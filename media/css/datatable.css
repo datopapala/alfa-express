@@ -1,0 +1,119 @@
+body {
+    font-size: 13px;
+	font-family: BPG arial;
+}
+
+@font-face {
+	font-family: "BPG Arial";
+	src:	url("../fonts/bpg_arial.eot");
+	src:	url("../fonts/bpg_arial.eot?#iefix") format("embedded-opentype"),
+			url("../fonts/bpg_arial.ttf") format("truetype"),
+			url("../fonts/bpg_arial.svg#JournalRegular") format("svg");
+}
+
+h2{
+	font-size: 16px;
+	font-family: BPG arial;
+}
+
+span{
+	font-size: 13px;
+	font-family: BPG arial;
+}
+
+label{
+	font-size: 13px;
+	font-family: BPG arial;
+	font-weight: normal;
+}
+table{
+	font-size: 13px;
+	font-family: BPG arial !important;
+}
+input{
+	font-size: 13px;
+	font-family: BPG arial !important;
+}
+.ui-widget-header{
+	font-size: 13px;
+	font-family: BPG arial !important;;
+}
+
+.clear{
+	clear: both;
+	display: block;
+	overflow: hidden;
+	visibility: hidden;
+	width: 0;
+	height: 10px;
+}
+
+.left{
+	float: left !important;
+}
+
+.right{
+	float: right !important;
+}
+
+.center{
+	margin: 0 auto !important;
+	display: block !important;
+}
+
+.price
+{
+    width: 90px !important;
+}
+
+.num
+{
+    width: 100px !important;
+}
+
+.user_id
+{
+    width: 90px !important;
+}
+
+.address
+{
+    width: 225px !important;
+}
+
+.small
+{
+    width: 55px !important;
+}
+
+.medium
+{
+    width: 120px !important;
+}
+
+.large
+{
+    width: 320px !important;
+}
+
+.date
+{
+    width: 75px !important;
+}
+
+.date_time
+{
+    width: 125px !important;
+}
+
+.comment{
+	height: 70px !important;
+}
+
+.high{
+	height: 40px;
+}
+
+.form-dialog{
+	display: none;
+}

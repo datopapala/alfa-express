@@ -1,0 +1,280 @@
+#main-table {
+	width: 1140px;
+	margin: 0 auto;
+}
+
+#container {
+	width: 1024px;
+	margin: 30px auto;
+	padding: 0;
+}
+
+.overhead_container {
+	width: 100% !important;
+}
+
+#container h2{
+	margin: 15px;
+	text-align: center;
+	color: #4E6CA3;
+}
+
+.search_init{
+	text-align: center;
+}
+
+#button_area {
+	float: left;
+	height: 37px;
+}
+
+#bottom_button_area {
+	margin-top: 10px;
+}
+
+.dataTables_wrapper {
+	position: relative;
+	clear: both;
+}
+
+div.dataTables_wrapper .ui-widget-header {
+	font-weight: normal;
+}
+
+.dataTables_wrapper .ui-toolbar {
+	padding: 5px;
+}
+
+.dataTables_length {
+	width: 40%;
+	float: left;
+}
+
+.dataTables_length select {
+	padding: 0;
+	border: none;
+	width: 70px;
+}
+
+.dataTables_filter {
+	width: 50%;
+	float: right;
+	text-align: right;
+}
+
+.dataTables_filter input{
+	height: 13px;
+}
+
+.dataTables_processing {
+	position: absolute;
+	top: 0px;
+	left: 50%;
+	width: 250px;
+	margin-left: -125px;
+	border: 1px solid #ddd;
+	text-align: center;
+	color: #999;
+	font-size: 11px;
+	padding: 2px 0;
+}
+
+.dataTables_info {
+	width: 50%;
+	float: left;
+}
+
+.paging_full_numbers {
+	width: 410px !important;
+}
+
+#dt_example a {
+	text-decoration: none;
+}
+
+.dataTables_paginate .ui-button {
+	margin-right: -0.1em !important;
+}
+
+.dataTables_info {
+	padding-top: 3px;
+}
+
+.dataTables_paginate {
+	float: right;
+	text-align: right;
+}
+
+.paging_full_numbers .ui-button {
+	padding: 2px 6px;
+	margin: 0;
+	cursor: pointer;
+	color: #333 !important;
+	line-height: 15px;
+}
+
+table.display {
+	margin: 0 auto;
+	width: 100%;
+	clear: both;
+	border-collapse: collapse;
+	table-layout: fixed;
+}
+
+table.display #datatable_header th {
+	padding: 3px 0px;
+	text-align: center;
+	cursor: pointer;
+	vertical-align: middle;
+}
+
+table.display thead th div.DataTables_sort_wrapper {
+	position: relative;
+	padding-right: 20px;
+}
+
+table.display thead th div.DataTables_sort_wrapper span {
+	position: absolute;
+	top: 50%;
+	margin-top: -8px;
+	right: 0;
+}
+
+table.display td, table.display th {
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+table.display td, table.display th {
+	white-space: nowrap;
+}
+
+table.display thead th div.DataTables_sort_wrapper span {
+	position: absolute;
+	top: 50%;
+	margin-top: -8px;
+	right: 0;
+}
+
+.search_header th {
+	border: 1px solid #C5DBEC;
+}
+
+table.display th input[type="text"] {
+	margin: 9px 0 9px 2px;
+	width: 140px;
+	border: 1px solid #EEEEEE;
+}
+
+.search_header input {
+	color: Gray;
+}
+
+table.display .colum_hidden {
+	display: none;
+}
+
+.hidden-input {
+	display: none !important;
+}
+
+table.display th input[type="checkbox"] {
+	margin: 9px 0 9px 9px;
+}
+
+table.display tbody td {
+	cursor: pointer;
+}
+
+table.display tbody td {
+	padding: 0 10px;
+	height: 22px;
+	margin: 0;
+	line-height: 22px;
+}
+
+table.display td input[type="checkbox"] {
+	margin: 0;
+	padding: 0;
+}
+
+.dataTables_empty {
+	text-align: center;
+}
+
+table.display {
+	color: #333;
+}
+
+/* * * * Colum Width * * * */
+
+table.display thead .min{
+	width: 155px;
+}
+
+table.display thead .aver{
+	width: 355px;
+}
+
+table.display thead .max{
+	width: 1023px;
+}
+
+table.display thead .check{
+	width: 35px;
+}
+
+.category_table{
+	width: 512px !important;
+}
+
+span.rotate{
+	font-size: 12pt;
+	writing-mode: tb-rl;
+	-webkit-transform: rotate(270deg);
+	-moz-transform: rotate(270deg);
+	-o-transform: rotate(270deg);
+	white-space: nowrap;
+	display: block;
+	width: 8px;
+	vertical-align: bottom;
+}
+			
+			
+span.style1{
+    padding-left: 19px !important;
+	padding-top: 7px !important;
+}
+
+.clear_box td {
+	padding: 0px !important;
+	padding-right: 15px !important;
+	height: 22px;
+	margin: 0;
+	line-height: 22px;
+	background-color: white !important;
+	border: 1px solid #c5dbec;
+	border-top-color: rgb(197, 219, 236);
+	border-top-style: solid;
+	border-top-width: 1px;
+	border-right-color: rgb(197, 219, 236);
+	border-right-style: solid;
+	border-right-width: 1px;
+	border-bottom-color: rgb(197, 219, 236);
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+	border-left-color: rgb(197, 219, 236);
+	border-left-style: solid;
+	border-left-width: 1px;
+}
+
+.center_price th{
+	font-size:11px !important;
+	font-weight: normal !important;
+}
+
+.center_td td{
+	text-align:center !important;
+}
+
