@@ -24,8 +24,8 @@ function GetCss(){
 	<link rel="stylesheet" href="media/css/jNotify.jquery.css" type="text/css" />
 	
 	<!-- jQuery UI -->
-	<link rel="stylesheet" href="media/themes/jQuery-UI/ui-lightness/jquery-ui.min.css" type="text/css" />
-	<link rel="stylesheet" href="media/themes/jQuery-UI/ui-lightness/jquery-ui.datatable.css" type="text/css" />
+	<link rel="stylesheet" href="media/themes/jQuery-UI/redmond/jquery-ui.min.css" type="text/css" />
+	<link rel="stylesheet" href="media/themes/jQuery-UI/redmond/jquery-ui.datatable.css" type="text/css" />
 	<!-- <link rel="stylesheet" href="media/themes/jQuery-Mobile/default/jquery.mobile-1.2.0.css" type="text/css" /> -->
 	';
 	return $data;

@@ -142,10 +142,10 @@ a.minimize{
 	float: left;
 	display: block;
 	position: relative;
-	-moz-box-shadow: #CC840E 0 1px 0 0 inset,#CC840E 0 -1px 0 0 inset,#CC840E -1px 0 0 0 inset,#CC840E 1px 0 0 0 inset;
-	-webkit-box-shadow: #CC840E 0 1px 0 0 inset,#CC840E 0 -1px 0 0 inset,#CC840E -1px 0 0 0 inset,#CC840E 1px 0 0 0 inset;
-	-o-box-shadow: #CC840E 0 1px 0 0 inset,#CC840E 0 -1px 0 0 inset,#CC840E -1px 0 0 0 inset,#CC840E 1px 0 0 0 inset;
-	box-shadow: #CC840E 0 1px 0 0 inset,#CC840E 0 -1px 0 0 inset,#CC840E -1px 0 0 0;
+	-moz-box-shadow: #87B6DA 0 1px 0 0 inset,#87B6DA 0 -1px 0 0 inset,#87B6DA -1px 0 0 0 inset,#87B6DA 1px 0 0 0 inset;
+	-webkit-box-shadow: #87B6DA 0 1px 0 0 inset,#87B6DA 0 -1px 0 0 inset,#87B6DA -1px 0 0 0 inset,#87B6DA 1px 0 0 0 inset;
+	-o-box-shadow: #87B6DA 0 1px 0 0 inset,#87B6DA 0 -1px 0 0 inset,#87B6DA -1px 0 0 0 inset,#87B6DA 1px 0 0 0 inset;
+	box-shadow: #87B6DA 0 1px 0 0 inset,#87B6DA 0 -1px 0 0 inset,#87B6DA -1px 0 0 0;
 }
 
 .bar_nav ul ul li { 

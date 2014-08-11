@@ -12,8 +12,8 @@
 {
     padding: 13px 10px 10px 10px;
     border: solid 1px #85B1DE;
-    background-color:   #FFE29A  /* #F0F0BA*/;
-   background-image: url( '../images/forms/bg.png' );
+    background-color:   #E2F0FD;
+    background-image: url( '../images/forms/bg.png' );
 }
 
 #dialog-form legend

@@ -66,7 +66,7 @@ if((time() - $_SESSION['lifetime'] > 36000) && $_SERVER['QUERY_STRING'] && strpo
 	unset($_SESSION['lifetime']);
 	header('LOCATION: 404.php');	
 }else{
-	$db = new sql_db ( "192.168.11.99", "root", "Gl-1114", "smiley_new" );
+	$db = new sql_db ( "192.168.11.99", "root", "Gl-1114", "alfa" );
 }
 
 ?>

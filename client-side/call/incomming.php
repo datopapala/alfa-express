@@ -102,40 +102,24 @@ if(isset($_SESSION['QSTATS']['hideloggedoff'])) {
 
 		    param.act						= "save_incomming";
 
-	    	param.id						= $("#id").val();
-	    	param.phone						= $("#phone").val();
-	    	param.call_date					= $("#call_date").val();
-	    	param.pin						= $("#site_user_pin").val();
-
-	    	param.call_type_id				= $("#call_type_id").val();
-	    	param.category_id				= $("#category_id").val();
-	    	param.category_parent_id		= $("#category_parent_id").val();
-	    	param.problem_date				= $("#problem_date").val();
-	    	param.call_status_id			= $("#call_status_id").val();
-	    	param.call_content				= $("#call_content").val();
-	    	param.persons_id				= $("#persons_id").val();
-	    	param.comment					= $("#comment").val();
-	    	param.task_department_id		= $("#task_department_id").val();
-	    	param.task_type_id				= $("#task_type_id").val();
-	    	param.priority_id				= $("#priority_id").val();
-	    	param.problem_id				= $("#problem_id").val();
-	    	param.pay_type_id				= $("#pay_type_id").val();
-	    	param.bank_id					= $("#bank_id").val();
-	    	param.bank_object_id			= $("#bank_object_id").val();
-	    	param.card_type_id				= $("#card_type_id").val();
-	    	param.card_type1_id				= $("#card_type1_id").val();
-	    	param.pay_aparat_id				= $("#pay_aparat_id").val();
-	    	param.object_id					= $("#object_id").val();
-	    	param.personal_pin				= $("#personal_pin").val();
-	    	param.personal_id				= $("#personal_id").val();
-	    	param.personal_phone			= $("#personal_phone").val();
-	    	param.mail						= $("#mail").val();
-	    	param.name						= $("#name").val();
-	    	param.user						= $("#user").val();
-	    	param.friend_pin				= $("#friend_pin").val();
-	    	param.rand_file					= rand_file;
-	    	param.file_name					= file_name;
-	    	param.hidden_inc				= $("#hidden_inc").val();
+	    	param.id_p							= $("#id").val();
+	    	param.c_date						= $("#c_date").val();
+	    	param.phone							= $("#phone").val();
+	    	param.person_name					= $("#person_name").val();
+	    	param.type							= $("input[name='x']:checked").val();
+	    	param.results_id					= $("#results_id").val();
+	    	param.information_category_id		= $("#information_category_id").val();
+	    	param.information_sub_category_id	= $("#information_sub_category_id").val();
+	    	param.content_id					= $("#content_id").val();
+	    	param.product_id					= $("#product_id").val();
+	    	param.forward_id					= $("#forward_id").val();
+	    	param.connect						= $("#connect:checked").val();
+	    	param.results_comment				= $("#results_comment").val();
+	    	param.content						= $("#content").val();
+	    	param.task_type_id					= $("#task_type_id").val();
+	    	param.task_department_id			= $("#task_department_id").val();
+	    	param.persons_id					= $("#persons_id").val();
+	    	param.comment						= $("#comment").val();
 	    	
 			if(param.req_phone == ""){
 				alert("შეავსეთ ტელეფონის ნომერი!");
@@ -319,6 +303,32 @@ if(isset($_SESSION['QSTATS']['hideloggedoff'])) {
 			}
 		    
 	    });
+
+	    $(document).on("change", "#information_category_id",function(){
+		    var information_category_id = $("#information_category_id").val();
+		    param 			= new Object();
+		    param.act		= "category_change";
+		    param.information_category_id_check		= information_category_id;
+ 	    	$.ajax({
+ 		    url: aJaxURL,
+ 			data: param,
+ 		    success: function(data) {
+ 				if(typeof(data.error) != 'undefined'){
+ 					if(data.error != ''){
+ 						alert(data.error);
+ 					}else{
+ 						$("#information_sub_category_id").html(data.cat);
+ 					}
+ 				}
+ 			}
+ 		    });
+
+			if(this.value == 407){
+				$("#additional").removeClass('hidden');
+			}else{
+				$("#additional").addClass('hidden');
+			}
+        });
 
     	$(document).on("change", "#category_parent_id",function(){
      	 	param 			= new Object();
