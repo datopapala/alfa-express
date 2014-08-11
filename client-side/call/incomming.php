@@ -107,6 +107,7 @@ if(isset($_SESSION['QSTATS']['hideloggedoff'])) {
 	    	param.phone							= $("#phone").val();
 	    	param.person_name					= $("#person_name").val();
 	    	param.type							= $("input[name='x']:checked").val();
+	    	param.call_vote						= $("input[name='xx']:checked").val();
 	    	param.results_id					= $("#results_id").val();
 	    	param.information_category_id		= $("#information_category_id").val();
 	    	param.information_sub_category_id	= $("#information_sub_category_id").val();
