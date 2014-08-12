@@ -693,7 +693,7 @@ function Getinformation_category($information_category_id){
 	$req = mysql_query("	SELECT 	`id`,
 									`name`
 							FROM 	info_category 
-							WHERE 	parent_id = '0'	");
+							WHERE 	parent_id = '0'	AND `actived` = 1");
 	
 	$data .= '<option value="0" selected="selected">----</option>';
 	while( $res = mysql_fetch_assoc($req)){
@@ -712,7 +712,7 @@ function Getinformation_sub_category($information_sub_category_id,$information_c
 									n1.`name`
 							FROM 	info_category
 							JOIN 	info_category as n1 ON info_category.id = n1.parent_id
-							WHERE 	info_category.id = $information_category_id_check	");
+							WHERE 	info_category.id = $information_category_id_check AND n1.`actived` = 1");
 
 	$data .= '<option value="0" selected="selected">----</option>';
 	while( $res = mysql_fetch_assoc($req)){
@@ -730,6 +730,7 @@ function Getcontent($content_id){
 	$req = mysql_query("	SELECT 	`id`,
 									`name`
 							FROM 	content
+							WHERE `actived` = 1
 							");
 
 	$data .= '<option value="0" selected="selected">----</option>';
@@ -748,6 +749,7 @@ function Getproduct($product_id){
 	$req = mysql_query("	SELECT 	`id`,
 									`name`
 							FROM 	product
+							WHERE `actived` = 1
 							");
 
 	$data .= '<option value="0" selected="selected">----</option>';
@@ -766,6 +768,7 @@ function Getforward($forward_id){
 	$req = mysql_query("	SELECT 	`id`,
 									`name`
 							FROM 	forward
+							WHERE `actived` = 1
 							");
 
 	$data .= '<option value="0" selected="selected">----</option>';
@@ -784,6 +787,7 @@ function Getresults($results_id){
 	$req = mysql_query("	SELECT 	`id`,
 									`name`
 							FROM 	results
+							WHERE `actived` = 1
 							");
 
 	$data .= '<option value="0" selected="selected">----</option>';
