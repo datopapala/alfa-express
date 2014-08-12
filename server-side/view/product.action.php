@@ -11,8 +11,8 @@ switch ($action) {
 
 		break;
 	case 'get_edit_page':
-		$departmetn_id		= $_REQUEST['id'];
-	       $page		= GetPage(Getdepartment($departmetn_id));
+		$product_id		= $_REQUEST['id'];
+	       $page		= GetPage(Getproduct($product_id));
            $data		= array('page'	=> $page);
 
 		break;
@@ -20,10 +20,10 @@ switch ($action) {
 		$count	= $_REQUEST['count'];
 		$hidden	= $_REQUEST['hidden'];
 		 
-		$rResult = mysql_query("SELECT 	department.id,
-										department.`name`
-							    FROM 	department
-							    WHERE 	department.actived=1");
+		$rResult = mysql_query("SELECT 	product.id,
+										product.`name`
+							    FROM 	product
+							    WHERE 	product.actived=1");
 
 		$data = array(
 				"aaData"	=> array()
@@ -44,30 +44,30 @@ switch ($action) {
 		}
 
 		break;
-	case 'save_department':
-		$department_id 		= $_REQUEST['id'];
-		$department_name    = $_REQUEST['name'];
+	case 'save_product':
+		$product_id 		= $_REQUEST['id'];
+		$product_name    = $_REQUEST['name'];
 		
 	
 		
-		if($department_name != ''){
-			if(!CheckdepartmentExist($department_name, $department_id)){
-				if ($department_id == '') {
-					Adddepartment( $department_id, $department_name);
+		if($product_name != ''){
+			if(!CheckproductExist($product_name, $product_id)){
+				if ($product_id == '') {
+					Adddeproduct( $product_id, $product_name);
 				}else {
-					Savedepartment($department_id, $department_name);
+					Savedeproduct($product_id, $product_name);
 				}
 								
 			} else {
-				$error = '"' . $department_name . '" უკვე არის სიაში!';
+				$error = '"' . $product_name . '" უკვე არის სიაში!';
 				
 			}
 		}
 		
 		break;
 	case 'disable':
-		$department_id	= $_REQUEST['id'];
-		Disabledepartment($department_id);
+		$product_id	= $_REQUEST['id'];
+		Disableproduct($product_id);
 
 		break;
 	default:
@@ -84,35 +84,35 @@ echo json_encode($data);
 * ******************************
 */
 
-function Adddepartment($department_id, $department_name)
+function Adddeproduct($product_id, $product_name)
 {
 	$user_id	= $_SESSION['USERID'];
-	mysql_query("INSERT INTO 	 `department`
+	mysql_query("INSERT INTO 	 `product`
 								(`name`,`user_id`)
-					VALUES 		('$department_name', '$user_id')");
+					VALUES 		('$product_name', '$user_id')");
 }
 
-function Savedepartment($department_id, $department_name)
+function Savedeproduct($product_id, $product_name)
 {
 	$user_id	= $_SESSION['USERID'];
-	mysql_query("	UPDATE `department`
-					SET     `name` = '$department_name',
+	mysql_query("	UPDATE `product`
+					SET     `name` = '$product_name',
 							`user_id` ='$user_id'
-					WHERE	`id` = $department_id");
+					WHERE	`id` = $product_id");
 }
 
-function Disabledepartment($department_id)
+function Disableproduct($product_id)
 {
-	mysql_query("	UPDATE `department`
+	mysql_query("	UPDATE `product`
 					SET    `actived` = 0
-					WHERE  `id` = $department_id");
+					WHERE  `id` = $product_id");
 }
 
-function CheckdepartmentExist($department_name)
+function CheckproductExist($product_name)
 {
 	$res = mysql_fetch_assoc(mysql_query("	SELECT `id`
-											FROM   `department`
-											WHERE  `name` = '$department_name' && `actived` = 1"));
+											FROM   `product`
+											WHERE  `name` = '$product_name' && `actived` = 1"));
 	if($res['id'] != ''){
 		return true;
 	}
@@ -120,12 +120,12 @@ function CheckdepartmentExist($department_name)
 }
 
 
-function Getdepartment($department_id)
+function Getproduct($product_id)
 {
 	$res = mysql_fetch_assoc(mysql_query("	SELECT  `id`,
 													`name`
-											FROM    `department`
-											WHERE   `id` = $department_id" ));
+											FROM    `product`
+											WHERE   `id` = $product_id" ));
 
 	return $res;
 }
@@ -147,7 +147,7 @@ function GetPage($res = '')
 
 			</table>
 			<!-- ID -->
-			<input type="hidden" id="department_id" value="' . $res['id'] . '" />
+			<input type="hidden" id="product_id" value="' . $res['id'] . '" />
         </fieldset>
     </div>
     ';

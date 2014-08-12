@@ -67,6 +67,14 @@ if(isset($_SESSION['QSTATS']['hideloggedoff'])) {
 			GetDataTable(tName, aJaxURL, "get_list",9, "", 0, "", 1, "desc");
 		}
 
+		$(document).on("click", ".download", function () {
+            var link = $(this).attr("str");
+            link = "https:/212.72.155.176/records/" + link + ".wav";
+
+            var newWin = window.open(link, "JSSite", "width=420,height=230,resizable=yes,scrollbars=yes,status=yes");
+            newWin.focus();
+        });
+
 		function LoadDialog(){
 
 			/* Dialog Form Selector Name, Buttons Array */

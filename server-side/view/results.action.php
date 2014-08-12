@@ -11,19 +11,19 @@ switch ($action) {
 
 		break;
 	case 'get_edit_page':
-		$cardtype_id		= $_REQUEST['id'];
-		$page		= GetPage(Getcard_type($cardtype_id));
-		$data		= array('page'	=> $page);
+		$results_id		= $_REQUEST['id'];
+	       $page		= GetPage(Getresults($results_id));
+           $data		= array('page'	=> $page);
 
 		break;
 	case 'get_list' :
 		$count	= $_REQUEST['count'];
 		$hidden	= $_REQUEST['hidden'];
-			
-		$rResult = mysql_query("SELECT 	card_type.id,
-										card_type.`name`
-							    FROM 	card_type
-							    WHERE 	card_type.actived=1");
+		 
+		$rResult = mysql_query("SELECT 	results.id,
+										results.`name`
+							    FROM 	results
+							    WHERE 	results.actived=1");
 
 		$data = array(
 				"aaData"	=> array()
@@ -44,30 +44,30 @@ switch ($action) {
 		}
 
 		break;
-	case 'save_cardtype':
-		$cardtype_id 		= $_REQUEST['id'];
-		$cardtype_name    = $_REQUEST['name'];
-
-
-
-		if($cardtype_name != ''){
-			if(!Checkcard_typeExist($cardtype_name, $cardtype_id)){
-				if ($cardtype_id == '') {
-					Addcard_type( $cardtype_id, $cardtype_name);
+	case 'save_results':
+		$results_id 		= $_REQUEST['id'];
+		$results_name    = $_REQUEST['name'];
+		
+	
+		
+		if($results_name != ''){
+			if(!CheckresultsExist($results_name, $results_id)){
+				if ($results_id == '') {
+					Addderesults( $results_id, $results_name);
 				}else {
-					Savecard_type($cardtype_id, $cardtype_name);
+					Savederesults($results_id, $results_name);
 				}
-
+								
 			} else {
-				$error = '"' . $cardtype_name . '" უკვე არის სიაში!';
-
+				$error = '"' . $results_name . '" უკვე არის სიაში!';
+				
 			}
 		}
-
+		
 		break;
 	case 'disable':
-		$cardtype_id	= $_REQUEST['id'];
-		Disablecard_type($cardtype_id);
+		$results_id	= $_REQUEST['id'];
+		Disableresults($results_id);
 
 		break;
 	default:
@@ -84,35 +84,35 @@ echo json_encode($data);
 * ******************************
 */
 
-function Addcard_type($cardtype_id, $cardtype_name)
+function Addderesults($results_id, $results_name)
 {
 	$user_id	= $_SESSION['USERID'];
-	mysql_query("INSERT INTO 	 `card_type`
-								(`user_id`,`name`)
-					VALUES 		('$user_id','$cardtype_name')");
+	mysql_query("INSERT INTO 	 `results`
+								(`name`,`user_id`)
+					VALUES 		('$results_name', '$user_id')");
 }
 
-function Savecard_type($cardtype_id, $cardtype_name)
+function Savederesults($results_id, $results_name)
 {
 	$user_id	= $_SESSION['USERID'];
-	mysql_query("	UPDATE `card_type`
-					SET    `user_id`='$user_id',
-							 `name` = '$cardtype_name'
-					WHERE	`id` = $cardtype_id");
+	mysql_query("	UPDATE `results`
+					SET     `name` = '$results_name',
+							`user_id` ='$user_id'
+					WHERE	`id` = $results_id");
 }
 
-function Disablecard_type($cardtype_id)
+function Disableresults($results_id)
 {
-	mysql_query("	UPDATE `card_type`
+	mysql_query("	UPDATE `results`
 					SET    `actived` = 0
-					WHERE  `id` = $cardtype_id");
+					WHERE  `id` = $results_id");
 }
 
-function Checkcard_typeExist($cardtype_name)
+function CheckresultsExist($results_name)
 {
 	$res = mysql_fetch_assoc(mysql_query("	SELECT `id`
-											FROM   `card_type`
-											WHERE  `name` = '$cardtype_name' && `actived` = 1"));
+											FROM   `results`
+											WHERE  `name` = '$results_name' && `actived` = 1"));
 	if($res['id'] != ''){
 		return true;
 	}
@@ -120,12 +120,12 @@ function Checkcard_typeExist($cardtype_name)
 }
 
 
-function Getcard_type($cardtype_id)
+function Getresults($results_id)
 {
 	$res = mysql_fetch_assoc(mysql_query("	SELECT  `id`,
 													`name`
-											FROM    `card_type`
-											WHERE   `id` = $cardtype_id" ));
+											FROM    `results`
+											WHERE   `id` = $results_id" ));
 
 	return $res;
 }
@@ -147,7 +147,7 @@ function GetPage($res = '')
 
 			</table>
 			<!-- ID -->
-			<input type="hidden" id="cardtype_id" value="' . $res['id'] . '" />
+			<input type="hidden" id="results_id" value="' . $res['id'] . '" />
         </fieldset>
     </div>
     ';
