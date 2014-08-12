@@ -30,6 +30,7 @@ $task_type_id					= $_REQUEST['task_type_id'];
 $task_department_id				= $_REQUEST['task_department_id'];
 $persons_id						= $_REQUEST['persons_id'];
 $comment						= $_REQUEST['comment'];
+$source_id						= $_REQUEST['source_id'];
 
 switch ($action) {
 	case 'get_add_page':
@@ -80,15 +81,14 @@ switch ($action) {
 
 		break;
 	case 'save_incomming':
-		$incom_id = $_REQUEST['id'];
-		$task_type_id = $_REQUEST['task_type_id'];
-		if($incom_id == ''){
+		$incom_id_check = $_REQUEST['id_p'];
+		if($incom_id_check == ''){
 			
-			Addincomming($id_p, $phone, $person_name, $type, $results_id, $information_category_id, $information_sub_category_id, $content_id, $product_id,  $forward_id, $connect, $results_comment, $content, $task_type_id, $task_department_id, $persons_id, $comment, $call_vote);
+			Addincomming($id_p, $phone, $person_name, $type, $results_id, $information_category_id, $information_sub_category_id, $content_id, $product_id,  $forward_id, $connect, $results_comment, $content, $task_type_id, $task_department_id, $persons_id, $comment, $call_vote, $source_id);
 
 		}else {
 			
-			Saveincomming($id_p, $phone, $person_name, $type, $results_id, $information_category_id, $information_sub_category_id, $content_id, $product_id,  $forward_id, $connect, $results_comment, $content, $task_type_id, $task_department_id, $persons_id, $comment, $call_vote);
+			Saveincomming($id_p, $phone, $person_name, $type, $results_id, $information_category_id, $information_sub_category_id, $content_id, $product_id,  $forward_id, $connect, $results_comment, $content, $task_type_id, $task_department_id, $persons_id, $comment, $call_vote, $source_id);
 	
 		}
 		break;
@@ -137,7 +137,7 @@ echo json_encode($data);
 * ******************************
 */
 
-function Addincomming($id_p, $phone, $person_name, $type, $results_id, $information_category_id, $information_sub_category_id, $content_id, $product_id,  $forward_id, $connect, $results_comment, $content, $task_type_id, $task_department_id, $persons_id, $comment, $call_vote){
+function Addincomming($id_p, $phone, $person_name, $type, $results_id, $information_category_id, $information_sub_category_id, $content_id, $product_id,  $forward_id, $connect, $results_comment, $content, $task_type_id, $task_department_id, $persons_id, $comment, $call_vote, $source_id){
 	
 	$c_date		= date('Y-m-d H:i:s');
 	$user		= $_SESSION['USERID'];
@@ -145,15 +145,15 @@ function Addincomming($id_p, $phone, $person_name, $type, $results_id, $informat
 	mysql_query("INSERT INTO `incomming_call` 
 			(`user_id`, `date`, `phone`, `name`, `type`, `information_category_id`, `information_sub_category_id`, `product_id`, `source_id`, `content`, `results_id`, `results_comment`, `content_id`, `connect`, `forward_id`, `call_vote`, `actived`)
 			 VALUES 
-			( '$user', '$c_date', '$phone', '$person_name', '$type', '$information_category_id', '$information_sub_category_id', '$product_id', '', '$content', '$results_id', '$results_comment', '$content_id', '$content', '$forward_id', '$call_vote', '1');");
+			( '$user', '$c_date', '$phone', '$person_name', '$type', '$information_category_id', '$information_sub_category_id', '$product_id', '$source_id', '$content', '$results_id', '$results_comment', '$content_id', '$connect', '$forward_id', '$call_vote', '1');");
 	
 
 }
 
 				
-function Saveincomming($id_p, $phone, $person_name, $type, $results_id, $information_category_id, $information_sub_category_id, $content_id, $product_id,  $forward_id, $connect, $results_comment, $content, $task_type_id, $task_department_id, $persons_id, $comment, $call_vote)
+function Saveincomming($id_p, $phone, $person_name, $type, $results_id, $information_category_id, $information_sub_category_id, $content_id, $product_id,  $forward_id, $connect, $results_comment, $content, $task_type_id, $task_department_id, $persons_id, $comment, $call_vote, $source_id)
 {
-	$incom_id	= $_REQUEST['id'];
+	
 	$user		= $_SESSION['USERID'];
 	$c_date		= date('Y-m-d H:i:s');
 	mysql_query("UPDATE  `incomming_call` 
@@ -166,15 +166,16 @@ function Saveincomming($id_p, $phone, $person_name, $type, $results_id, $informa
 						 `information_category_id`		='$information_category_id', 
 						 `information_sub_category_id`	='$information_sub_category_id',
 						 `product_id`					='$product_id',
-						 `source_id`					='',
+						 `source_id`					='$source_id',
 						 `content`						='$content', 
 						 `results_id`					='$results_id',
 						 `results_comment`				='$results_comment',
 						 `content_id`					='$content_id',
 						 `connect`						='$content',
 						 `forward_id`					='$forward_id',
+						 `call_vote`					='$call_vote',
 						 `actived`						='1'
-			    WHERE    `id`							='$incom_id'
+			    WHERE    `id`							='$id_p'
 							");
 	
 
@@ -787,7 +788,7 @@ function Getresults($results_id){
 
 	$data .= '<option value="0" selected="selected">----</option>';
 	while( $res = mysql_fetch_assoc($req)){
-		if($res['id'] == $forward_id){
+		if($res['id'] == $results_id){
 			$data .= '<option value="' . $res['id'] . '" selected="selected">' . $res['name'] . '</option>';
 		} else {
 			$data .= '<option value="' . $res['id'] . '">' . $res['name'] . '</option>';
@@ -805,7 +806,7 @@ function Getsource($source_id){
 
 	$data .= '<option value="0" selected="selected">----</option>';
 	while( $res = mysql_fetch_assoc($req)){
-		if($res['id'] == $forward_id){
+		if($res['id'] == $source_id){
 			$data .= '<option value="' . $res['id'] . '" selected="selected">' . $res['name'] . '</option>';
 		} else {
 			$data .= '<option value="' . $res['id'] . '">' . $res['name'] . '</option>';
@@ -831,7 +832,8 @@ function Getincomming($incom_id)
 														incomming_call.results_comment,
 														incomming_call.content_id,
 														incomming_call.connect,
-														incomming_call.forward_id
+														incomming_call.forward_id,
+														incomming_call.call_vote
 												FROM 	incomming_call
 												where   incomming_call.id = $incom_id
 														" ));
@@ -920,11 +922,11 @@ function GetPage($res='', $number)
 			    	<legend>ზარის შეფასება</legend>
 					<table id="" class="dialog-form-table" width="220px">						
 						<tr>
-							<td style="width: 220px;"><input style="float:left;" type="radio" name="xx" value="1" '.(($res['type']=='1')?"checked":"").'><span style="margin-top:5px; display:block;">პოზიტიური</span></td>
-					  		<td style="width: 220px;"><input style="float:left;" type="radio" name="xx" value="2" '.(($res['type']=='2')?"checked":"").'><span style="margin-top:5px; display:block;"">ნეიტრალური</span></td>
+							<td style="width: 220px;"><input style="float:left;" type="radio" name="xx" value="1" '.(($res['call_vote']=='1')?"checked":"").'><span style="margin-top:5px; display:block;">პოზიტიური</span></td>
+					  		<td style="width: 220px;"><input style="float:left;" type="radio" name="xx" value="2" '.(($res['call_vote']=='2')?"checked":"").'><span style="margin-top:5px; display:block;"">ნეიტრალური</span></td>
 					  	</tr>
 					  	<tr>
-					  		<td style="width: 220px;"><input style="float:left;" type="radio" name="xx" value="3" '.(($res['type']=='2')?"checked":"").'><span style="margin-top:5px; display:block;"">ნეგატიური</span></td>
+					  		<td style="width: 220px;"><input style="float:left;" type="radio" name="xx" value="3" '.(($res['call_vote']=='3')?"checked":"").'><span style="margin-top:5px; display:block;"">ნეგატიური</span></td>
 						</tr>
 					</table>
 				</fieldset>

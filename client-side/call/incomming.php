@@ -21,8 +21,8 @@ if(isset($_SESSION['QSTATS']['hideloggedoff'])) {
 	font-size: 12px;
 	text-align: center;
 	border-collapse: collapse;
-	border-top: 7px solid #F8B64A;
-	border-bottom: 7px solid #F8B64A;
+	border-top: 7px solid #8FC122;
+	border-bottom: 7px solid #8FC122;
 }
 #box-table-b th
 {
@@ -30,16 +30,16 @@ if(isset($_SESSION['QSTATS']['hideloggedoff'])) {
 	font-weight: normal;
 	padding: 8px;
 	background: #e8edff;
-	border-right: 1px solid #CC840E;
-	border-left: 1px solid #CC840E;
+	border-right: 1px solid #8FC122;
+	border-left: 1px solid #8FC122;
 	color: #039;
 }
 #box-table-b td
 {
 	padding: 8px;
 	background: #e8edff; 
-	border-right: 1px solid #CC840E;
-	border-left: 1px solid #CC840E;
+	border-right: 1px solid #8FC122;
+	border-left: 1px solid #8FC122;
 	color: #669;
 }
 </style>
@@ -129,6 +129,7 @@ if(isset($_SESSION['QSTATS']['hideloggedoff'])) {
 	    	param.task_department_id			= $("#task_department_id").val();
 	    	param.persons_id					= $("#persons_id").val();
 	    	param.comment						= $("#comment").val();
+	    	param.source_id						= $("#source_id").val();
 	    	
 			if(param.req_phone == ""){
 				alert("შეავსეთ ტელეფონის ნომერი!");
