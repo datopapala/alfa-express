@@ -353,7 +353,7 @@ function GetPosition($point)
     $req = mysql_query("SELECT 	`id`,
     						   	`person_position`
 						FROM 	`position`
-						WHERE 	`visible` = 'Yes'");
+						WHERE 	`actived` = '1'");
 
 	if($point == ''){
 		$data = '<option value="0" selected="selected"></option>';
