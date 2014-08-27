@@ -1,4 +1,7 @@
 <?php
+
+//quire_once('../../includes/classes/core.php');
+
 mysql_close();
 $conn = mysql_connect('212.72.155.176', 'root', 'Gl-1114');
 if (!$conn) {
@@ -7,7 +10,7 @@ if (!$conn) {
 mysql_select_db('asteriskcdrdb');
 
 $action 	= $_REQUEST['act'];
-//$error		= '';
+$error		= '';
 $data		= '';
 
 switch ($action) {
