@@ -1,6 +1,6 @@
 <?php
-require_once("AsteriskManager/config.php");
-include("AsteriskManager/sesvars.php");
+require_once("AsteriskManagerM/config.php");
+include("AsteriskManagerM/sesvars.php");
 if(isset($_SESSION['QSTATS']['hideloggedoff'])) {
     $ocultar=$_SESSION['QSTATS']['hideloggedoff'];
 } else {
@@ -44,15 +44,13 @@ if(isset($_SESSION['QSTATS']['hideloggedoff'])) {
 }
 </style>
 <script type="text/javascript">
-		var aJaxURL	= "server-side/call/incomming.action.php";		//server side folder url
-		var upJaxURL		= "server-side/upload/file.action.php";	
+		var aJaxURL	= "server-side/call/incomming_m.action.php";		//server side folder url
 		var tName	= "example";										//table name
 		var fName	= "add-edit-form";									//form name
 		var file_name = '';
 		var rand_file = '';
 
 		$(document).ready(function () {
-		
 
 			runAjax();
 			LoadTable();
@@ -73,13 +71,12 @@ if(isset($_SESSION['QSTATS']['hideloggedoff'])) {
             link = 'http://212.72.155.176:8181/records/' + link + '.wav';
 
             window.open(link, 'chatwindow', "width=420,height=230,resizable=yes,scrollbars=yes,status=yes");
-            
         });
 
 		function LoadDialog(){
 
 			/* Dialog Form Selector Name, Buttons Array */
-			GetDialog(fName, 1200, "auto", "mail");
+			GetDialog(fName, 1200, "auto", "cust");
 			var id = $("#incomming_id").val();
 			var cat_id = $("#category_parent_id").val();
 			$( ".calls" ).button({
@@ -88,7 +85,9 @@ if(isset($_SESSION['QSTATS']['hideloggedoff'])) {
 			      }
 			});
 			$( ".download" ).button({
-			    
+			      icons: {
+			        primary: " ui-icon-contact"
+			      }
 			});
 		}
 
@@ -236,7 +235,7 @@ if(isset($_SESSION['QSTATS']['hideloggedoff'])) {
             $.ajax({
             	async: true,
             	dataType: "html",
-		        url: 'AsteriskManager/liveState.php',
+		        url: 'AsteriskManagerM/liveState.php',
 			    data: 'sesvar=hideloggedoff&value=true',
 		        success: function(data) {
 							$("#jq").html(data);
@@ -408,14 +407,12 @@ if(isset($_SESSION['QSTATS']['hideloggedoff'])) {
 		<tr style="width: 800px">
 			<td>
             	<h2 align="center">შემომავალი ზარები</h2>
-            	<div id="button_area">
-        			<button id="add_button">დამატება</button>
-        		</div>
+
                 <table class="display" id="example">
                     <thead>
                         <tr id="datatable_header">
                             <th>ID</th>
-                            <th style="width: 50px;" >№</th>
+                            <th style="width: 45px;" >№</th>
                             <th style="width: 150px;">თარიღი</th>
                             <th style="width: 150px;">კატეგორია</th>
                             <th style="width: 150px;">ტელეფონი</th>

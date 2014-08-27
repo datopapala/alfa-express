@@ -31,7 +31,7 @@
 	    $(document).on("click", "#save-dialog", function () {
 		    param 			= new Object();
 
-		    param.act		="save_content";
+		    param.act		="save_forward";
 	    	param.id		= $("#forward_id").val();
 	    	param.name		= $("#name").val();
 	    	

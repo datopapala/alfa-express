@@ -31,7 +31,7 @@
 	    $(document).on("click", "#save-dialog", function () {
 		    param 			= new Object();
 
-		    param.act		="save_content";
+		    param.act		="save_results";
 	    	param.id		= $("#results_id").val();
 	    	param.name		= $("#name").val();
 	    	
@@ -63,7 +63,7 @@
     <div id="dt_example" class="ex_highlight_row" style="width: 1024px; margin: 0 auto;">
         <div id="container">        	
             <div id="dynamic">
-            	<h2 align="center">მომართვის შინაარსი</h2>
+            	<h2 align="center">შედეგი</h2>
             	<div id="button_area">
         			<button id="add_button">დამატება</button>
         			<button id="delete_button">წაშლა</button>

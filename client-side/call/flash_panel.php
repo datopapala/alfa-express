@@ -59,7 +59,7 @@ require_once("AsteriskManager/config.php");
 	font-size: 13px;
 	font-weight: normal;
 	padding: 8px;
-	background: #e8edff;
+	background: #F2FBE6;
 	border-right: 1px solid #8FC122;
 	border-left: 1px solid #8FC122;
 	color: #039;
@@ -67,7 +67,7 @@ require_once("AsteriskManager/config.php");
 #box-table-b td
 {
 	padding: 8px;
-	background: #e8edff; 
+	background: #F2FBE6; 
 	border-right: 1px solid #8FC122;
 	border-left: 1px solid #8FC122;
 	color: #669;
