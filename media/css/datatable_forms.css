@@ -11,7 +11,7 @@
 #dialog-form fieldset
 {
     padding: 13px 10px 10px 10px;
-    border: solid 1px #85B1DE;
+    border: solid 1px #75AD3B;
     background-color:   #E2F0FD;
     background-image: url( '../images/forms/bg.png' );
 }
@@ -58,7 +58,7 @@
 
 #dialog-form fieldset .idle, .inpt
 {
-    border: solid 1px #85b1de;
+    border: solid 1px #75AD3B;
     background-image: url( '../images/forms/gray_bg.png' );
     background-repeat: repeat-x;
     background-position: top;
@@ -76,7 +76,7 @@
 
 #dialog-form fieldset .idls
 {
-    border: solid 1px #85b1de;
+    border: solid 1px #75AD3B;
     background-color: #F8F8F8;
 }
 
