@@ -1230,8 +1230,20 @@ function SetEvents(add, dis, check, tname, fname, aJaxURL, c_data) {
 * @requested   Dialog Form Selector Name, Buttons Array
 */
 function GetDialog(fname, width, height, buttons) {
-    var defoult = {
-        "save": {
+   if(buttons == 'cust'){
+	var defoult = {
+      
+        "cancel": {
+            text: "დახურვა",
+            id: "cancel-dialog",
+            click: function () {
+                $(this).dialog("close");
+            }
+        }
+    };
+   }else if(buttons != 'mail'){
+	var defoult = {
+         "save": {
             text: "შენახვა",
             id: "save-dialog",
             click: function () {
@@ -1245,11 +1257,32 @@ function GetDialog(fname, width, height, buttons) {
             }
         }
     };
+   }else{    
+    var defoult = {
+            "save": {
+                text: "შენახვა",
+                id: "save-dialog",
+                click: function () {
+                }
+            },
+            "mail": {
+                text: "მეილზე გაგზავნა",
+                id: "send_mail",
+                click: function () {
+                }
+            },
+            "cancel": {
+                text: "დახურვა",
+                id: "cancel-dialog",
+                click: function () {
+                    $(this).dialog("close");
+                }
+            }
+        };
+   }
     var ok_defoult = "save-dialog";
 
-    if (!empty(buttons)) {
-        defoult = buttons;
-    }
+
     
     $("#" + fname).dialog({
     	position: "top",
