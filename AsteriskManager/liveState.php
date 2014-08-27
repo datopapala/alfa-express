@@ -47,7 +47,14 @@ $color['ringing']="#d0d01f";
 $color['not in use']="#00ff00";
 $color['paused']="#000000";
 
-foreach($queue as $qn) {
+$test = array(
+	'0' => "2555130",
+	'1' => "2551441",
+	'2' => "2470017",
+	'3' => "2555155"
+);
+
+foreach($test  as $qn) {
 	if($filter=="" || stristr($qn,$filter)) {
 		$contador=1;
 		if(!isset($queues[$qn]['members'])) continue;
@@ -143,7 +150,7 @@ foreach($queue as $qn) {
 ///QUEUE details
 echo "<BR><h2>".$lang[$language]['calls_waiting_detail']."</h2><BR>";
 			
-foreach($queue as $qn) {
+foreach($test as $qn) {
 	$position=1;
 	if(!isset($queues[$qn]['calls']))  continue;
 
