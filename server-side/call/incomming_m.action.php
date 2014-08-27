@@ -58,7 +58,6 @@ switch ($action) {
 	case 'get_list' :
 		$count = 		$_REQUEST['count'];
 		$hidden = 		$_REQUEST['hidden'];
-		$c_date		= date('Y-m-d');
 	  	$rResult = mysql_query("select  		incomming_call.id,           
 												incomming_call.id,
 											  	DATE_FORMAT(incomming_call.`date`,'%y-%m-%d %H:%i:%s'),
@@ -67,7 +66,7 @@ switch ($action) {
 	  											incomming_call.content
 								FROM 			incomming_call
 								LEFT JOIN 		info_category  ON incomming_call.information_category_id=info_category.id
-	  							WHERE 			incomming_call.actived = 1 AND date LIKE '%$c_date%'");
+	  							WHERE 			incomming_call.actived = 1");
 	  
 		$data = array(
 				"aaData"	=> array()
