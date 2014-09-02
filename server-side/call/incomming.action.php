@@ -1057,7 +1057,7 @@ function GetPage($res='', $number)
 					<table id="" class="dialog-form-table" width="220px">						
 						<tr>
 							<td style="width: 220px;"><input style="float:left;" type="radio" name="xx" value="1" '.(($res['call_vote']=='1')?"checked":"").'><span style="margin-top:5px; display:block;">პოზიტიური</span></td>
-					  		<td style="width: 220px;"><input style="float:left;" type="radio" name="xx" value="2" '.(($res['call_vote']=='2')?"checked":"").'><span style="margin-top:5px; display:block;"">ნეიტრალური</span></td>
+					  		<td style="width: 220px;"><input style="float:left;" type="radio" name="xx" value="2" '.(($res['call_vote']=='2')?"checked":"").' checked><span style="margin-top:5px; display:block;"">ნეიტრალური</span></td>
 					  	</tr>
 					  	<tr>
 					  		<td style="width: 220px;"><input style="float:left;" type="radio" name="xx" value="3" '.(($res['call_vote']=='3')?"checked":"").'><span style="margin-top:5px; display:block;"">ნეგატიური</span></td>
