@@ -120,9 +120,8 @@ li.openable.active span.icon{
 .side_nav ul a,
 .bar_nav ul,
 .side_nav ul{
-	background: #FFC751; /* old browsers */
-	background: -moz-linear-gradient(top, #d0def0 0%, #C6D4E6 100%); /* firefox */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#d0def0), color-stop(100%,#C6D4E6)); /* webkit */ 
+	background: #F2FBE6; /* old browsers */
+	
 }
 
 .grad_blue:hover,
@@ -130,14 +129,8 @@ li.openable.active span.icon{
 .side_nav ul li:hover > a,
 ul li.openable.active > a{	
 	border: 1px solid #81a4d0;
-	background-color: #F7B139;
-	background-image: -webkit-gradient(linear,50% 0,50% 100%,color-stop(0%,#dbeeff),color-
-	stop(48%,#d0e7ff),color-stop(52%,#bbd2f0),color-stop(100%,#bed6f5));
-	background-image: -webkit-linear-gradient(top,#dbeeff,#d0e7ff 48%,#bbd2f0 52%,#bed6f5);
-	background-image: -moz-linear-gradient(top,#dbeeff,#d0e7ff 48%,#bbd2f0 52%,#bed6f5);
-	background-image: -o-linear-gradient(top,#dbeeff,#d0e7ff 48%,#bbd2f0 52%,#bed6f5);
-	background-image: -ms-linear-gradient(top,#dbeeff,#d0e7ff 48%,#bbd2f0 52%,#bed6f5);
-	background-image: linear-gradient(top,#dbeeff,#d0e7ff 48%,#bbd2f0 52%,#bed6f5);*/
+	background-color: #7EB543 !important;
+
 	
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;

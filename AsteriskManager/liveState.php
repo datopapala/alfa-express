@@ -6,6 +6,7 @@ $time = $time[1] + $time[0];
 $begintime = $time;
 $inuse      = Array();
 $dict_queue = Array();
+$filter_queues = array("2555130","2551441","2470017","2555155");
 
 require("config.php");
 require("asmanager.php");
@@ -47,14 +48,7 @@ $color['ringing']="#d0d01f";
 $color['not in use']="#00ff00";
 $color['paused']="#000000";
 
-$test = array(
-	'0' => "2555130",
-	'1' => "2551441",
-	'2' => "2470017",
-	'3' => "2555155"
-);
-
-foreach($test  as $qn) {
+foreach($filter_queues  as $qn) {
 	if($filter=="" || stristr($qn,$filter)) {
 		$contador=1;
 		if(!isset($queues[$qn]['members'])) continue;
@@ -150,7 +144,7 @@ foreach($test  as $qn) {
 ///QUEUE details
 echo "<BR><h2>".$lang[$language]['calls_waiting_detail']."</h2><BR>";
 			
-foreach($test as $qn) {
+foreach($filter_queues as $qn) {
 	$position=1;
 	if(!isset($queues[$qn]['calls']))  continue;
 

@@ -428,7 +428,7 @@ if(isset($_SESSION['QSTATS']['hideloggedoff'])) {
                             	<input type="text" name="search_id" value="ფილტრი" class="search_init" style=""/>
                             </th>
                             <th>
-                            	<input type="text" name="search_number" value="ფილტრი" class="search_init hidden-input" style=""></th>
+                            	<input style="width: 30px;" type="text" name="search_number" value="" class="search_init" style=""></th>
                             <th>
                                 <input type="text" name="search_date" value="ფილტრი" class="search_init" style="width: 100px;"/>
                             </th>                            
