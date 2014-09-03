@@ -1,6 +1,6 @@
 <?php
 
-mysql_connect('212.72.155.176', 'root', '') or die('kavsh');
+mysql_connect('212.72.155.176', 'root', 'Gl-1114') or die('<br><br>kavsh');
 mysql_select_db('stats') or die ('baza');
 
 //require_once '../../includes/classes/asteriskcore.php';
@@ -152,6 +152,14 @@ while ($row = mysql_fetch_assoc($res1)) {
 		 		</tr>';
 }
 
+if($_REQUEST[ge]){
+	
+	$data = $_REQUEST['list'];
+	
+	echo json_encode($data);
+	
+	return $data;
+}
 ?>
 <head>
 	<style type="text/css">
@@ -214,6 +222,9 @@ while ($row = mysql_fetch_assoc($res1)) {
 			xcolor: #000000;
 			font-weight: bold;
 		}
+		a{
+			cursor: pointer;
+		}
     </style>
 	<script type="text/javascript">
 		var aJaxURL		= "server-side/report/technical.action.php";		//server side folder url
@@ -249,10 +260,68 @@ while ($row = mysql_fetch_assoc($res1)) {
             }
         });
 
-		function go_next(val){
-			alert(val);
+		function go_next(val,par){
+			if(val != undefined){
+				$("#myform_List_"+par+"_from option:selected").remove();
+				$("#myform_List_"+par+"_to").append(new Option(val, val));
+			}
 		}
-		
+
+		function go_previous(val,par){
+			if(val != undefined){
+				$("#myform_List_"+par+"_to option:selected").remove();
+				$("#myform_List_"+par+"_from").append(new Option(val, val));
+			}
+		}
+
+		function go_last(par){
+			var options = $('#myform_List_'+par+'_from option');
+			$("#myform_List_"+par+"_from option").remove();
+			var values = $.map(options ,function(option) {
+			    $("#myform_List_"+par+"_to").append(new Option(option.value, option.value));
+			});
+			
+			
+		}
+
+		function go_first(par){
+			var options = $('#myform_List_'+par+'_to option');
+			$("#myform_List_"+par+"_to option").remove();
+			var values = $.map(options ,function(option) {
+			    $("#myform_List_"+par+"_from").append(new Option(option.value, option.value));
+			});
+		}
+
+		$(document).on("click", "#show_report", function () {
+			paramq 			= new Object();
+			parama 			= new Object();
+			parame 			= new Object();
+			paramm		= "client-side/report/technical.php?ge=ge";
+			var i=0;
+			var r=0;
+			var optionsq = $('#myform_List_Queue_to option');
+			var valuesq = $.map(optionsq ,function(option) {
+				parama[i++]=option.value;
+				parame.queue = parama;
+			})
+			
+			var optionsa = $('#myform_List_Agent_to option');
+			var valuesa = $.map(optionsa ,function(option) {
+				paramq[r++]=option.value;
+				parame.agent = paramq;
+			})
+			
+			parame.start_time = $('#start_time').val();
+			parame.end_time = $('#end_time').val();
+			
+			$.ajax({
+		        url: paramm,
+			    data: parame,
+		        success: function(data) {
+						
+			    }
+		    });
+        });
     </script>
     
 </head>
@@ -270,6 +339,7 @@ while ($row = mysql_fetch_assoc($res1)) {
 			<div style="width: 48%; float:left;">
 			<span>აირჩიე რიგი</span>
 			<hr>
+			
 			    <table border="0" cellspacing="0" cellpadding="8">
 					<tbody>
 					<tr>
@@ -277,16 +347,16 @@ while ($row = mysql_fetch_assoc($res1)) {
 							ხელმისაწვდომია<br>
 						    <select name="List_Queue_available" multiple="multiple" id="myform_List_Queue_from" size="10" style="height: 100px;width: 125px;" >
 								
-							    <option value="'2470017'">2470017</option>
+							    <option value="2470017">2470017</option>
 						    </select>
 						</td>
 						<td align="left">
-							<a href="#" onclick="go_next($('#myform_List_Queue_from option:selected').val())"><img src="media/images/go-next.png" width="16" height="16" border="0"></a>
-							<a href="#" onclick="List_move_around('left', false,'queues'); return false;"><img src="media/images/go-previous.png" width="16" height="16" border="0"></a>
+							<a onclick="go_next($('#myform_List_Queue_from option:selected').val(),'Queue')"><img src="media/images/go-next.png" width="16" height="16" border="0"></a>
+							<a onclick="go_previous($('#myform_List_Queue_to option:selected').val(),'Queue')"><img src="media/images/go-previous.png" width="16" height="16" border="0"></a>
 							<br>
 							<br>
-							<a href="#" onclick="List_move_around('right', true,'queues'); return false;"><img src="media/images/go-last.png" width="16" height="16" border="0"></a>
-							<a href="#" onclick="List_move_around('left', true,'queues'); return false;"><img src="media/images/go-first.png" width="16" height="16" border="0"></a>
+							<a  onclick="go_last('Queue')"><img src="media/images/go-last.png" width="16" height="16" border="0"></a>
+							<a  onclick="go_first('Queue')"><img src="media/images/go-first.png" width="16" height="16" border="0"></a>
 						</td>
 						<td>
 							არჩეული<br>
@@ -306,19 +376,19 @@ while ($row = mysql_fetch_assoc($res1)) {
 					   <td>
 						ხელმისაწვდომია<br>
 					    <select size="10" name="List_Agent_available" multiple="multiple" id="myform_List_Agent_from" style="height: 100px;width: 125px;">
-							<option value="'ALF1'">ALF1</option>
-							<option value="'ALF2'">ALF2</option>
-							<option value="'ALF3'">ALF3</option>
-							<option value="'ALF4'">ALF4</option>    
+							<option value="ALF1">ALF1</option>
+							<option value="ALF2">ALF2</option>
+							<option value="ALF3">ALF3</option>
+							<option value="ALF4">ALF4</option>    
 						</select>
 					</td>
 					<td align="left">
-							<a href="#" onclick="List_move_around('right',false,'agents'); return false;"><img src="media/images/go-next.png" width="16" height="16" border="0"></a>
-							<a href="#" onclick="List_move_around('left', false,'agents'); return false;"><img src="media/images/go-previous.png" width="16" height="16" border="0"></a>
+							<a  onclick="go_next($('#myform_List_Agent_from option:selected').val(),'Agent')"><img src="media/images/go-next.png" width="16" height="16" border="0"></a>
+							<a  onclick="go_previous($('#myform_List_Agent_to option:selected').val(),'Agent')"><img src="media/images/go-previous.png" width="16" height="16" border="0"></a>
 							<br>
 							<br>
-							<a href="#" onclick="List_move_around('right', true,'agents'); return false;"><img src="media/images/go-last.png" width="16" height="16" border="0"></a>
-							<a href="#" onclick="List_move_around('left', true,'agents'); return false;"><img src="media/images/go-first.png" width="16" height="16" border="0"></a>
+							<a  onclick="go_last('Agent')"><img src="media/images/go-last.png" width="16" height="16" border="0"></a>
+							<a  onclick="go_first('Agent')"><img src="media/images/go-first.png" width="16" height="16" border="0"></a>
 					</td>
 					<td>
 						არჩეული<br>
@@ -343,9 +413,11 @@ while ($row = mysql_fetch_assoc($res1)) {
 	            		<input type="text" name="search_end" id="end_time" class="inpt right" />
             		</div>	
             	</div>
-				<button style="position: absolute; margin-top: 50px; " id="show_report">რეპორტების ჩვენება</button>
-				 
-                <table width="100%" border="0" cellpadding="0" cellspacing="0" style="margin-top: 100px">
+            	
+            		<input style="margin-left: 15px;" id="show_report" name="show_report" type="submit" value="რეპორტების ჩვენება">
+            	
+				
+                <table width="100%" border="0" cellpadding="0" cellspacing="0" style="margin-top: 50px">
                 <caption>ტექნიკური ინფორმაცია</caption>
                 <tbody>
                 <tr>
@@ -438,14 +510,14 @@ while ($row = mysql_fetch_assoc($res1)) {
         <caption>ნაპასუხები ზარები ოპერატორების მიხედვით</caption>
             <thead>
             <tr>
-                  <th><a href="#" class="sortheader" onclick="ts_resortTable(this, 0);return false;">ოპერატორი<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-                  <th><a href="#" class="sortheader" onclick="ts_resortTable(this, 1);return false;">ზარები<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-                  <th><a href="#" class="sortheader" onclick="ts_resortTable(this, 2);return false;">% ზარები<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-                  <th><a href="#" class="sortheader" onclick="ts_resortTable(this, 3);return false;">ზარის დრო<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-                  <th><a href="#" class="sortheader" onclick="ts_resortTable(this, 4);return false;">% ზარის დრო<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-                  <th><a href="#" class="sortheader" onclick="ts_resortTable(this, 5);return false;">საშ. ზარის ხანგძლივობა<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-                  <th><a href="#" class="sortheader" onclick="ts_resortTable(this, 6);return false;">ლოდინის დრო<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-                  <th><a href="#" class="sortheader" onclick="ts_resortTable(this, 7);return false;">საშ. ლოდისნის ხანგძლივობა<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
+                  <th><a  class="sortheader" onclick="ts_resortTable(this, 0);return false;">ოპერატორი<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
+                  <th><a  class="sortheader" onclick="ts_resortTable(this, 1);return false;">ზარები<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
+                  <th><a  class="sortheader" onclick="ts_resortTable(this, 2);return false;">% ზარები<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
+                  <th><a  class="sortheader" onclick="ts_resortTable(this, 3);return false;">ზარის დრო<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
+                  <th><a  class="sortheader" onclick="ts_resortTable(this, 4);return false;">% ზარის დრო<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
+                  <th><a  class="sortheader" onclick="ts_resortTable(this, 5);return false;">საშ. ზარის ხანგძლივობა<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
+                  <th><a  class="sortheader" onclick="ts_resortTable(this, 6);return false;">ლოდინის დრო<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
+                  <th><a  class="sortheader" onclick="ts_resortTable(this, 7);return false;">საშ. ლოდისნის ხანგძლივობა<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
             </tr>
             </thead>
             <tbody>
@@ -490,9 +562,9 @@ while ($row = mysql_fetch_assoc($res1)) {
                 <table width="99%" cellpadding="1" cellspacing="1" border="0" class="sortable" id="table3">
                 <thead>
                 <tr> 
-                       <th><a href="#" class="sortheader" onclick="ts_resortTable(this, 0);return false;">რიგი<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-                    <th><a href="#" class="sortheader" onclick="ts_resortTable(this, 1);return false;">სულ<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-                    <th><a href="#" class="sortheader" onclick="ts_resortTable(this, 2);return false;">%<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
+                       <th><a  class="sortheader" onclick="ts_resortTable(this, 0);return false;">რიგი<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
+                    <th><a  class="sortheader" onclick="ts_resortTable(this, 1);return false;">სულ<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
+                    <th><a  class="sortheader" onclick="ts_resortTable(this, 2);return false;">%<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -514,9 +586,9 @@ while ($row = mysql_fetch_assoc($res1)) {
                 <table width="50%" cellpadding="1" cellspacing="1" border="0" class="sortable" id="table4">
                 <thead>
                 <tr>
-                    <th><a href="#" class="sortheader" onclick="ts_resortTable(this, 0);return false;">მიზეზი<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-                    <th><a href="#" class="sortheader" onclick="ts_resortTable(this, 1);return false;">სულ<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-                    <th><a href="#" class="sortheader" onclick="ts_resortTable(this, 2);return false;">სულ<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
+                    <th><a  class="sortheader" onclick="ts_resortTable(this, 0);return false;">მიზეზი<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
+                    <th><a  class="sortheader" onclick="ts_resortTable(this, 1);return false;">სულ<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
+                    <th><a  class="sortheader" onclick="ts_resortTable(this, 2);return false;">სულ<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -720,15 +792,15 @@ while ($row = mysql_fetch_assoc($res1)) {
 			<caption>ზარის განაწილება დღეების მიხედვით</caption>
 				<thead>
 				<tr>
-					<th><a href="#" class="sortheader" onclick="ts_resortTable(this, 0);return false;">თარირი<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-					<th><a href="#" class="sortheader" onclick="ts_resortTable(this, 1);return false;">ნაპასუხები<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-					<th><a href="#" class="sortheader" onclick="ts_resortTable(this, 2);return false;">% ნაპასუხები<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-					<th><a href="#" class="sortheader" onclick="ts_resortTable(this, 3);return false;">უპასუხო<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-					<th><a href="#" class="sortheader" onclick="ts_resortTable(this, 4);return false;">% უპასუხო<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-					<th><a href="#" class="sortheader" onclick="ts_resortTable(this, 5);return false;">საშ. ხანგძლივობა<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-					<th><a href="#" class="sortheader" onclick="ts_resortTable(this, 6);return false;">საშ. ლოდინის ხანგძლივობა<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-					<th><a href="#" class="sortheader" onclick="ts_resortTable(this, 7);return false;">შესვლა<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-					<th><a href="#" class="sortheader" onclick="ts_resortTable(this, 8);return false;">გასვლა<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
+					<th><a  class="sortheader" onclick="ts_resortTable(this, 0);return false;">თარირი<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
+					<th><a  class="sortheader" onclick="ts_resortTable(this, 1);return false;">ნაპასუხები<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
+					<th><a  class="sortheader" onclick="ts_resortTable(this, 2);return false;">% ნაპასუხები<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
+					<th><a  class="sortheader" onclick="ts_resortTable(this, 3);return false;">უპასუხო<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
+					<th><a  class="sortheader" onclick="ts_resortTable(this, 4);return false;">% უპასუხო<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
+					<th><a  class="sortheader" onclick="ts_resortTable(this, 5);return false;">საშ. ხანგძლივობა<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
+					<th><a  class="sortheader" onclick="ts_resortTable(this, 6);return false;">საშ. ლოდინის ხანგძლივობა<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
+					<th><a  class="sortheader" onclick="ts_resortTable(this, 7);return false;">შესვლა<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
+					<th><a  class="sortheader" onclick="ts_resortTable(this, 8);return false;">გასვლა<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
 				</tr>
 				</thead>
 				<tbody>
@@ -750,15 +822,15 @@ while ($row = mysql_fetch_assoc($res1)) {
 			<caption>ზარის განაწილება საათების მიხედვით</caption>
 				<thead>
 				<tr>
-                    <th><a href="#" class="sortheader" onclick="ts_resortTable(this, 0);return false;">საათი<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-                    <th><a href="#" class="sortheader" onclick="ts_resortTable(this, 1);return false;">ნაპასუხები<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-                    <th><a href="#" class="sortheader" onclick="ts_resortTable(this, 2);return false;">% ნაპასუხები<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-                    <th><a href="#" class="sortheader" onclick="ts_resortTable(this, 3);return false;">უპასუხო<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-                    <th><a href="#" class="sortheader" onclick="ts_resortTable(this, 4);return false;">% უპასუხო<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-                    <th><a href="#" class="sortheader" onclick="ts_resortTable(this, 5);return false;">საშ. ხანგძლივობა<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-                    <th><a href="#" class="sortheader" onclick="ts_resortTable(this, 6);return false;">საშ. ლოდინის ხანგძლივობა<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-                    <th><a href="#" class="sortheader" onclick="ts_resortTable(this, 7);return false;">შესვლა<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-                    <th><a href="#" class="sortheader" onclick="ts_resortTable(this, 8);return false;">გასვლა<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
+                    <th><a  class="sortheader" onclick="ts_resortTable(this, 0);return false;">საათი<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
+                    <th><a  class="sortheader" onclick="ts_resortTable(this, 1);return false;">ნაპასუხები<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
+                    <th><a  class="sortheader" onclick="ts_resortTable(this, 2);return false;">% ნაპასუხები<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
+                    <th><a  class="sortheader" onclick="ts_resortTable(this, 3);return false;">უპასუხო<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
+                    <th><a  class="sortheader" onclick="ts_resortTable(this, 4);return false;">% უპასუხო<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
+                    <th><a  class="sortheader" onclick="ts_resortTable(this, 5);return false;">საშ. ხანგძლივობა<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
+                    <th><a  class="sortheader" onclick="ts_resortTable(this, 6);return false;">საშ. ლოდინის ხანგძლივობა<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
+                    <th><a  class="sortheader" onclick="ts_resortTable(this, 7);return false;">შესვლა<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
+                    <th><a  class="sortheader" onclick="ts_resortTable(this, 8);return false;">გასვლა<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
 				</tr>
 				</thead>
 				<tbody>
@@ -1033,15 +1105,15 @@ while ($row = mysql_fetch_assoc($res1)) {
 			<caption>ზარის განაწილება კვირების მიხედვით</caption>
 				<thead>
 				<tr>
-                    <th><a href="#" class="sortheader" onclick="ts_resortTable(this, 0);return false;">დღე<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-                    <th><a href="#" class="sortheader" onclick="ts_resortTable(this, 1);return false;">ნაპასუხები<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-                    <th><a href="#" class="sortheader" onclick="ts_resortTable(this, 2);return false;">% ნაპასუხები<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-                    <th><a href="#" class="sortheader" onclick="ts_resortTable(this, 3);return false;">უპასუხო<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-                    <th><a href="#" class="sortheader" onclick="ts_resortTable(this, 4);return false;">% უპასუხო<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-                    <th><a href="#" class="sortheader" onclick="ts_resortTable(this, 5);return false;">საშ. ხანგძლივობა<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-                    <th><a href="#" class="sortheader" onclick="ts_resortTable(this, 6);return false;">საშ. ლოდინის ხანგძლივობა<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-                    <th><a href="#" class="sortheader" onclick="ts_resortTable(this, 7);return false;">შესვლა<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-                    <th><a href="#" class="sortheader" onclick="ts_resortTable(this, 8);return false;">გასვლა<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
+                    <th><a  class="sortheader" onclick="ts_resortTable(this, 0);return false;">დღე<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
+                    <th><a  class="sortheader" onclick="ts_resortTable(this, 1);return false;">ნაპასუხები<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
+                    <th><a  class="sortheader" onclick="ts_resortTable(this, 2);return false;">% ნაპასუხები<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
+                    <th><a  class="sortheader" onclick="ts_resortTable(this, 3);return false;">უპასუხო<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
+                    <th><a  class="sortheader" onclick="ts_resortTable(this, 4);return false;">% უპასუხო<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
+                    <th><a  class="sortheader" onclick="ts_resortTable(this, 5);return false;">საშ. ხანგძლივობა<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
+                    <th><a  class="sortheader" onclick="ts_resortTable(this, 6);return false;">საშ. ლოდინის ხანგძლივობა<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
+                    <th><a  class="sortheader" onclick="ts_resortTable(this, 7);return false;">შესვლა<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
+                    <th><a  class="sortheader" onclick="ts_resortTable(this, 8);return false;">გასვლა<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
 				</tr>
 				</thead>
 				<tbody>
