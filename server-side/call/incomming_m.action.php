@@ -1080,22 +1080,6 @@ function GetPage($res='', $number)
 						</tr>
 					</table>
 				</fieldset>
-				<fieldset style="width:370px; float:left;">
-			    	<legend>მომართვის შინაარსი</legend>
-					<table id="" class="dialog-form-table" width="350px">		
-						<tr>
-							<td style="width: 370px;"><select style="width: 368px;" id="content_id" class="idls object">'. Getcontent($res['content_id']).'</select></td>
-						</tr>
-					</table>
-				</fieldset>
-				<fieldset style="width:350px; float:left; margin-left:10px;">
-			    	<legend>პროდუქტი</legend>
-					<table id="" class="dialog-form-table" width="350px">		
-						<tr>
-							<td style="width: 350px;"><select style="width: 350px;" id="product_id" class="idls object">'. Getproduct($res['product_id']).'</select></td>
-						</tr>
-					</table>
-				</fieldset>
 				<fieldset style="width:755px; float:left;">
 			    	<legend>გადამისამართება</legend>
 					<table id="" class="dialog-form-table" width="230px">		
