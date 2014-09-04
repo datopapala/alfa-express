@@ -1,7 +1,7 @@
 <?php
 
 mysql_close();
-$conn = mysql_connect('212.72.155.176', 'root', '');
+$conn = mysql_connect('212.72.155.176', 'root', 'Gl-1114');
 mysql_select_db('stats');
 
 
