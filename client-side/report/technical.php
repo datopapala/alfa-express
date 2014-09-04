@@ -173,7 +173,8 @@
 					$("#totals").html(data.page.totals);
 					$("#call_distribution_per_day").html(data.page.call_distribution_per_day);
 					$("#call_distribution_per_hour").html(data.page.call_distribution_per_hour);
-					$("#call_distribution_per_day_of_week").html(data.page.call_distribution_per_day_of_week);				
+					$("#call_distribution_per_day_of_week").html(data.page.call_distribution_per_day_of_week);
+					$("#service_level").html(data.page.service_level);	
 			    }
 		    });
         });
@@ -379,6 +380,31 @@
                 
 			</tbody>
         </table>
+        <br>
+        <table width="99%" cellpadding="3" cellspacing="3" border="0">
+            <caption>მომსახურების დონე(Service Level)</caption>
+            <thead>
+            <tr>
+            <td valign="top" width="50%" bgcolor="#fffdf3">
+                <table width="99%" cellpadding="1" cellspacing="1" border="0" class="sortable" id="table3">
+                <thead>
+                <tr> 
+                    <th><a  class="sortheader">პასუხი<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
+                    <th><a  class="sortheader">რაოდენობა<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
+                    <th><a  class="sortheader">დელტა<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
+                    <th><a  class="sortheader">%<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
+                </tr>
+                </thead>
+                <tbody id="service_level">
+                
+              </tbody>
+              </table>
+            </td>
+            <td valign="top" width="50%" align="center" bgcolor="#fffdf3">
+                            </td>
+            </tr>
+            </thead>
+            </table>
         <br>
         <table width="99%" cellpadding="3" cellspacing="3" border="0">
             <caption>ნაპასუხები ზარები რიგის მიხედვით</caption>
