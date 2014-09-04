@@ -12,7 +12,7 @@ class Authorization {
 	private  $date;
 	private  $ip;
 	
-	private  $time = 36000;
+	private  $time = 360000;
 	
 	
 	/**

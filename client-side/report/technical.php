@@ -278,9 +278,9 @@
                 <tr>
                 	<th></th>
                     <th>სულ</th>
-                    <th>ნაპასუხები</th>
-                    <th>უპასუხო</th>
-                    <th>დამუშავებული *</th>
+                    <th style="background: #538DD5;">ნაპასუხები</th>
+                    <th style="background: #FA3A3A;">უპასუხო</th>
+                    <th style="background: #76933C;">დამუშავებული *</th>
                     <th>ნაპასუხებია</th>
                     <th>უპასუხოა</th>
                     <th>დამუშავებულია</th>

@@ -49,7 +49,7 @@ class sql_db {
 	
 }
 
-if((time() - $_SESSION['lifetime'] > 36000) && $_SERVER['QUERY_STRING'] && strpos($_SERVER[REQUEST_URI],'worker') === false){
+if((time() - $_SESSION['lifetime'] > 360000) && $_SERVER['QUERY_STRING'] && strpos($_SERVER[REQUEST_URI],'worker') === false){
 	
 	session_start();
 	session_destroy();
@@ -58,7 +58,7 @@ if((time() - $_SESSION['lifetime'] > 36000) && $_SERVER['QUERY_STRING'] && strpo
 	header('LOCATION: index.php');	
 	unset($_SERVER['QUERY_STRING']);
 	
-}elseif((time() - $_SESSION['lifetime'] > 36000) && isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest' && strpos($_SERVER[REQUEST_URI],'worker') === false){
+}elseif((time() - $_SESSION['lifetime'] > 360000) && isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest' && strpos($_SERVER[REQUEST_URI],'worker') === false){
 	
 	session_start();
 	session_destroy();
