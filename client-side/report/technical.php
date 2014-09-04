@@ -167,7 +167,13 @@
 					$("#answer_call_info").html(data.page.answer_call_info);
 					$("#answer_call_by_queue").html(data.page.answer_call_by_queue);
 					$("#disconnection_cause").html(data.page.disconnection_cause);
-					$("#unanswer_call").html(data.page.unanswer_call);					
+					$("#unanswer_call").html(data.page.unanswer_call);
+					$("#disconnection_cause_unanswer").html(data.page.disconnection_cause_unanswer);
+					$("#unanswered_calls_by_queue").html(data.page.unanswered_calls_by_queue);
+					$("#totals").html(data.page.totals);
+					$("#call_distribution_per_day").html(data.page.call_distribution_per_day);
+					$("#call_distribution_per_hour").html(data.page.call_distribution_per_hour);
+					$("#call_distribution_per_day_of_week").html(data.page.call_distribution_per_day_of_week);				
 			    }
 		    });
         });
@@ -500,21 +506,17 @@
 					<th>სულ</th>
 					<th>%</th>
 				</tr>
-				</thead>
-				<tbody>
+				</thead >
+				<tbody id="disconnection_cause_unanswer">
                 <tr> 
                   <td>აბონენტმა გათიშა</td>
-			      <td>78 calls</td>
-			      <td>
-					  100.00 
-                   %</td>
+			      <td></td>
+			      <td></td>
 		        </tr>
 			    <tr> 
                   <td>დრო ამოიწურა</td>
-			      <td>0 calls</td>
-			      <td>
-					  0.00 
-					%</td>
+			      <td></td>
+			      <td></td>
 		        </tr>
 				</tbody>
 			  </table>

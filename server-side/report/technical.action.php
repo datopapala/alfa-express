@@ -17,7 +17,13 @@ $data		= array('page' => array(
 										'answer_call_info' => '',
 										'answer_call_by_queue' => '',
 										'disconnection_cause' => '',
-										'unanswer_call' => ''
+										'unanswer_call' => '',
+										'disconnection_cause_unanswer' => '',
+										'unanswered_calls_by_queue' => '',
+										'totals' => '',
+										'call_distribution_per_day' => '',
+										'call_distribution_per_hour' => '',
+										'call_distribution_per_day_of_week' => ''
 								));
 
 	
@@ -78,6 +84,42 @@ $res6 = mysql_query("SELECT DISTINCT (SELECT count(*) FROM queue_stats AS qs, qn
 					qs.qevent = ac.event_id AND DATE(qs.datetime) = CURDATE()
 					AND q.queue IN ('2470017','NONE') AND ac.event IN ('ABANDON', 'EXITWITHTIMEOUT')) as unanswer, CURDATE() as date
 					FROM queue_stats");
+
+$res7 = mysql_query("SELECT	COUNT(*) as counter
+					FROM	queue_stats AS qs,
+							qname AS q,
+							qagent AS ag,
+							qevent AS ac
+					WHERE qs.qname = q.qname_id AND qs.qagent = ag.agent_id AND
+					qs.qevent = ac.event_id AND DATE(qs.datetime) = CURDATE() AND
+					q.queue IN ('2470017') AND ag.agent in ('ALF1','ALF2','ALF3','ALF4') AND ac.event IN ('COMPLETECALLER') ORDER BY ag.agent");
+
+$res8 = mysql_query("SELECT	COUNT(*) as counter
+					FROM	queue_stats AS qs,
+							qname AS q,
+							qagent AS ag,
+							qevent AS ac
+					WHERE qs.qname = q.qname_id AND qs.qagent = ag.agent_id AND
+					qs.qevent = ac.event_id AND DATE(qs.datetime) = CURDATE() AND
+					q.queue IN ('2470017') AND ag.agent in ('ALF1','ALF2','ALF3','ALF4') AND ac.event IN ('COMPLETECALLER') ORDER BY ag.agent");
+
+$res9 = mysql_query("SELECT	COUNT(*) as counter
+					FROM	queue_stats AS qs,
+							qname AS q,
+							qagent AS ag,
+							qevent AS ac
+					WHERE qs.qname = q.qname_id AND qs.qagent = ag.agent_id AND
+					qs.qevent = ac.event_id AND DATE(qs.datetime) = CURDATE() AND
+					q.queue IN ('2470017') AND ag.agent in ('ALF1','ALF2','ALF3','ALF4') AND ac.event IN ('COMPLETECALLER') ORDER BY ag.agent");
+
+$res10 = mysql_query("SELECT	COUNT(*) as counter
+					FROM	queue_stats AS qs,
+							qname AS q,
+							qagent AS ag,
+							qevent AS ac
+					WHERE qs.qname = q.qname_id AND qs.qagent = ag.agent_id AND
+					qs.qevent = ac.event_id AND DATE(qs.datetime) = CURDATE() AND
+					q.queue IN ('2470017') AND ag.agent in ('ALF1','ALF2','ALF3','ALF4') AND ac.event IN ('COMPLETECALLER') ORDER BY ag.agent");
 
 
 while($row = mysql_fetch_assoc($res)){
@@ -223,96 +265,149 @@ while($row = mysql_fetch_assoc($res6)){
 
 }
 
+while($row = mysql_fetch_assoc($res7)){
 
-// $disconect = '';
-// while ($row = mysql_fetch_assoc($res2)) {
-// 	if ($row[id]%2 ) {
-// 		$odd = 'class="odd"';
-// 	}
+	$data['page']['disconnection_cause_unanswer'] = '
 
-// 	$disconect .= '<tr '. $odd .'>
-// 			 		<th style="width: 80px;">ოპერატორი</th>
-// 		 			<th style="width: 80px;">'.$row[counter].'</th>
-// 		 			<th style="width: 80px;">0</th>
-// 		 		</tr>';
-// }
+                  <tr> 
+                  <td>აბონენტმა გათიშა</td>
+			      <td>'.$row[counter].' ზარი</td>
+			      <td>'.$row[counter].' %</td>
+		        </tr>
+			    <tr> 
+                  <td>დრო ამოიწურა</td>
+			      <td>'.$row[counter].' ზარი</td>
+			      <td>'.$row[counter].' %</td>
+		        </tr>
 
-// $distribution  = '';
-// while ($row = mysql_fetch_assoc($res6)) {
-// 	if ($row[id]%2 ) {
-// 		$odd = 'class="odd"';
-// 	}
+							';
 
-// 	$distribution .= '<tr '. $odd .'>
-// 			 		<th style="width: 80px;">'.$row[date].'</th>
-// 		 			<th style="width: 80px;">'.$row[answer].'</th>
-// 		 			<th style="width: 80px;">'.$row[unanswer].'</th>
-// 		 		</tr>';
-// }
+}
 
-// $disconect1 = '';
-// while ($row = mysql_fetch_assoc($res3)) {
-// 	if ($row[id]%2 ) {
-// 		$odd = 'class="odd"';
-// 	}
+while($row = mysql_fetch_assoc($res8)){
 
-// 	$disconect1 .= '<tr '. $odd .'>
-// 			 		<th style="width: 80px;">მომხმარებელი</th>
-// 		 			<th style="width: 80px;">'.$row[counter].'</th>
-// 		 			<th style="width: 80px;">0</th>
-// 		 		</tr>';
-// }
+	$data['page']['unanswered_calls_by_queue'] = '
 
-// $unanswer = '';
-// while ($row = mysql_fetch_assoc($res4)) {
-// 	if ($row[id]%2 ) {
-// 		$odd = 'class="odd"';
-// 	}
+                   	<tr>
+					<td>უპასუხო ზარების რაოდენობა:</td>
+					<td>'.$row[counter].' ზარი</td>
+					</tr>
+					<tr>
+					<td>ლოდინის საშ. დრო კავშირის გაწყვეტამდე:</td>
+					<td>'.$row[counter].' წამი</td>
+					</tr>
+					<tr>
+					<td>საშ. რიგში პოზიცია კავშირის გაწყვეტამდე:</td>
+					<td>'.$row[counter].'</td>
+					</tr>
+					<tr>
+					<td>საშ. საწყისი პოზიცია რიგში:</td>
+					<td>'.$row[counter].'</td>
+					</tr>
 
-// 	$unanswer .= '<tr '. $odd .'>
-// 			 		<th style="width: 80px;">'.$row[qname].'</th>
-// 		 			<th style="width: 80px;">'.$row[unanswer].'</th>
-// 		 			<th style="width: 80px;">0</th>
-// 		 		</tr>';
-// }
+							';
 
-// $unanswer1 = '';
-// while ($row = mysql_fetch_assoc($res5)) {
-// 	if ($row[id]%2 ) {
-// 		$odd = 'class="odd"';
-// 	}
+}
 
-// 	$unanswer1 .= '<tr '. $odd .'>
-// 			 		<th style="width: 80px;">User Abandon</th>
-// 		 			<th style="width: 80px;">'.$row[unanswer].'</th>
-// 		 			<th style="width: 80px;">0</th>
-// 		 		</tr>';
-// }
+while($row = mysql_fetch_assoc($res9)){
 
-// $agent = '';
-// while ($row = mysql_fetch_assoc($res1)) {
-// 	if ($row[id]%2 ) {
-// 		$odd = 'class="odd"';
-// 	}
+	$data['page']['totals'] = '
 
-// 	$agent .= '
-// 			<tr>
-// 				<td>ALF1</td>
-// 				<td>32</td>
-// 				<td>15.24 %</td>
-// 				<td>78:35 min</td>
-// 				<td>15.33 %</td>
-// 				<td>2:27 min</td>
-// 				<td>1260 secs</td>
-// 				<td>39.38 secs</td>
-// 			</tr>
-// 			<tr '. $odd .'>
-// 			 		<th style="width: 80px;">'.$row[agent].'</th>
-// 		 			<th style="width: 80px;">'.$row[quant].'</th>
-// 		 			<th style="width: 80px;">'.$row[percent].'</th>
-// 		 		</tr>';
-// }
+                   	<tr>
+					<td>უპასუხო ზარების რაოდენობა:</td>
+					<td>'.$row[counter].' ზარი</td>
+					</tr>
+					<tr>
+					<td>ლოდინის საშ. დრო კავშირის გაწყვეტამდე:</td>
+					<td>'.$row[counter].' წამი</td>
+					</tr>
+					<tr>
+					<td>საშ. რიგში პოზიცია კავშირის გაწყვეტამდე:</td>
+					<td>'.$row[counter].'</td>
+					</tr>
+					<tr>
+					<td>საშ. საწყისი პოზიცია რიგში:</td>
+					<td>'.$row[counter].'</td>
+					</tr>
 
+							';
+
+}
+
+while($row = mysql_fetch_assoc($res10)){
+
+	$data['page']['call_distribution_per_day'] = '
+
+                   	<tr>
+					<td>უპასუხო ზარების რაოდენობა:</td>
+					<td>'.$row[counter].' ზარი</td>
+					</tr>
+					<tr>
+					<td>ლოდინის საშ. დრო კავშირის გაწყვეტამდე:</td>
+					<td>'.$row[counter].' წამი</td>
+					</tr>
+					<tr>
+					<td>საშ. რიგში პოზიცია კავშირის გაწყვეტამდე:</td>
+					<td>'.$row[counter].'</td>
+					</tr>
+					<tr>
+					<td>საშ. საწყისი პოზიცია რიგში:</td>
+					<td>'.$row[counter].'</td>
+					</tr>
+
+							';
+
+}
+
+while($row = mysql_fetch_assoc($res11)){
+
+	$data['page']['call_distribution_per_hour'] = '
+
+                   	<tr>
+					<td>უპასუხო ზარების რაოდენობა:</td>
+					<td>'.$row[counter].' ზარი</td>
+					</tr>
+					<tr>
+					<td>ლოდინის საშ. დრო კავშირის გაწყვეტამდე:</td>
+					<td>'.$row[counter].' წამი</td>
+					</tr>
+					<tr>
+					<td>საშ. რიგში პოზიცია კავშირის გაწყვეტამდე:</td>
+					<td>'.$row[counter].'</td>
+					</tr>
+					<tr>
+					<td>საშ. საწყისი პოზიცია რიგში:</td>
+					<td>'.$row[counter].'</td>
+					</tr>
+
+							';
+
+}
+
+while($row = mysql_fetch_assoc($res12)){
+
+	$data['page']['call_distribution_per_day_of_week'] = '
+
+                   	<tr>
+					<td>უპასუხო ზარების რაოდენობა:</td>
+					<td>'.$row[counter].' ზარი</td>
+					</tr>
+					<tr>
+					<td>ლოდინის საშ. დრო კავშირის გაწყვეტამდე:</td>
+					<td>'.$row[counter].' წამი</td>
+					</tr>
+					<tr>
+					<td>საშ. რიგში პოზიცია კავშირის გაწყვეტამდე:</td>
+					<td>'.$row[counter].'</td>
+					</tr>
+					<tr>
+					<td>საშ. საწყისი პოზიცია რიგში:</td>
+					<td>'.$row[counter].'</td>
+					</tr>
+
+							';
+
+}
 
 echo json_encode($data);
 
