@@ -121,6 +121,24 @@ $res10 = mysql_query("SELECT	COUNT(*) as counter
 					qs.qevent = ac.event_id AND DATE(qs.datetime) = CURDATE() AND
 					q.queue IN ('2470017') AND ag.agent in ('ALF1','ALF2','ALF3','ALF4') AND ac.event IN ('COMPLETECALLER') ORDER BY ag.agent");
 
+$res11 = mysql_query("SELECT	COUNT(*) as counter
+					FROM	queue_stats AS qs,
+							qname AS q,
+							qagent AS ag,
+							qevent AS ac
+					WHERE qs.qname = q.qname_id AND qs.qagent = ag.agent_id AND
+					qs.qevent = ac.event_id AND DATE(qs.datetime) = CURDATE() AND
+					q.queue IN ('2470017') AND ag.agent in ('ALF1','ALF2','ALF3','ALF4') AND ac.event IN ('COMPLETECALLER') ORDER BY ag.agent");
+
+$res12 = mysql_query("SELECT	COUNT(*) as counter
+					FROM	queue_stats AS qs,
+							qname AS q,
+							qagent AS ag,
+							qevent AS ac
+					WHERE qs.qname = q.qname_id AND qs.qagent = ag.agent_id AND
+					qs.qevent = ac.event_id AND DATE(qs.datetime) = CURDATE() AND
+					q.queue IN ('2470017') AND ag.agent in ('ALF1','ALF2','ALF3','ALF4') AND ac.event IN ('COMPLETECALLER') ORDER BY ag.agent");
+
 
 while($row = mysql_fetch_assoc($res)){
 
@@ -288,22 +306,7 @@ while($row = mysql_fetch_assoc($res8)){
 
 	$data['page']['unanswered_calls_by_queue'] = '
 
-                   	<tr>
-					<td>უპასუხო ზარების რაოდენობა:</td>
-					<td>'.$row[counter].' ზარი</td>
-					</tr>
-					<tr>
-					<td>ლოდინის საშ. დრო კავშირის გაწყვეტამდე:</td>
-					<td>'.$row[counter].' წამი</td>
-					</tr>
-					<tr>
-					<td>საშ. რიგში პოზიცია კავშირის გაწყვეტამდე:</td>
-					<td>'.$row[counter].'</td>
-					</tr>
-					<tr>
-					<td>საშ. საწყისი პოზიცია რიგში:</td>
-					<td>'.$row[counter].'</td>
-					</tr>
+                   	<tr><td>'.$row[counter].'</td><td>'.$row[counter].' ზარი</td><td>'.$row[counter].' %</td></tr>
 
 							';
 
@@ -313,22 +316,22 @@ while($row = mysql_fetch_assoc($res9)){
 
 	$data['page']['totals'] = '
 
-                   	<tr>
-					<td>უპასუხო ზარების რაოდენობა:</td>
-					<td>'.$row[counter].' ზარი</td>
-					</tr>
-					<tr>
-					<td>ლოდინის საშ. დრო კავშირის გაწყვეტამდე:</td>
-					<td>'.$row[counter].' წამი</td>
-					</tr>
-					<tr>
-					<td>საშ. რიგში პოზიცია კავშირის გაწყვეტამდე:</td>
-					<td>'.$row[counter].'</td>
-					</tr>
-					<tr>
-					<td>საშ. საწყისი პოზიცია რიგში:</td>
-					<td>'.$row[counter].'</td>
-					</tr>
+                   	<tr> 
+                  <td>ნაპასუხები ზარების რაოდენობა:</td>
+		          <td>'.$row[counter].' ზარი</td>
+	            </tr>
+                <tr>
+                  <td>უპასუხო ზარების რაოდენობა:</td>
+                  <td>'.$row[counter].' ზარი</td>
+                </tr>
+		        <tr>
+                  <td>ოპერატორი შევიდა:</td>
+		          <td>'.$row[counter].'</td>
+	            </tr>
+                <tr>
+                  <td>ოპერატორი გავიდა:</td>
+                  <td>'.$row[counter].'</td>
+                </tr>
 
 							';
 
@@ -338,20 +341,15 @@ while($row = mysql_fetch_assoc($res10)){
 
 	$data['page']['call_distribution_per_day'] = '
 
-                   	<tr>
-					<td>უპასუხო ზარების რაოდენობა:</td>
-					<td>'.$row[counter].' ზარი</td>
-					</tr>
-					<tr>
-					<td>ლოდინის საშ. დრო კავშირის გაწყვეტამდე:</td>
-					<td>'.$row[counter].' წამი</td>
-					</tr>
-					<tr>
-					<td>საშ. რიგში პოზიცია კავშირის გაწყვეტამდე:</td>
+                   	<tr class="odd">
 					<td>'.$row[counter].'</td>
-					</tr>
-					<tr>
-					<td>საშ. საწყისი პოზიცია რიგში:</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].' %</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].' %</td>
+					<td>2:'.$row[counter].' წუთი</td>
+					<td>'.$row[counter].' წამი</td>
+					<td>'.$row[counter].'</td>
 					<td>'.$row[counter].'</td>
 					</tr>
 
@@ -363,20 +361,15 @@ while($row = mysql_fetch_assoc($res11)){
 
 	$data['page']['call_distribution_per_hour'] = '
 
-                   	<tr>
-					<td>უპასუხო ზარების რაოდენობა:</td>
-					<td>'.$row[counter].' ზარი</td>
-					</tr>
-					<tr>
-					<td>ლოდინის საშ. დრო კავშირის გაწყვეტამდე:</td>
-					<td>'.$row[counter].' წამი</td>
-					</tr>
-					<tr>
-					<td>საშ. რიგში პოზიცია კავშირის გაწყვეტამდე:</td>
+                   	<tr class="odd">
 					<td>'.$row[counter].'</td>
-					</tr>
-					<tr>
-					<td>საშ. საწყისი პოზიცია რიგში:</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].' %</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].'%</td>
+					<td>'.$row[counter].' წამი</td>
+					<td>'.$row[counter].' წამი</td>
+					<td>'.$row[counter].'</td>
 					<td>'.$row[counter].'</td>
 					</tr>
 
@@ -388,20 +381,15 @@ while($row = mysql_fetch_assoc($res12)){
 
 	$data['page']['call_distribution_per_day_of_week'] = '
 
-                   	<tr>
-					<td>უპასუხო ზარების რაოდენობა:</td>
-					<td>'.$row[counter].' ზარი</td>
-					</tr>
-					<tr>
-					<td>ლოდინის საშ. დრო კავშირის გაწყვეტამდე:</td>
-					<td>'.$row[counter].' წამი</td>
-					</tr>
-					<tr>
-					<td>საშ. რიგში პოზიცია კავშირის გაწყვეტამდე:</td>
+                   	<tr class="odd">
 					<td>'.$row[counter].'</td>
-					</tr>
-					<tr>
-					<td>საშ. საწყისი პოზიცია რიგში:</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].' %</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].'%</td>
+					<td>'.$row[counter].' წამი</td>
+					<td>'.$row[counter].' წამი</td>
+					<td>'.$row[counter].'</td>
 					<td>'.$row[counter].'</td>
 					</tr>
 

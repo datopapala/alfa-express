@@ -538,8 +538,8 @@
 					<th>%</th>
                 </tr>
 				</thead>
-				<tbody>
-				<tr><td>2470017</td><td>78 calls</td><td>100.00 %</td></tr>
+				<tbody id="unanswered_calls_by_queue">
+				<tr><td></td><td></td><td></td></tr>
 			  </tbody>
 			  </table>
 			</td>
@@ -581,22 +581,22 @@
 
 				<table width="100%" border="0" cellpadding="0" cellspacing="0">
 				<caption>სულ</caption>
-				<tbody>
+				<tbody id="totals">
 		        <tr> 
                   <td>ნაპასუხები ზარების რაოდენობა:</td>
-		          <td>210 calls</td>
+		          <td></td>
 	            </tr>
                 <tr>
                   <td>უპასუხო ზარების რაოდენობა:</td>
-                  <td>78 calls</td>
+                  <td></td>
                 </tr>
 		        <tr>
                   <td>ოპერატორი შევიდა:</td>
-		          <td>0</td>
+		          <td></td>
 	            </tr>
                 <tr>
                   <td>ოპერატორი გავიდა:</td>
-                  <td>0</td>
+                  <td></td>
                 </tr>
 				</tbody>
 	          </table>
@@ -621,15 +621,15 @@
 					<th><a  class="sortheader" onclick="ts_resortTable(this, 8);return false;">გასვლა<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
 				</tr>
 				</thead>
-				<tbody>
+				<tbody id="call_distribution_per_day">
 				<tr class="odd">
-					<td>2014-09-01</td>
-					<td>210</td>
-					<td>100.00 %</td>
-					<td>78</td>
-					<td>100.00%</td>
-					<td>2:26 min</td>
-					<td>35 secs</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
 					<td></td>
 					<td></td>
 					</tr>
@@ -651,270 +651,17 @@
                     <th><a  class="sortheader" onclick="ts_resortTable(this, 8);return false;">გასვლა<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
 				</tr>
 				</thead>
-				<tbody>
+				<tbody id="call_distribution_per_hour">
 				<tr class="odd">
-					<td>00</td>
-					<td>0</td>
-					<td>0.00%</td>
-					<td>1</td>
-					<td>1.28%</td>
-					<td>0 secs</td>
-					<td>0 secs</td>
-					<td>0</td>
-					<td>0</td>
-					</tr>
-					<tr>
-					<td>01</td>
-					<td>0</td>
-					<td>0.00%</td>
-					<td>0</td>
-					<td>0.00%</td>
-					<td>0 secs</td>
-					<td>0 secs</td>
-					<td>0</td>
-					<td>0</td>
-					</tr>
-					<tr class="odd">
-					<td>02</td>
-					<td>0</td>
-					<td>0.00%</td>
-					<td>0</td>
-					<td>0.00%</td>
-					<td>0 secs</td>
-					<td>0 secs</td>
-					<td>0</td>
-					<td>0</td>
-					</tr>
-					<tr>
-					<td>03</td>
-					<td>0</td>
-					<td>0.00%</td>
-					<td>0</td>
-					<td>0.00%</td>
-					<td>0 secs</td>
-					<td>0 secs</td>
-					<td>0</td>
-					<td>0</td>
-					</tr>
-					<tr class="odd">
-					<td>04</td>
-					<td>0</td>
-					<td>0.00%</td>
-					<td>1</td>
-					<td>1.28%</td>
-					<td>0 secs</td>
-					<td>0 secs</td>
-					<td>0</td>
-					<td>0</td>
-					</tr>
-					<tr>
-					<td>05</td>
-					<td>0</td>
-					<td>0.00%</td>
-					<td>0</td>
-					<td>0.00%</td>
-					<td>0 secs</td>
-					<td>0 secs</td>
-					<td>0</td>
-					<td>0</td>
-					</tr>
-					<tr class="odd">
-					<td>06</td>
-					<td>0</td>
-					<td>0.00%</td>
-					<td>0</td>
-					<td>0.00%</td>
-					<td>0 secs</td>
-					<td>0 secs</td>
-					<td>0</td>
-					<td>0</td>
-					</tr>
-					<tr>
-					<td>07</td>
-					<td>0</td>
-					<td>0.00%</td>
-					<td>0</td>
-					<td>0.00%</td>
-					<td>0 secs</td>
-					<td>0 secs</td>
-					<td>0</td>
-					<td>0</td>
-					</tr>
-					<tr class="odd">
-					<td>08</td>
-					<td>0</td>
-					<td>0.00%</td>
-					<td>2</td>
-					<td>2.56%</td>
-					<td>0 secs</td>
-					<td>0 secs</td>
-					<td>0</td>
-					<td>0</td>
-					</tr>
-					<tr>
-					<td>09</td>
-					<td>0</td>
-					<td>0.00%</td>
-					<td>6</td>
-					<td>7.69%</td>
-					<td>0 secs</td>
-					<td>0 secs</td>
-					<td>0</td>
-					<td>0</td>
-					</tr>
-					<tr class="odd">
-					<td>10</td>
-					<td>12</td>
-					<td>5.71%</td>
-					<td>19</td>
-					<td>24.36%</td>
-					<td>198 secs</td>
-					<td>90 secs</td>
-					<td>0</td>
-					<td>0</td>
-					</tr>
-					<tr>
-					<td>11</td>
-					<td>23</td>
-					<td>10.95%</td>
-					<td>5</td>
-					<td>6.41%</td>
-					<td>217 secs</td>
-					<td>34 secs</td>
-					<td>0</td>
-					<td>0</td>
-					</tr>
-					<tr class="odd">
-					<td>12</td>
-					<td>23</td>
-					<td>10.95%</td>
-					<td>4</td>
-					<td>5.13%</td>
-					<td>135 secs</td>
-					<td>34 secs</td>
-					<td>0</td>
-					<td>0</td>
-					</tr>
-					<tr>
-					<td>13</td>
-					<td>19</td>
-					<td>9.05%</td>
-					<td>5</td>
-					<td>6.41%</td>
-					<td>95 secs</td>
-					<td>33 secs</td>
-					<td>0</td>
-					<td>0</td>
-					</tr>
-					<tr class="odd">
-					<td>14</td>
-					<td>22</td>
-					<td>10.48%</td>
-					<td>3</td>
-					<td>3.85%</td>
-					<td>139 secs</td>
-					<td>28 secs</td>
-					<td>0</td>
-					<td>0</td>
-					</tr>
-					<tr>
-					<td>15</td>
-					<td>29</td>
-					<td>13.81%</td>
-					<td>7</td>
-					<td>8.97%</td>
-					<td>140 secs</td>
-					<td>37 secs</td>
-					<td>0</td>
-					<td>0</td>
-					</tr>
-					<tr class="odd">
-					<td>16</td>
-					<td>22</td>
-					<td>10.48%</td>
-					<td>10</td>
-					<td>12.82%</td>
-					<td>127 secs</td>
-					<td>32 secs</td>
-					<td>0</td>
-					<td>0</td>
-					</tr>
-					<tr>
-					<td>17</td>
-					<td>22</td>
-					<td>10.48%</td>
-					<td>4</td>
-					<td>5.13%</td>
-					<td>122 secs</td>
-					<td>16 secs</td>
-					<td>0</td>
-					<td>0</td>
-					</tr>
-					<tr class="odd">
-					<td>18</td>
-					<td>13</td>
-					<td>6.19%</td>
-					<td>7</td>
-					<td>8.97%</td>
-					<td>182 secs</td>
-					<td>44 secs</td>
-					<td>0</td>
-					<td>0</td>
-					</tr>
-					<tr>
-					<td>19</td>
-					<td>11</td>
-					<td>5.24%</td>
-					<td>2</td>
-					<td>2.56%</td>
-					<td>133 secs</td>
-					<td>35 secs</td>
-					<td>0</td>
-					<td>0</td>
-					</tr>
-					<tr class="odd">
-					<td>20</td>
-					<td>13</td>
-					<td>6.19%</td>
-					<td>1</td>
-					<td>1.28%</td>
-					<td>155 secs</td>
-					<td>38 secs</td>
-					<td>0</td>
-					<td>0</td>
-					</tr>
-					<tr>
-					<td>21</td>
-					<td>1</td>
-					<td>0.48%</td>
-					<td>0</td>
-					<td>0.00%</td>
-					<td>38 secs</td>
-					<td>7 secs</td>
-					<td>0</td>
-					<td>0</td>
-					</tr>
-					<tr class="odd">
-					<td>22</td>
-					<td>0</td>
-					<td>0.00%</td>
-					<td>0</td>
-					<td>0.00%</td>
-					<td>0 secs</td>
-					<td>0 secs</td>
-					<td>0</td>
-					<td>0</td>
-					</tr>
-					<tr>
-					<td>23</td>
-					<td>0</td>
-					<td>0.00%</td>
-					<td>1</td>
-					<td>1.28%</td>
-					<td>0 secs</td>
-					<td>0 secs</td>
-					<td>0</td>
-					<td>0</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
 					</tr>
 			</tbody>
 			</table>
@@ -934,84 +681,18 @@
                     <th><a  class="sortheader" onclick="ts_resortTable(this, 8);return false;">გასვლა<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
 				</tr>
 				</thead>
-				<tbody>
+				<tbody id="call_distribution_per_day_of_week">
 				<tr class="odd">
-					<td>Sunday</td>
-					<td>0</td>
-					<td>0.00%</td>
-					<td>0</td>
-					<td>0.00%</td>
-					<td>0 secs</td>
-					<td>0 secs</td>
-					<td>0</td>
-					<td>0</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
 					</tr>
-					<tr>
-					<td>Monday</td>
-					<td>210</td>
-					<td>100.00%</td>
-					<td>78</td>
-					<td>100.00%</td>
-					<td>146 secs</td>
-					<td>35 secs</td>
-					<td>0</td>
-					<td>0</td>
-					</tr>
-					<tr class="odd">
-					<td>Tuesday</td>
-					<td>0</td>
-					<td>0.00%</td>
-					<td>0</td>
-					<td>0.00%</td>
-					<td>0 secs</td>
-					<td>0 secs</td>
-					<td>0</td>
-					<td>0</td>
-					</tr>
-					<tr>
-					<td>Wednesday</td>
-					<td>0</td>
-					<td>0.00%</td>
-					<td>0</td>
-					<td>0.00%</td>
-					<td>0 secs</td>
-					<td>0 secs</td>
-					<td>0</td>
-					<td>0</td>
-					</tr>
-					<tr class="odd">
-					<td>Thursday</td>
-					<td>0</td>
-					<td>0.00%</td>
-					<td>0</td>
-					<td>0.00%</td>
-					<td>0 secs</td>
-					<td>0 secs</td>
-					<td>0</td>
-					<td>0</td>
-					</tr>
-					<tr>
-					<td>Friday</td>
-					<td>0</td>
-					<td>0.00%</td>
-					<td>0</td>
-					<td>0.00%</td>
-					<td>0 secs</td>
-					<td>0 secs</td>
-					<td>0</td>
-					<td>0</td>
-					</tr>
-					<tr class="odd">
-					<td>Saturday</td>
-					<td>0</td>
-					<td>0.00%</td>
-					<td>0</td>
-					<td>0.00%</td>
-					<td>0 secs</td>
-					<td>0 secs</td>
-					<td>0</td>
-					<td>0</td>
-				</tr>
 			</tbody>
 			</table>
 		 </div>
