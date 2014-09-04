@@ -2,7 +2,7 @@
 
 require_once('../../includes/classes/core.php');
 
-// ცვლადი
+//----------------------------- ცვლადი
 
 $agent	= $_REQUEST['agent'];
 $queue	= $_REQUEST['queuet'];
@@ -10,7 +10,7 @@ $start_time = $_REQUEST['start_time'];
 $end_time 	= $_REQUEST['end_time'];
 $day = (strtotime($end_time)) -  (strtotime($start_time));
 $day_format = (int)date('d', $day);
-
+// ----------------------------------
 
 $row_done_blank = mysql_fetch_assoc(mysql_query("	SELECT COUNT(*) AS `count`
 		FROM `incomming_call`
@@ -37,21 +37,6 @@ $data		= array('page' => array(
 										'call_distribution_per_day_of_week' => '',
 										'service_level' => ''
 								));
-
-$res4 = mysql_query("SELECT 	ag.agent as `agent`,
-								COUNT(*) as `call`,
-								ROUND((SUM(qs.info2) / 60 ),2) AS info2,
-								ROUND((SUM(qs.info1) / COUNT(*)),2) AS `hold`
-								 
-					FROM queue_stats AS qs, qname AS q, 
-					qagent AS ag, qevent AS ac WHERE qs.qname = q.qname_id AND qs.qagent = ag.agent_id AND 
-					qs.qevent = ac.event_id AND DATE(qs.datetime) >= '$start_time' AND DATE(qs.datetime) <= '$end_time' AND 
-					q.queue IN ($queue) AND ag.agent in ($agent) AND ac.event IN ('COMPLETECALLER', 'COMPLETEAGENT')
-					GROUP BY 	qs.qagent");
-
-
-
-
 
 
 //------------------------------- ტექნიკური ინფორმაცია
@@ -114,10 +99,20 @@ $res4 = mysql_query("SELECT 	ag.agent as `agent`,
 
 	
 	
-	$res = mysql_query("SELECT queue_stats.info1
-					FROM   queue_stats
-					WHERE DATE(queue_stats.datetime) >= '$start_time' AND DATE(queue_stats.datetime) <= '$end_time' AND queue_stats.qevent = 10
-					");
+	$res = mysql_query("	SELECT 	qs.info1
+							FROM 	queue_stats AS qs,
+									qname AS q,
+									qagent AS ag,
+									qevent AS ac 
+							WHERE 	qs.qname = q.qname_id 
+							AND qs.qagent = ag.agent_id 
+							AND qs.qevent = ac.event_id 
+							AND DATE(qs.datetime) >= '$start_time'
+							AND DATE(qs.datetime) <= '$end_time'
+							AND q.queue IN ($queue)
+							AND ag.agent in ($agent) 
+							AND ac.event IN ('CONNECT')
+						");
 	$w15 = 0;
 	$w30 = 0;
 	$w45 = 0;
@@ -226,7 +221,7 @@ $res4 = mysql_query("SELECT 	ag.agent as `agent`,
 	
 //-------------------------------------------------------
 	
-//-------------------------- რეპორტ ინფო
+//---------------------------------------- რეპორტ ინფო
 
 	$data['page']['report_info'] = '
 				
@@ -314,10 +309,29 @@ $row_clock = mysql_fetch_assoc(mysql_query("	SELECT	ROUND((SUM(qs.info1) / COUNT
 	
 //---------------------------------------------
 
+/* 	$res4 = mysql_query("SELECT 	ag.agent as `agent`,
+			COUNT(*) as `call`,
+			ROUND((SUM(qs.info2) / 60 ),2) AS info2,
+			ROUND((SUM(qs.info1) / COUNT(*)),2) AS `hold`
+				
+			FROM queue_stats AS qs, qname AS q,
+			qagent AS ag, qevent AS ac WHERE qs.qname = q.qname_id AND qs.qagent = ag.agent_id AND
+			qs.qevent = ac.event_id AND DATE(qs.datetime) >= '$start_time' AND DATE(qs.datetime) <= '$end_time' AND
+			q.queue IN ($queue) AND ag.agent in ($agent) AND ac.event IN ('COMPLETECALLER', 'COMPLETEAGENT')
+			GROUP BY 	qs.qagent"); */
+	
+ 	$ress =mysql_query("SELECT ag.agent as `agent`,
+			COUNT(*) as `call`,
+			ROUND((SUM(qs.info2) / 60 )) AS info2,
+			ROUND((SUM(qs.info1) / COUNT(*))) AS `hold`
+ 			  FROM queue_stats AS qs, qname AS q, 
+qagent AS ag, qevent AS ac WHERE qs.qname = q.qname_id AND qs.qagent = ag.agent_id AND 
+qs.qevent = ac.event_id AND DATE(qs.datetime) >= '$start_time' AND DATE(qs.datetime) <= '$end_time' AND 
+q.queue IN ($queue) AND ag.agent in ($agent) AND ac.event IN ('COMPLETECALLER', 'COMPLETEAGENT') GROUP BY 	qs.qagent"); 
 
-while($row = mysql_fetch_assoc($res4)){
+while($row = mysql_fetch_assoc($ress)){
 
-	$data['page']['answer_call_by_queue'] = '
+	$data['page']['answer_call_by_queue'] .= '
 
                    	<tr>
 					<td>'.$row[agent].'</td>
@@ -494,17 +508,25 @@ $row_COMPLETEAGENT = mysql_fetch_assoc(mysql_query("	SELECT	COUNT(*) AS `count`,
 	
 //------------------------------------------------
 
+	
+	$res10 = mysql_query("SELECT DATE(qs.datetime) AS datetime, q.queue AS qname, ag.agent AS qagent, ac.event AS qevent,
+	qs.info1 AS info1, qs.info2 AS info2,  qs.info3 AS info3 FROM queue_stats AS qs, qname AS q,
+	qagent AS ag, qevent AS ac WHERE qs.qname = q.qname_id AND qs.qagent = ag.agent_id AND
+	qs.qevent = ac.event_id AND DATE(qs.datetime) >= '$start_time' AND DATE(qs.datetime) <= '$end_time'
+	AND q.queue IN ($queue,'NONE') AND ac.event IN ('ABANDON', 'EXITWITHTIMEOUT','COMPLETECALLER','COMPLETEAGENT','AGENTLOGIN','AGENTLOGOFF','AGENTCALLBACKLOGIN','AGENTCALLBACKLOGOFF') 
+			GROUP BY 	DATE(qs.qagent)");
+	
 while($row = mysql_fetch_assoc($res10)){
 
-	$data['page']['call_distribution_per_day'] = '
+	$data['page']['call_distribution_per_day'] .= '
 
                    	<tr class="odd">
-					<td>'.$row[counter].'</td>
-					<td>'.$row[counter].'</td>
-					<td>'.$row[counter].' %</td>
+					<td>'.$row[datetime].'</td>
 					<td>'.$row[counter].'</td>
 					<td>'.$row[counter].' %</td>
-					<td>2:'.$row[counter].' წუთი</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].' %</td>
+					<td>'.$row[counter].' წუთი</td>
 					<td>'.$row[counter].' წამი</td>
 					<td>'.$row[counter].'</td>
 					<td>'.$row[counter].'</td>
