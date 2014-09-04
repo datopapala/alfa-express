@@ -1,6 +1,6 @@
 <head>
 	<script type="text/javascript">
-		var aJaxURL	= "server-side/report/technical.action.php";	//server side folder url
+		var aJaxURL	= "server-side/report/main.action.php";	//server side folder url
 		var tName	= "example";											//table name
 		var fName	= "add-edit-form";										//form name
 		

@@ -1,166 +1,3 @@
-<?php
-
-mysql_connect('212.72.155.176', 'root', 'Gl-1114') or die('<br><br>kavsh');
-mysql_select_db('stats') or die ('baza');
-
-//require_once '../../includes/classes/asteriskcore.php';
-mysql_query("SET @i=0;");
-$res = mysql_query("SELECT 		@i := @i + 1 AS `id`,
-								qname.queue,
-								COUNT(*) AS `quant`,
-								ROUND((COUNT(*) / (SELECT COUNT(*) FROM queue_stats WHERE queue_stats.qevent = 10 AND DATE(queue_stats.datetime) = CURDATE()) * 100), 2) AS `percent`
-					FROM 		`queue_stats`
-					JOIN 		qname ON queue_stats.qname = qname.qname_id
-					WHERE 		queue_stats.qevent = 10 AND DATE(queue_stats.datetime) = CURDATE()
-					GROUP BY 	queue_stats.qname"); 
-
-$res1 = mysql_query("SELECT 	@i := @i + 1 AS `iterator`,
-								qagent.agent,
-								COUNT(*) AS `quant`,
-								ROUND((COUNT(*) / (SELECT COUNT(*) FROM queue_stats WHERE queue_stats.qevent = 10 AND DATE(queue_stats.datetime) = CURDATE()) * 100), 2) AS `percent`
-					FROM 		`queue_stats`
-					JOIN 		qagent ON queue_stats.qagent = qagent.agent_id
-					WHERE 		queue_stats.qevent = 10 AND DATE(queue_stats.datetime) = CURDATE()
-					GROUP BY 	queue_stats.qagent");
-
-$res2 = mysql_query("SELECT	COUNT(*) as counter
-					FROM	queue_stats AS qs,
-								qname AS q, 
-								qagent AS ag,
-								qevent AS ac
-					WHERE qs.qname = q.qname_id AND qs.qagent = ag.agent_id AND 
-					qs.qevent = ac.event_id AND DATE(qs.datetime) = CURDATE() AND 
-					q.queue IN ('2470017') AND ag.agent in ('ALF1','ALF2','ALF3','ALF4') AND ac.event IN ( 'COMPLETEAGENT') ORDER BY ag.agent");
-
-$res3 = mysql_query("SELECT	COUNT(*) as counter
-					FROM	queue_stats AS qs,
-							qname AS q,
-							qagent AS ag,
-							qevent AS ac
-					WHERE qs.qname = q.qname_id AND qs.qagent = ag.agent_id AND
-					qs.qevent = ac.event_id AND DATE(qs.datetime) = CURDATE() AND
-					q.queue IN ('2470017') AND ag.agent in ('ALF1','ALF2','ALF3','ALF4') AND ac.event IN ('COMPLETECALLER') ORDER BY ag.agent");
-
-$res4 = mysql_query("SELECT COUNT(*) as unanswer, q.queue AS qname
-					FROM queue_stats AS qs, qname AS q, 
-					qagent AS ag, qevent AS ac WHERE qs.qname = q.qname_id AND qs.qagent = ag.agent_id AND 
-					qs.qevent = ac.event_id AND DATE(qs.datetime) = CURDATE()
-					AND q.queue IN ('2470017') AND ac.event IN ('ABANDON', 'EXITWITHTIMEOUT') ORDER BY qs.datetime");
-
-$res5 = mysql_query("SELECT COUNT(*) as unanswer, q.queue AS qname
-					FROM queue_stats AS qs, qname AS q,
-					qagent AS ag, qevent AS ac WHERE qs.qname = q.qname_id AND qs.qagent = ag.agent_id AND
-					qs.qevent = ac.event_id AND DATE(qs.datetime) = CURDATE()
-					AND q.queue IN ('2470017') AND ac.event IN ('ABANDON', 'EXITWITHTIMEOUT') ORDER BY qs.datetime");
-
-$res6 = mysql_query("SELECT DISTINCT (SELECT count(*) FROM queue_stats AS qs, qname AS q,qagent AS ag, qevent AS ac WHERE qs.qname = q.qname_id AND qs.qagent = ag.agent_id AND 
-					qs.qevent = ac.event_id AND DATE(qs.datetime) = CURDATE()
-					AND q.queue IN ('2470017','NONE') AND ac.event IN ('COMPLETECALLER','COMPLETEAGENT','AGENTLOGIN','AGENTLOGOFF','AGENTCALLBACKLOGIN')) as answer,
-					(SELECT count(*) FROM queue_stats AS qs, qname AS q,qagent AS ag, qevent AS ac WHERE qs.qname = q.qname_id AND qs.qagent = ag.agent_id AND 
-					qs.qevent = ac.event_id AND DATE(qs.datetime) = CURDATE()
-					AND q.queue IN ('2470017','NONE') AND ac.event IN ('ABANDON', 'EXITWITHTIMEOUT')) as unanswer, CURDATE() as date
-					FROM queue_stats");
-
-$queue = '';
-while ($row = mysql_fetch_assoc($res)) {
-	if ($row[id]%2 ) {
-		$odd = 'class="odd"';
-	}
-	
-	$queue .= '<tr '. $odd .'>
-			 		<th style="width: 80px;">'.$row[queue].'</th>
-		 			<th style="width: 80px;">'.$row[quant].'</th>
-		 			<th style="width: 80px;">'.$row[percent].'</th>
-		 		</tr>';
-}
-
-$disconect = '';
-while ($row = mysql_fetch_assoc($res2)) {
-	if ($row[id]%2 ) {
-		$odd = 'class="odd"';
-	}
-
-	$disconect .= '<tr '. $odd .'>
-			 		<th style="width: 80px;">ოპერატორი</th>
-		 			<th style="width: 80px;">'.$row[counter].'</th>
-		 			<th style="width: 80px;">0</th>
-		 		</tr>';
-}
-
-$distribution  = '';
-while ($row = mysql_fetch_assoc($res6)) {
-	if ($row[id]%2 ) {
-		$odd = 'class="odd"';
-	}
-
-	$distribution .= '<tr '. $odd .'>
-			 		<th style="width: 80px;">'.$row[date].'</th>
-		 			<th style="width: 80px;">'.$row[answer].'</th>
-		 			<th style="width: 80px;">'.$row[unanswer].'</th>
-		 		</tr>';
-}
-
-$disconect1 = '';
-while ($row = mysql_fetch_assoc($res3)) {
-	if ($row[id]%2 ) {
-		$odd = 'class="odd"';
-	}
-
-	$disconect1 .= '<tr '. $odd .'>
-			 		<th style="width: 80px;">მომხმარებელი</th>
-		 			<th style="width: 80px;">'.$row[counter].'</th>
-		 			<th style="width: 80px;">0</th>
-		 		</tr>';
-}
-
-$unanswer = '';
-while ($row = mysql_fetch_assoc($res4)) {
-	if ($row[id]%2 ) {
-		$odd = 'class="odd"';
-	}
-
-	$unanswer .= '<tr '. $odd .'>
-			 		<th style="width: 80px;">'.$row[qname].'</th>
-		 			<th style="width: 80px;">'.$row[unanswer].'</th>
-		 			<th style="width: 80px;">0</th>
-		 		</tr>';
-}
-
-$unanswer1 = '';
-while ($row = mysql_fetch_assoc($res5)) {
-	if ($row[id]%2 ) {
-		$odd = 'class="odd"';
-	}
-
-	$unanswer1 .= '<tr '. $odd .'>
-			 		<th style="width: 80px;">User Abandon</th>
-		 			<th style="width: 80px;">'.$row[unanswer].'</th>
-		 			<th style="width: 80px;">0</th>
-		 		</tr>';
-}
-
-$agent = '';
-while ($row = mysql_fetch_assoc($res1)) {
-	if ($row[id]%2 ) {
-		$odd = 'class="odd"';
-	}
-
-	$agent .= '<tr '. $odd .'>
-			 		<th style="width: 80px;">'.$row[agent].'</th>
-		 			<th style="width: 80px;">'.$row[quant].'</th>
-		 			<th style="width: 80px;">'.$row[percent].'</th>
-		 		</tr>';
-}
-
-if($_REQUEST[ge]){
-	
-	$data = $_REQUEST['list'];
-	
-	echo json_encode($data);
-	
-	return $data;
-}
-?>
 <head>
 	<style type="text/css">
 		caption{
@@ -228,10 +65,6 @@ if($_REQUEST[ge]){
     </style>
 	<script type="text/javascript">
 		var aJaxURL		= "server-side/report/technical.action.php";		//server side folder url
-		var aJaxURL1	= "server-side/report/technical.action.php";		//server side folder url
-		var aJaxURL2	= "server-side/report/technical.action.php";		//server side folder url
-		var aJaxURL3	= "server-side/report/technical.action.php";		//server side folder url
-		var aJaxURL4	= "server-side/report/technical.action.php";		//server side folder url
 		var tName		= "example0";										//table name
 		var tbName		= "tabs";											//tabs name
 		var fName		= "add-edit-form";									//form name
@@ -293,32 +126,48 @@ if($_REQUEST[ge]){
 		}
 
 		$(document).on("click", "#show_report", function () {
+			var i=0;
 			paramq 			= new Object();
 			parama 			= new Object();
 			parame 			= new Object();
-			paramm		= "client-side/report/technical.php?ge=ge";
-			var i=0;
-			var r=0;
-			var optionsq = $('#myform_List_Queue_to option');
-			var valuesq = $.map(optionsq ,function(option) {
-				parama[i++]=option.value;
-				parame.queue = parama;
-			})
+			parame.agent	= '';
+			parame.queuet = '';
+			paramm		= "server-side/report/technical.action.php";
 			
-			var optionsa = $('#myform_List_Agent_to option');
-			var valuesa = $.map(optionsa ,function(option) {
-				paramq[r++]=option.value;
-				parame.agent = paramq;
-			})
+			
+			var options = $('#myform_List_Queue_to option');
+			var values = $.map(options ,function(option) {
+				if(parame.queuet != ""){
+					parame.queuet+=",";
+					
+				}
+				parame.queuet+="'"+option.value+"'";
+			});
+
+			
+			var options = $('#myform_List_Agent_to option');
+			var values = $.map(options ,function(option) {
+				if(parame.agent != ''){
+					parame.agent+=',';
+					
+				}
+				parame.agent+="'"+option.value+"'";
+			});
 			
 			parame.start_time = $('#start_time').val();
 			parame.end_time = $('#end_time').val();
-			
+			parame.act = 'check';
 			$.ajax({
 		        url: paramm,
 			    data: parame,
 		        success: function(data) {
-						
+					$("#answer_call").html(data.page.answer_call);
+					$("#technik_info").html(data.page.technik_info);
+					$(".report_info").html(data.page.report_info);
+					$("#answer_call_info").html(data.page.answer_call_info);
+					$("#answer_call_by_queue").html(data.page.answer_call_by_queue);
+					$("#disconnection_cause").html(data.page.disconnection_cause);
+					$("#unanswer_call").html(data.page.unanswer_call);					
 			    }
 		    });
         });
@@ -430,18 +279,18 @@ if($_REQUEST[ge]){
                     <th>უპასუხოა</th>
                     <th>დამუშავებულია</th>
                 </tr>
+                <tr id="technik_info">
                     <td>ზარი</td>
-                    <td>22</td>
-                    <td>222</td>
-                    <td>222</td>
-                    <td>22222</td>
-                    <td>77%</td>
-                    <td>23%</td>
-                    <td>68%</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                 </tr>
                 </tbody>
                 </table>
-
 		</div>
 		 </div>
 		<div id="tab-1">
@@ -451,23 +300,23 @@ if($_REQUEST[ge]){
             <td valign="top" width="50%" style="padding:0 5px 0 0;">
                 <table width="100%" border="0" cellpadding="0" cellspacing="0">
                 <caption>რეპორტ ინფო</caption>
-                <tbody>
+                <tbody class="report_info">
                 <tr>
                     <td>რიგი:</td>
-                    <td>'2470017'</td>
+                    <td></td>
                 </tr>
                 
                        <tr><td>საწყისი თარიღი:</td>
-                       <td>2014-09-01</td>
+                       <td></td>
                 </tr>
                 
                 <tr>
                        <td>დასრულების თარიღი:</td>
-                       <td>2014-09-01</td>
+                       <td></td>
                 </tr>
                 <tr>
                        <td>პერიოდი:</td>
-                       <td>1 days</td>
+                       <td></td>
                 </tr>
                 </tbody>
                 </table>
@@ -477,26 +326,26 @@ if($_REQUEST[ge]){
 
                 <table width="100%" border="0" cellpadding="0" cellspacing="0">
                 <caption>ნაპასუხები ზარები</caption>
-                <tbody>
+                <tbody id="answer_call_info">
                 <tr> 
                   <td>ნაპასუხები ზარები</td>
-                  <td>210 calls</td>
+                  <td></td>
                 </tr>
                 <tr> 
                   <td>გადამისამართებული ზარები</td>
-                  <td>0 calls</td>
+                  <td></td>
                 </tr>
                 <tr>
                   <td>საშ. ხანგძლივობა:</td>
-                  <td>146.41 secs</td>
+                  <td></td>
                 </tr>
                 <tr>
                   <td>სულ საუბრის ხანგძლივობა:</td>
-                  <td>512:27 min</td>
+                  <td> </td>
                 </tr>
                 <tr>
                   <td>ლოდინის საშ. ხანგძლივობა:</td>
-                  <td>35.41 secs</td>
+                  <td></td>
                 </tr>
                 </tbody>
               </table>
@@ -520,37 +369,8 @@ if($_REQUEST[ge]){
                   <th><a  class="sortheader" onclick="ts_resortTable(this, 7);return false;">საშ. ლოდისნის ხანგძლივობა<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
             </tr>
             </thead>
-            <tbody>
-                <tr>
-					<td>ALF1</td>
-					<td>32</td>
-					<td>15.24 %</td>
-					<td>78:35 min</td>
-					<td>15.33 %</td>
-					<td>2:27 min</td>
-					<td>1260 secs</td>
-					<td>39.38 secs</td>
-					</tr>
-					<tr class="odd">
-					<td>ALF2</td>
-					<td>97</td>
-					<td>46.19 %</td>
-					<td>182:13 min</td>
-					<td>35.56 %</td>
-					<td>1:52 min</td>
-					<td>3064 secs</td>
-					<td>31.59 secs</td>
-					</tr>
-					<tr>
-					<td>ALF3</td>
-					<td>81</td>
-					<td>38.57 %</td>
-					<td>251:39 min</td>
-					<td>49.11 %</td>
-					<td>3:06 min</td>
-					<td>3113 secs</td>
-					<td>38.43 secs</td>
-					</tr>
+            <tbody id="answer_call_by_queue">
+                
 			</tbody>
         </table>
         <br>
@@ -567,8 +387,8 @@ if($_REQUEST[ge]){
                     <th><a  class="sortheader" onclick="ts_resortTable(this, 2);return false;">%<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
                 </tr>
                 </thead>
-                <tbody>
-                <tr><td>2470017</td><td>210 calls</td><td>100.00 %</td></tr>
+                <tbody id="answer_call">
+                
               </tbody>
               </table>
             </td>
@@ -591,21 +411,17 @@ if($_REQUEST[ge]){
                     <th><a  class="sortheader" onclick="ts_resortTable(this, 2);return false;">სულ<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
                 </tr>
                 </thead>
-                <tbody>
-                <tr> 
-                  <td>ოპერატორმა გათიშა:</td>
-                  <td>57 calls</td>
-                  <td>
-                      0.00 
-                   %</td>
-                </tr>
-                <tr> 
-                  <td>აბონენტმა გათიშა:</td>
-                  <td>153 calls</td>
-                  <td>
-                      0.00 
-                    %</td>
-                </tr>
+                <tbody id="disconnection_cause">
+	                <tr>
+						<td>ოპერატორმა გათიშა:</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>აბონენტმა გათიშა:</td>
+						<td></td>
+						<td></td>
+					</tr>
                 </tbody>
               </table>
             </td>
@@ -621,24 +437,24 @@ if($_REQUEST[ge]){
 			<td valign="top" width="50%" style="padding: 0 5px 0 0;">
 				<table width="100%" border="0" cellpadding="0" cellspacing="0">
 				<caption>რეპორტ ინფო</caption>
-				<tbody>
+				<tbody class="report_info">
 				<tr>
-					<td>რიგი:</td>
-					<td>'2470017'</td>
-				</tr>
-    	        
-        	       	<tr><td>საწყისი თარიღი:</td>
-            	   	<td>2014-09-01</td>
-				</tr>
-    	        
-        	    <tr>
-            	   	<td>დასრულების თარიღი:</td>
-               		<td>2014-09-01</td>
-	            </tr>
-    	        <tr>
-        	       	<td>პერიოდი:</td>
-            	   	<td>1 days</td>
-	            </tr>
+                    <td>რიგი:</td>
+                    <td></td>
+                </tr>
+                
+                       <tr><td>საწყისი თარიღი:</td>
+                       <td></td>
+                </tr>
+                
+                <tr>
+                       <td>დასრულების თარიღი:</td>
+                       <td></td>
+                </tr>
+                <tr>
+                       <td>პერიოდი:</td>
+                       <td></td>
+                </tr>
 				</tbody>
 				</table>
 
@@ -647,22 +463,22 @@ if($_REQUEST[ge]){
 
 				<table width="100%" border="0" cellpadding="0" cellspacing="0">
 				<caption>უპასუხო ზარები</caption>
-				<tbody>
+				<tbody id="unanswer_call">
 		        <tr> 
                   <td>უპასუხო ზარების რაოდენობა:</td>
-		          <td>78 calls</td>
+		          <td></td>
 	            </tr>
                 <tr>
                   <td>ლოდინის საშ. დრო კავშირის გაწყვეტამდე:</td>
-                  <td>67 secs</td>
+                  <td></td>
                 </tr>
 		        <tr>
                   <td>საშ. რიგში პოზიცია კავშირის გაწყვეტამდე:</td>
-		          <td>1</td>
+		          <td></td>
 	            </tr>
                 <tr>
                   <td>საშ. საწყისი პოზიცია რიგში:</td>
-                  <td>2</td>
+                  <td></td>
                 </tr>
 				</tbody>
 	          </table>
@@ -737,24 +553,24 @@ if($_REQUEST[ge]){
 			<td valign="top" width="50%" style="padding: 0 5px 0 0;">
 				<table width="100%" border="0" cellpadding="0" cellspacing="0">
 				<caption>რეპორტ ინფო</caption>
-				<tbody>
+				<tbody class="report_info">
 				<tr>
-					<td>რიგი:</td>
-					<td>'2470017'</td>
-				</tr>
-    	        
-        	       	<tr><td>საწყისი თარიღი:</td>
-            	   	<td>2014-09-01</td>
-				</tr>
-    	        
-        	    <tr>
-            	   	<td>დასრულების თარიღი:</td>
-               		<td>2014-09-01</td>
-	            </tr>
-    	        <tr>
-        	       	<td>პერიოდი:</td>
-            	   	<td>1 days</td>
-	            </tr>
+                    <td>რიგი:</td>
+                    <td></td>
+                </tr>
+                
+                       <tr><td>საწყისი თარიღი:</td>
+                       <td></td>
+                </tr>
+                
+                <tr>
+                       <td>დასრულების თარიღი:</td>
+                       <td></td>
+                </tr>
+                <tr>
+                       <td>პერიოდი:</td>
+                       <td></td>
+                </tr>
 				</tbody>
 				</table>
 
