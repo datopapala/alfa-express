@@ -99,7 +99,7 @@ $data		= array('page' => array(
 
 	
 	
-	$res = mysql_query("	SELECT 	qs.info1
+	$res_service_level = mysql_query("	SELECT 	qs.info1
 							FROM 	queue_stats AS qs,
 									qname AS q,
 									qagent AS ag,
@@ -124,29 +124,29 @@ $data		= array('page' => array(
 	
 	
 	
-	while ($row = mysql_fetch_assoc($res)) {
+	while ($res_service_level_r = mysql_fetch_assoc($res_service_level)) {
 	
-		if ($row['info1'] < 15) {
+		if ($res_service_level_r['info1'] < 15) {
 			$w15++;
 		}
 	
-		if ($row['info1'] < 30){
+		if ($res_service_level_r['info1'] < 30){
 			$w30++;
 		}
 	
-		if ($row['info1'] < 45){
+		if ($res_service_level_r['info1'] < 45){
 			$w45++;
 		}
 	
-		if ($row['info1'] < 60){
+		if ($res_service_level_r['info1'] < 60){
 			$w60++;
 		}
 	
-		if ($row['info1'] < 75){
+		if ($res_service_level_r['info1'] < 75){
 			$w75++;
 		}
 	
-		if ($row['info1'] < 90){
+		if ($res_service_level_r['info1'] < 90){
 			$w90++;
 		}
 	
@@ -309,20 +309,12 @@ $row_clock = mysql_fetch_assoc(mysql_query("	SELECT	ROUND((SUM(qs.info1) / COUNT
 	
 //---------------------------------------------
 
-/* 	$res4 = mysql_query("SELECT 	ag.agent as `agent`,
-			COUNT(*) as `call`,
-			ROUND((SUM(qs.info2) / 60 ),2) AS info2,
-			ROUND((SUM(qs.info1) / COUNT(*)),2) AS `hold`
-				
-			FROM queue_stats AS qs, qname AS q,
-			qagent AS ag, qevent AS ac WHERE qs.qname = q.qname_id AND qs.qagent = ag.agent_id AND
-			qs.qevent = ac.event_id AND DATE(qs.datetime) >= '$start_time' AND DATE(qs.datetime) <= '$end_time' AND
-			q.queue IN ($queue) AND ag.agent in ($agent) AND ac.event IN ('COMPLETECALLER', 'COMPLETEAGENT')
-			GROUP BY 	qs.qagent"); */
+
 	
  	$ress =mysql_query("SELECT ag.agent as `agent`,
 			COUNT(*) as `call`,
-			ROUND((SUM(qs.info2) / 60 )) AS info2,
+ 			SUM(qs.info2) as g,
+			ROUND((SUM(qs.info2) / 60 ),2) AS info2,
 			ROUND((SUM(qs.info1) / COUNT(*))) AS `hold`
  			  FROM queue_stats AS qs, qname AS q, 
 qagent AS ag, qevent AS ac WHERE qs.qname = q.qname_id AND qs.qagent = ag.agent_id AND 
@@ -336,12 +328,12 @@ while($row = mysql_fetch_assoc($ress)){
                    	<tr>
 					<td>'.$row[agent].'</td>
 					<td>'.$row[call].'</td>
-					<td>'.$row[info2].' %</td>
+					<td>'.round((($row[call] / $row_answer[count]) * 100),2).' %</td>
 					<td>'.$row[info2].' წუთი</td>
-					<td>'.$row[hold].' %</td>
-					<td>'.$row[qname].' წუთი</td>
-					<td>'.$row[qname].' წამი</td>
-					<td>'.$row[qname].' წამი</td>
+					<td>'.round(($row[g]/70),2).' %</td>
+					<td>'.round(($row[g]/100),2).' წუთი</td>
+					<td>'.$row[g].' წამი</td>
+					<td>'.round(($row[g]/$row[call]),2).' წამი</td>
 					</tr>
 
 							';
@@ -509,39 +501,60 @@ $row_COMPLETEAGENT = mysql_fetch_assoc(mysql_query("	SELECT	COUNT(*) AS `count`,
 //------------------------------------------------
 
 	
-	$res10 = mysql_query("SELECT DATE(qs.datetime) AS datetime, q.queue AS qname, ag.agent AS qagent, ac.event AS qevent,
-	qs.info1 AS info1, qs.info2 AS info2,  qs.info3 AS info3 FROM queue_stats AS qs, qname AS q,
+	$res = mysql_query("SELECT DATE(qs.datetime) AS datetime, q.queue AS qname, ag.agent AS qagent, ac.event AS qevent, COUNT(*) AS `count`,
+	qs.info1 AS info1, qs.info2 AS info2,  qs.info3 AS info3 FROM queue_stats AS qs, qname AS q, 
 	qagent AS ag, qevent AS ac WHERE qs.qname = q.qname_id AND qs.qagent = ag.agent_id AND
 	qs.qevent = ac.event_id AND DATE(qs.datetime) >= '$start_time' AND DATE(qs.datetime) <= '$end_time'
-	AND q.queue IN ($queue,'NONE') AND ac.event IN ('ABANDON', 'EXITWITHTIMEOUT','COMPLETECALLER','COMPLETEAGENT','AGENTLOGIN','AGENTLOGOFF','AGENTCALLBACKLOGIN','AGENTCALLBACKLOGOFF') 
-			GROUP BY 	DATE(qs.qagent)");
-	
-while($row = mysql_fetch_assoc($res10)){
+	AND q.queue IN ($queue,'NONE') AND ac.event IN ('ABANDON', 'EXITWITHTIMEOUT') 
+	GROUP BY 	DATE(qs.datetime)");
 
-	$data['page']['call_distribution_per_day'] .= '
+	$ress = mysql_query("SELECT TIME_FORMAT(SEC_TO_TIME((qs.info2 / COUNT(*))*60), '%i:%s') AS info2, COUNT(*) AS `count` FROM queue_stats AS qs, qname AS q, 
+	qagent AS ag, qevent AS ac WHERE qs.qname = q.qname_id AND qs.qagent = ag.agent_id AND
+	qs.qevent = ac.event_id AND DATE(qs.datetime) >= '$start_time' AND DATE(qs.datetime) <= '$end_time'
+	AND q.queue IN ($queue,'NONE') AND ac.event IN ('COMPLETECALLER','COMPLETEAGENT') 
+	GROUP BY 	DATE(qs.datetime)");
+	
+	
+	
+	while($row = mysql_fetch_assoc($res)){
+			$roww = mysql_fetch_assoc($ress);
+			$answer_row = $roww[count];
+			$answer_row_proc = round((($answer_row / $row_answer[count]) * 100),2);
+			$abadon_row_proc = round((($row[count] / $row_abadon[count]) * 100),2);
+			$avg = $roww[info2] / $row_answer[count];
+		
+			
+			$data['page']['call_distribution_per_day'] .= '
 
                    	<tr class="odd">
 					<td>'.$row[datetime].'</td>
-					<td>'.$row[counter].'</td>
-					<td>'.$row[counter].' %</td>
-					<td>'.$row[counter].'</td>
-					<td>'.$row[counter].' %</td>
-					<td>'.$row[counter].' წუთი</td>
-					<td>'.$row[counter].' წამი</td>
-					<td>'.$row[counter].'</td>
-					<td>'.$row[counter].'</td>
+					<td>'.$answer_row.'</td>
+					<td>'.$answer_row_proc.' %</td>
+					<td>'.$row[count].'</td>
+					<td>'.$abadon_row_proc.' %</td>
+					<td>'.$roww[info2].' წუთი</td>
+					<td>'.$row[info2].' წამი</td>
+					<td></td>
+					<td></td>
 					</tr>
 
 							';
+	}
+	
 
-}
+$res11 = mysql_query("SELECT qs.datetime AS datetime, q.queue AS qname, ag.agent AS qagent, ac.event AS qevent,
+		qs.info1 AS info1, qs.info2 AS info2,  qs.info3 AS info3 FROM queue_stats AS qs, qname AS q,
+		qagent AS ag, qevent AS ac WHERE qs.qname = q.qname_id AND qs.qagent = ag.agent_id AND
+		qs.qevent = ac.event_id AND DATE(qs.datetime) >= '$start_time' AND DATE(qs.datetime) <= '$end_time'
+		AND q.queue IN ($queue,'NONE') AND ac.event IN ('ABANDON', 'EXITWITHTIMEOUT','COMPLETECALLER','COMPLETEAGENT','AGENTLOGIN','AGENTLOGOFF','AGENTCALLBACKLOGIN','AGENTCALLBACKLOGOFF')
+		GROUP BY 	DATE(qs.datetime)");
 
 while($row = mysql_fetch_assoc($res11)){
 
-	$data['page']['call_distribution_per_hour'] = '
+	$data['page']['call_distribution_per_houre'] = '
 
                    	<tr class="odd">
-					<td>'.$row[counter].'</td>
+					<td>00</td>
 					<td>'.$row[counter].'</td>
 					<td>'.$row[counter].' %</td>
 					<td>'.$row[counter].'</td>
@@ -551,17 +564,345 @@ while($row = mysql_fetch_assoc($res11)){
 					<td>'.$row[counter].'</td>
 					<td>'.$row[counter].'</td>
 					</tr>
+					<tr class="odd">
+					<td>01</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].' %</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].'%</td>
+					<td>'.$row[counter].' წამი</td>
+					<td>'.$row[counter].' წამი</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].'</td>
+					</tr>
+					<tr class="odd">
+					<td>02</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].' %</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].'%</td>
+					<td>'.$row[counter].' წამი</td>
+					<td>'.$row[counter].' წამი</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].'</td>
+					</tr>
+					<tr class="odd">
+					<td>03</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].' %</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].'%</td>
+					<td>'.$row[counter].' წამი</td>
+					<td>'.$row[counter].' წამი</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].'</td>
+					</tr>
+					<tr class="odd">
+					<td>04</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].' %</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].'%</td>
+					<td>'.$row[counter].' წამი</td>
+					<td>'.$row[counter].' წამი</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].'</td>
+					</tr>
+					<tr class="odd">
+					<td>05</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].' %</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].'%</td>
+					<td>'.$row[counter].' წამი</td>
+					<td>'.$row[counter].' წამი</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].'</td>
+					</tr>
+					<tr class="odd">
+					<td>06</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].' %</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].'%</td>
+					<td>'.$row[counter].' წამი</td>
+					<td>'.$row[counter].' წამი</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].'</td>
+					</tr>
+					<tr class="odd">
+					<td>07</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].' %</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].'%</td>
+					<td>'.$row[counter].' წამი</td>
+					<td>'.$row[counter].' წამი</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].'</td>
+					</tr>
+					<tr class="odd">
+					<td>08</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].' %</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].'%</td>
+					<td>'.$row[counter].' წამი</td>
+					<td>'.$row[counter].' წამი</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].'</td>
+					</tr>
+					<tr class="odd">
+					<td>09</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].' %</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].'%</td>
+					<td>'.$row[counter].' წამი</td>
+					<td>'.$row[counter].' წამი</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].'</td>
+					</tr>
+					<tr class="odd">
+					<td>10</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].' %</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].'%</td>
+					<td>'.$row[counter].' წამი</td>
+					<td>'.$row[counter].' წამი</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].'</td>
+					</tr>
+					<tr class="odd">
+					<td>11</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].' %</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].'%</td>
+					<td>'.$row[counter].' წამი</td>
+					<td>'.$row[counter].' წამი</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].'</td>
+					</tr>
+					<tr class="odd">
+					<td>12</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].' %</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].'%</td>
+					<td>'.$row[counter].' წამი</td>
+					<td>'.$row[counter].' წამი</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].'</td>
+					</tr>
+					<tr class="odd">
+					<td>13</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].' %</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].'%</td>
+					<td>'.$row[counter].' წამი</td>
+					<td>'.$row[counter].' წამი</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].'</td>
+					</tr>
+					<tr class="odd">
+					<td>14</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].' %</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].'%</td>
+					<td>'.$row[counter].' წამი</td>
+					<td>'.$row[counter].' წამი</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].'</td>
+					</tr>
+					<tr class="odd">
+					<td>15</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].' %</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].'%</td>
+					<td>'.$row[counter].' წამი</td>
+					<td>'.$row[counter].' წამი</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].'</td>
+					</tr>
+					<tr class="odd">
+					<td>16</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].' %</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].'%</td>
+					<td>'.$row[counter].' წამი</td>
+					<td>'.$row[counter].' წამი</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].'</td>
+					</tr>
+					<tr class="odd">
+					<td>17</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].' %</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].'%</td>
+					<td>'.$row[counter].' წამი</td>
+					<td>'.$row[counter].' წამი</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].'</td>
+					</tr>
+					<tr class="odd">
+					<td>18</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].' %</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].'%</td>
+					<td>'.$row[counter].' წამი</td>
+					<td>'.$row[counter].' წამი</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].'</td>
+					</tr>
+					<tr class="odd">
+					<td>19</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].' %</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].'%</td>
+					<td>'.$row[counter].' წამი</td>
+					<td>'.$row[counter].' წამი</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].'</td>
+					</tr>
+					<tr class="odd">
+					<td>20</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].' %</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].'%</td>
+					<td>'.$row[counter].' წამი</td>
+					<td>'.$row[counter].' წამი</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].'</td>
+					</tr>
+					<tr class="odd">
+					<td>21</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].' %</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].'%</td>
+					<td>'.$row[counter].' წამი</td>
+					<td>'.$row[counter].' წამი</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].'</td>
+					</tr>
+					<tr class="odd">
+					<td>22</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].' %</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].'%</td>
+					<td>'.$row[counter].' წამი</td>
+					<td>'.$row[counter].' წამი</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].'</td>
+					</tr>
+					<tr class="odd">
+					<td>23</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].' %</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].'%</td>
+					<td>'.$row[counter].' წამი</td>
+					<td>'.$row[counter].' წამი</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].'</td>
+					</tr>		
+					
 
 							';
 
 }
+
+$res12 = mysql_query("SELECT DATE(qs.datetime) AS datetime, q.queue AS qname, ag.agent AS qagent, ac.event AS qevent,
+		qs.info1 AS info1, qs.info2 AS info2,  qs.info3 AS info3 FROM queue_stats AS qs, qname AS q,
+		qagent AS ag, qevent AS ac WHERE qs.qname = q.qname_id AND qs.qagent = ag.agent_id AND
+		qs.qevent = ac.event_id AND DATE(qs.datetime) >= '$start_time' AND DATE(qs.datetime) <= '$end_time'
+		AND q.queue IN ($queue,'NONE') AND ac.event IN ('ABANDON', 'EXITWITHTIMEOUT','COMPLETECALLER','COMPLETEAGENT','AGENTLOGIN','AGENTLOGOFF','AGENTCALLBACKLOGIN','AGENTCALLBACKLOGOFF')
+		GROUP BY 	DATE(qs.datetime)");
+
 
 while($row = mysql_fetch_assoc($res12)){
 
 	$data['page']['call_distribution_per_day_of_week'] = '
 
                    	<tr class="odd">
+					<td>კვირა</td>
 					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].' %</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].'%</td>
+					<td>'.$row[counter].' წამი</td>
+					<td>'.$row[counter].' წამი</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].'</td>
+					</tr>
+							<tr class="odd">
+					<td>ორშაბათი</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].' %</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].'%</td>
+					<td>'.$row[counter].' წამი</td>
+					<td>'.$row[counter].' წამი</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].'</td>
+					</tr>
+							<tr class="odd">
+					<td>სამშაბათი</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].' %</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].'%</td>
+					<td>'.$row[counter].' წამი</td>
+					<td>'.$row[counter].' წამი</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].'</td>
+					</tr>
+							<tr class="odd">
+					<td>ოთხშაბათი</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].' %</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].'%</td>
+					<td>'.$row[counter].' წამი</td>
+					<td>'.$row[counter].' წამი</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].'</td>
+					</tr>
+							<tr class="odd">
+					<td>ხუთშაბათი</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].' %</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].'%</td>
+					<td>'.$row[counter].' წამი</td>
+					<td>'.$row[counter].' წამი</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].'</td>
+					</tr>
+							<tr class="odd">
+					<td>პარასკევი</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].' %</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].'%</td>
+					<td>'.$row[counter].' წამი</td>
+					<td>'.$row[counter].' წამი</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].'</td>
+					</tr>
+							<tr class="odd">
+					<td>კვირა</td>
 					<td>'.$row[counter].'</td>
 					<td>'.$row[counter].' %</td>
 					<td>'.$row[counter].'</td>
@@ -575,6 +916,26 @@ while($row = mysql_fetch_assoc($res12)){
 							';
 
 }
+
+
+for($key=0;$key<24;$key++) {
+
+	$data['page']['call_distribution_per_hour'] .= '
+			<tr class="odd">
+					<td>'.(strlen($key)<2?'0'.$key:$key).'</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].' %</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].'%</td>
+					<td>'.$row[counter].' წამი</td>
+					<td>'.$row[counter].' წამი</td>
+					<td>'.$row[counter].'</td>
+					<td>'.$row[counter].'</td>
+					</tr>	
+			';
+}
+
+
 
 echo json_encode($data);
 

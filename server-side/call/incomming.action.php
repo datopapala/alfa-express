@@ -589,13 +589,13 @@ function getCalls(){
 
 	$req = mysql_query("
 
-						SELECT  	DISTINCT
-									IF(SUBSTR(cdr.src, 1, 3) = 995, SUBSTR(cdr.src, 4, 9), cdr.src) AS `src`
+						SELECT  	DISTINCT 
+							IF(SUBSTR(cdr.src, 1, 3) = 995, SUBSTR(cdr.src, 4, 9), cdr.src) AS `src`
 						FROM    	cdr
+						WHERE clid LIKE '%ALF%'
 						GROUP BY 	cdr.src
 						ORDER BY 	cdr.calldate DESC
-						LIMIT 		12
-
+						LIMIT 		14
 
 						");
 
@@ -610,7 +610,7 @@ function getCalls(){
 
 		$data .= '
 	    		<tr class="trClass">
-					<td class="tdClass">' . $i . '</td>
+					<td class="tdClass" style="padding:0 2px;">' . $i . ')</td>
 					<td class="tdClass" style="width: 30px !important;">' . $res3['src'] . '</td>
 					<td class="tdClass" style="font-size: 13px !important;"><button class="insert" number="' . $res3['src'] . '">დამატება</button></td>
 				</tr>';
@@ -1038,7 +1038,7 @@ function GetPage($res='', $number)
 								<select style="width: 165px;" id="source_id" class="idls object">'. Getsource($res['source_id']).'</select>
 							</td>
 							<td style="width: 69px;">
-								<button class="calls">ნომრები</button>
+								<button id="button_calls" class="calls">ნომრები</button>
 							</td>
 						</tr>				
 					</table>

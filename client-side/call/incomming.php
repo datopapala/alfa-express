@@ -63,6 +63,25 @@ if(isset($_SESSION['QSTATS']['hideloggedoff'])) {
 
 		});
 
+		$(document).on("click", "#button_calls", function () {
+			LoadDialogCalls();
+			$('#refresh-dialog').click(); 
+		});
+
+		function LoadDialogCalls(){
+			var button = {
+               		"save": {
+               			text: "განახლება",
+               			id: "refresh-dialog",
+               			click: function () {
+               			}
+               		}
+				};
+
+			/* Dialog Form Selector Name, Buttons Array */
+			GetDialogCalls('last_calls', 330, 550, button);
+		}
+
 		function LoadTable(){
 			/* Table ID, aJaxURL, Action, Colum Number, Custom Request, Hidden Colum, Menu Array */
 			GetDataTable(tName, aJaxURL, "get_list",9, "", 0, "", 1, "desc");
