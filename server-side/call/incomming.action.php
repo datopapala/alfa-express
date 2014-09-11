@@ -149,12 +149,11 @@ function Addincomming($c_date, $id_p, $phone, $person_name, $type, $results_id, 
 
 	$user		= $_SESSION['USERID'];
 	mysql_query("INSERT INTO `incomming_call` 
-			(`id`, `user_id`, `date`, `phone`, `name`, `type`, `information_category_id`, `information_sub_category_id`, `product_id`, `source_id`, `content`, `results_id`, `results_comment`, `content_id`, `connect`, `forward_id`, `call_vote`, `actived`)
+			( `user_id`, `date`, `phone`, `name`, `type`, `information_category_id`, `information_sub_category_id`, `product_id`, `source_id`, `content`, `results_id`, `results_comment`, `content_id`, `connect`, `forward_id`, `call_vote`, `actived`)
 			 VALUES 
-			('$id_p', '$user', '$c_date', '$phone', '$person_name', '$type', '$information_category_id', '$information_sub_category_id', '$product_id', '$source_id', '$content', '$results_id', '$results_comment', '$content_id', '$connect', '$forward_id', '$call_vote', '1')");
+			( '$user', '$c_date', '$phone', '$person_name', '$type', '$information_category_id', '$information_sub_category_id', '$product_id', '$source_id', '$content', '$results_id', '$results_comment', '$content_id', '$connect', '$forward_id', '$call_vote', '1')");
 	
-	GLOBAL $log;
-	$log->setInsertLog('incomming_call');
+	$incomming_call_id = mysql_insert_id();
 	
 	$personal_phone			= $_REQUEST['personal_phone'];
 	$personal_id			= $_REQUEST['personal_id'];
@@ -167,7 +166,7 @@ function Addincomming($c_date, $id_p, $phone, $person_name, $type, $results_id, 
 	mysql_query("INSERT INTO `personal_info`
 	( `user_id`, `incomming_call_id`, `personal_phone`, `personal_id`, `personal_contragent`, `personal_mail`, `personal_addres`, `personal_status`)
 	VALUES
-	( '$user', '$id_p', '$personal_phone', '$personal_id', '$personal_contragent', '$personal_mail', '$personal_addres', '$personal_status')");
+	( '$user', '$incomming_call_id', '$personal_phone', '$personal_id', '$personal_contragent', '$personal_mail', '$personal_addres', '$personal_status')");
 	
 	
 

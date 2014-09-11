@@ -14,11 +14,11 @@ $day_format = ($day / (60*60*24)) + 1;
 
 $row_done_blank = mysql_fetch_assoc(mysql_query("	SELECT COUNT(*) AS `count`
 		FROM `incomming_call`
-		WHERE DATE(date) >= '$start_time' AND DATE(date) <= '$end_time' AND phone != '' "));
+		WHERE DATE(date) >= '$start_time' AND DATE(date) <= '$end_time' AND phone = '' "));
 
 mysql_close();
-$conn = mysql_connect('212.72.155.176', 'root', 'Gl-1114');
-mysql_select_db('stats');
+$conn = mysql_connect('212.58.116.81', 'adrenali_user', 'TdGroupChat1');
+mysql_select_db('adrenali_chat');
 
 
 $data		= array('page' => array(
@@ -41,34 +41,48 @@ $data		= array('page' => array(
 
 //------------------------------- ტექნიკური ინფორმაცია
 
-	$row_answer = mysql_fetch_assoc(mysql_query("	SELECT	COUNT(*) AS `count`,
-															q.queue AS `queue`
-													FROM	queue_stats AS qs,
-															qname AS q,
-															qagent AS ag,
-															qevent AS ac
-													WHERE qs.qname = q.qname_id 
-													AND qs.qagent = ag.agent_id 
-													AND qs.qevent = ac.event_id 
-													AND DATE(qs.datetime) >= '$start_time' AND DATE(qs.datetime) <= '$end_time'
-													AND q.queue IN ($queue) 
-													AND ag.agent in ($agent)
-													AND ac.event IN ( 'COMPLETECALLER', 'COMPLETEAGENT') 
-													ORDER BY ag.agent"));
-	
-	$row_abadon = mysql_fetch_assoc(mysql_query("	SELECT 	COUNT(*) AS `count`,
-															ROUND((SUM(qs.info3) / COUNT(*))) AS `sec`
-													FROM	queue_stats AS qs,
-															qname AS q, 
-															qagent AS ag,
-															qevent AS ac
-													WHERE qs.qname = q.qname_id
-													AND qs.qagent = ag.agent_id
-													AND qs.qevent = ac.event_id
-													AND DATE(qs.datetime) >= '$start_time'
-													AND DATE(qs.datetime) <= '$end_time' 
-													AND q.queue IN ($queue) 
-													AND ac.event IN ('ABANDON', 'EXITWITHTIMEOUT')"));
+	$row_chat = mysql_fetch_assoc(mysql_query("	SELECT 	(
+															SELECT COUNT(*)
+															FROM `chat_chat`
+															WHERE chat_chat.department_name = 'MoneyMan'
+															AND DATE(chat_chat.cur_time) >= '$start_time'
+															AND DATE(chat_chat.cur_time) <= '$end_time'
+														) AS `total_chat`,
+														COUNT(*) AS `answer_chat`,
+														(
+															SELECT COUNT(*)
+															FROM `chat_chat`
+															WHERE chat_chat.department_name = 'MoneyMan'
+															AND chat_chat.chat_status = 1
+															AND DATE(chat_chat.cur_time) >= '$start_time'
+															AND DATE(chat_chat.cur_time) <= '$end_time'
+														) AS `unanswer_chat`,
+														department_name,
+														(
+															SELECT	TIME_FORMAT(SEC_TO_TIME((SUM(time_end) - SUM(time_start))/COUNT(*)), '%H:%i:%s')
+															FROM 		`chat_chat`
+															WHERE 	department_name = 'MoneyMan'
+															AND 		chat_chat.chat_status = 3
+															AND 		DATE(chat_chat.cur_time) >= '2014-09-11'
+															AND 		DATE(chat_chat.cur_time) <= '2014-09-11'
+															AND 		time_end != 0
+															AND 		time_start != 0
+														) AS `avg_time`,
+														(
+															SELECT	TIME_FORMAT(SEC_TO_TIME(SUM(time_end) - SUM(time_start)), '%H:%i:%s')
+															FROM 		`chat_chat`
+															WHERE 	chat_chat.department_name = 'MoneyMan'
+															AND 		chat_chat.chat_status = 3
+															AND 		DATE(chat_chat.cur_time) >= '2014-09-11'
+															AND 		DATE(chat_chat.cur_time) <= '2014-09-11'
+															AND 		time_end != 0
+															AND 		time_start != 0
+														) AS `total_time`
+												FROM `chat_chat`
+												WHERE chat_chat.department_name = 'MoneyMan'
+												AND chat_chat.chat_status = 3
+												AND DATE(chat_chat.cur_time) >= '$start_time'
+												AND DATE(chat_chat.cur_time) <= '$end_time'"));
 	
 	
 	
@@ -76,13 +90,13 @@ $data		= array('page' => array(
 	$data['page']['technik_info'] = '
 							
                     <td>ზარი</td>
-                    <td>'.($row_answer[count] + $row_abadon[count]).'</td>
-                    <td>'.$row_answer[count].'</td>
-                    <td>'.$row_abadon[count].'</td>
+                    <td>'.$row_chat[total_chat].'</td>
+                    <td>'.$row_chat[answer_chat].'</td>
+                    <td>'.$row_chat[unanswer_chat].'</td>
                     <td>'.$row_done_blank[count].'</td>
-                    <td>'.round(((($row_answer[count]) / ($row_answer[count] + $row_abadon[count])) * 100),2).' %</td>
-                    <td>'.round(((($row_abadon[count]) / ($row_answer[count] + $row_abadon[count])) * 100),2).' %</td>
-                    <td>'.round(((($row_done_blank[count]) / ($row_answer[count] + $row_abadon[count])) * 100),2).' %</td>
+                    <td>'.round((($row_chat[answer_chat] / $row_chat[total_chat]) * 100),2).' %</td>
+                    <td>'.round((($row_chat[unanswer_chat] / $row_chat[total_chat]) * 100),2).' %</td>
+                    <td>'.round((($row_done_blank[count] / $row_chat[total_chat]) * 100),2).' %</td>
                 
 							';
 // -----------------------------------------------------
@@ -90,7 +104,7 @@ $data		= array('page' => array(
 //------------------------------- ნაპასუხები ზარები რიგის მიხედვით
 
 	$data['page']['answer_call'] = '
-							<tr><td>'.$row_answer[queue].'</td><td>'.$row_answer[count].' ზარი</td><td>'.round(((($row_answer[count]) / ($row_answer[count])) * 100)).' %</td></tr>
+							<tr><td>'.$row_chat[department_name].'</td><td>'.$row_chat[answer_chat].' ზარი</td><td>'.round(((($row_chat[answer_chat]) / ($row_chat[answer_chat])) * 100)).' %</td></tr>
 							';
 
 //-------------------------------------------------------
@@ -249,34 +263,6 @@ $data		= array('page' => array(
 
 //------------------------------------ ნაპასუხები ზარები
 
-$row_transfer = mysql_fetch_assoc(mysql_query("	SELECT	COUNT(*) AS `count`
-												FROM	queue_stats AS qs,
-												qname AS q,
-												qagent AS ag,
-												qevent AS ac
-												WHERE qs.qname = q.qname_id
-												AND qs.qagent = ag.agent_id
-												AND qs.qevent = ac.event_id
-												AND DATE(qs.datetime) >= '$start_time' AND DATE(qs.datetime) <= '$end_time'
-												AND q.queue IN ($queue)
-												AND ag.agent in ($agent)
-												AND ac.event IN ( 'TRANSFER')
-												ORDER BY ag.agent"));
-
-$row_clock = mysql_fetch_assoc(mysql_query("	SELECT	ROUND((SUM(qs.info1) / COUNT(*)),2) AS `hold`,
-														ROUND((SUM(qs.info2) / COUNT(*)),2) AS `sec`,
-														ROUND((SUM(qs.info2) / 60 ),2) AS `min`
-												FROM 	queue_stats AS qs,
-														qname AS q,
-														qagent AS ag,
-														qevent AS ac 
-												WHERE	qs.qname = q.qname_id 
-												AND qs.qagent = ag.agent_id 
-												AND qs.qevent = ac.event_id 
-												AND q.queue IN ($queue) 
-												AND DATE(qs.datetime) >= '$start_time' AND DATE(qs.datetime) <= '$end_time'
-												AND ac.event IN ('COMPLETECALLER', 'COMPLETEAGENT')
-												ORDER BY qs.datetime"));
 
 
 
@@ -285,19 +271,16 @@ $row_clock = mysql_fetch_assoc(mysql_query("	SELECT	ROUND((SUM(qs.info1) / COUNT
 
                    	<tr>
 					<td class="tdstyle">ნაპასუხები ზარები</td>
-					<td>'.$row_answer[count].' ზარი</td>
+					<td>'.$row_chat[answer_chat].' ზარი</td>
 					</tr>
-					<tr>
-					<td class="tdstyle">გადამისამართებული ზარები</td>
-					<td>'.$row_transfer[count].' ზარი</td>
-					</tr>
+					
 					<tr>
 					<td class="tdstyle">საშ. ხანგძლივობა:</td>
-					<td>'.$row_clock[sec].' წამი</td>
+					<td>'.$row_chat[avg_time].' დრო</td>
 					</tr>
 					<tr>
 					<td class="tdstyle">სულ საუბრის ხანგძლივობა:</td>
-					<td>'.$row_clock[min].' წუთი</td>
+					<td>'.$row_chat[total_time].' დრო</td>
 					</tr>
 					<tr>
 					<td class="tdstyle">ლოდინის საშ. ხანგძლივობა:</td>
@@ -311,51 +294,22 @@ $row_clock = mysql_fetch_assoc(mysql_query("	SELECT	ROUND((SUM(qs.info1) / COUNT
 	
 //--------------------------- ნაპასუხები ზარები ოპერატორების მიხედვით
 
- 	$ress =mysql_query("SELECT 	ag.agent as `agent`, 
- 								count(ev.event) AS `num`,
- 								round(((count(ev.event) / (
- 	
- 	SELECT count(ev.event) AS num
- 	FROM queue_stats AS qs, qname AS q, qevent AS ev
- 	WHERE qs.qname = q.qname_id
- 	and qs.qevent = ev.event_id
- 	and DATE(qs.datetime) >= '$start_time'
- 	and DATE(qs.datetime) <= '$end_time'
- 	and q.queue IN ($queue)
- 	AND ev.event IN ('COMPLETECALLER', 'COMPLETEAGENT')
- 	
- 	)) * 100),2) AS `call_pr`,
- 	ROUND((sum(qs.info2) / 60),2) AS `call_time`,
- 	
- 	round(((sum(qs.info2) / (
- 	
- 	SELECT sum(qs.info2)
- 	FROM queue_stats AS qs, qname AS q, qevent AS ev
- 	WHERE qs.qname = q.qname_id
- 	and qs.qevent = ev.event_id
- 	and DATE(qs.datetime) >= '$start_time'
- 	and DATE(qs.datetime) <= '$end_time'
- 	and q.queue IN ($queue)
- 	AND ev.event IN ('COMPLETECALLER', 'COMPLETEAGENT')
- 	
- 	))* 100),2) AS `call_time_pr`,
- 	TIME_FORMAT(SEC_TO_TIME(sum(qs.info2) / count(ev.event)), '%i:%s') AS `avg_call_time`,
- 	sum(qs.info1) AS `hold_time`,
- 	ROUND((sum(qs.info1) / count(ev.event)),2) AS `avg_hold_time`
- 	FROM queue_stats AS qs, qname AS q, qevent AS ev, qagent AS `ag` WHERE ag.agent_id = qs.qagent AND
- 	qs.qname = q.qname_id and qs.qevent = ev.event_id 
- 	AND DATE(qs.datetime) >= '$start_time'
- 	AND DATE(qs.datetime) <= '$end_time'
- 	AND q.queue IN ($queue) 
- 	AND ev.event IN ('COMPLETECALLER', 'COMPLETEAGENT')
- 	GROUP BY ag.agent");
+	$row_operator = mysql_query("
+								SELECT 	COUNT(DISTINCT chat_id) AS `num`, 
+										operator_name
+								FROM 	`chat_messages`
+								WHERE 	DATE(FROM_UNIXTIME(time)) >= '$start_time'
+								AND 	DATE(FROM_UNIXTIME(time)) <= '$end_time'
+								AND 	operator_name != ''
+								GROUP BY operator_name
+								");
 
-while($row = mysql_fetch_assoc($ress)){
+while($row = mysql_fetch_assoc($row_operator)){
 
 	$data['page']['answer_call_by_queue'] .= '
 
                    	<tr>
-					<td>'.$row[agent].'</td>
+					<td>'.$row[operator_name].'</td>
 					<td>'.$row[num].'</td>
 					<td>'.$row[call_pr].' %</td>
 					<td>'.$row[call_time].' წუთი</td>
@@ -371,55 +325,7 @@ while($row = mysql_fetch_assoc($ress)){
 
 //----------------------------------------------------
 
-//--------------------------- კავშირის გაწყვეტის მიზეზეი
 
-
-$row_COMPLETECALLER = mysql_fetch_assoc(mysql_query("	SELECT	COUNT(*) AS `count`,
-																	q.queue AS `queue`
-												FROM	queue_stats AS qs,
-														qname AS q,
-														qagent AS ag,
-														qevent AS ac
-												WHERE qs.qname = q.qname_id
-												AND qs.qagent = ag.agent_id
-												AND qs.qevent = ac.event_id
-												AND DATE(qs.datetime) >= '$start_time' AND DATE(qs.datetime) <= '$end_time'
-												AND q.queue IN ($queue)
-												AND ag.agent in ($agent)
-												AND ac.event IN ( 'COMPLETECALLER')
-												ORDER BY ag.agent"));
-
-$row_COMPLETEAGENT = mysql_fetch_assoc(mysql_query("	SELECT	COUNT(*) AS `count`,
-																q.queue AS `queue`
-														FROM	queue_stats AS qs,
-																qname AS q,
-																qagent AS ag,
-																qevent AS ac
-														WHERE qs.qname = q.qname_id
-														AND qs.qagent = ag.agent_id
-														AND qs.qevent = ac.event_id
-														AND DATE(qs.datetime) >= '$start_time' AND DATE(qs.datetime) <= '$end_time'
-														AND q.queue IN ($queue)
-														AND ag.agent in ($agent)
-														AND ac.event IN (  'COMPLETEAGENT')
-														ORDER BY ag.agent"));
-
-	$data['page']['disconnection_cause'] = '
-
-                   <tr>
-					<td class="tdstyle">ოპერატორმა გათიშა:</td>
-					<td>'.$row_COMPLETEAGENT[count].' ზარი</td>
-					<td>0.00 %</td>
-					</tr>
-					<tr>
-					<td class="tdstyle">აბონენტმა გათიშა:</td>
-					<td>'.$row_COMPLETECALLER[count].' ზარი</td>
-					<td>0.00 %</td>
-					</tr>
-
-							';
-
-//-----------------------------------------------
 
 //----------------------------------- უპასუხო ზარები
 
@@ -449,63 +355,6 @@ $row_COMPLETEAGENT = mysql_fetch_assoc(mysql_query("	SELECT	COUNT(*) AS `count`,
 //--------------------------------------------
 
 	
-//----------------------------------- კავშირის გაწყვეტის მიზეზი
-
-	$row_timeout = mysql_fetch_assoc(mysql_query("	SELECT 	COUNT(*) AS `count`
-			FROM 	queue_stats AS qs,
-			qname AS q,
-			qagent AS ag,
-			qevent AS ac
-			WHERE qs.qname = q.qname_id
-			AND qs.qagent = ag.agent_id
-			AND qs.qevent = ac.event_id
-			AND DATE(qs.datetime) >= '$start_time' AND DATE(qs.datetime) <= '$end_time'
-			AND q.queue IN ($queue)
-			AND ac.event IN ('EXITWITHTIMEOUT')
-			ORDER BY qs.datetime"));
-	
-
-	$data['page']['disconnection_cause_unanswer'] = '
-
-                  <tr> 
-                  <td class="tdstyle">აბონენტმა გათიშა</td>
-			      <td>'.$row_abadon[count].' ზარი</td>
-			      <td>'.round((($row_abadon[count] / $row_abadon[count]) * 100),2).' %</td>
-		        </tr>
-			    <tr> 
-                  <td class="tdstyle">დრო ამოიწურა</td>
-			      <td>'.$row_timeout[count].' ზარი</td>
-			      <td>'.round((($row_timeout[count] / $row_timeout[count]) * 100),2).' %</td>
-		        </tr>
-
-							';
-
-//--------------------------------------------
-
-//------------------------------ უპასუხო ზარები რიგის მიხედვით
-
-	$Unanswered_Calls_by_Queue = mysql_fetch_assoc(mysql_query("	SELECT 	COUNT(*) AS `count`,
-			q.queue as `queue`
-			FROM 	queue_stats AS qs,
-			qname AS q,
-			qagent AS ag,
-			qevent AS ac
-			WHERE qs.qname = q.qname_id
-			AND qs.qagent = ag.agent_id
-			AND qs.qevent = ac.event_id
-			AND DATE(qs.datetime) >= '$start_time' AND DATE(qs.datetime) <= '$end_time'
-			AND q.queue IN ($queue)
-			AND ac.event IN ('ABANDON')
-			ORDER BY qs.datetime"));
-	
-	$data['page']['unanswered_calls_by_queue'] = '
-
-                   	<tr><td>'.$Unanswered_Calls_by_Queue[queue].'</td><td>'.$Unanswered_Calls_by_Queue[count].' ზარი</td><td>'.round((($Unanswered_Calls_by_Queue[count] / $Unanswered_Calls_by_Queue[count]) * 100),2).' %</td></tr>
-
-							';
-
-//---------------------------------------------------
-
 //------------------------------------------- სულ
 
 	$data['page']['totals'] = '

@@ -138,7 +138,7 @@
 			parame 			= new Object();
 			parame.agent	= '';
 			parame.queuet = '';
-			paramm		= "server-side/report/technical.action.php";
+			paramm		= "server-side/report/chat.action.php";
 			
 			
 			var options = $('#myform_List_Queue_to option');
@@ -195,7 +195,7 @@
 			<li><a href="#tab-0">მთავარი</a></li>
 			<li><a href="#tab-1">ნაპასუხები</a></li>
 			<li><a href="#tab-2">უპასუხო</a></li>
-			<li><a href="#tab-3">ზარების განაწილება</a></li>
+			<li><a href="#tab-3">ჩატის განაწილება</a></li>
 		</ul>
 		<div id="tab-0">
 			<div style="width: 48%; float:left;">
@@ -209,7 +209,7 @@
 							ხელმისაწვდომია<br><br>
 						    <select name="List_Queue_available" multiple="multiple" id="myform_List_Queue_from" size="10" style="height: 100px;width: 125px;" >
 								
-							    <option value="2470017">2470017</option>
+							    <option value="MoneyMan">MoneyMan</option>
 						    </select>
 						</td>
 						<td align="left">
@@ -237,10 +237,10 @@
 					<tbody><tr>
 					   <td>ხელმისაწვდომია<br><br>
 					    <select size="10" name="List_Agent_available" multiple="multiple" id="myform_List_Agent_from" style="height: 100px;width: 125px;">
-							<option value="ALF1">ALF1</option>
-							<option value="ALF2">ALF2</option>
-							<option value="ALF3">ALF3</option>
-							<option value="ALF4">ALF4</option>    
+							<option value="ნინო">ნინო</option>
+							<option value="მამუკა">მამუკა</option>
+							<option value="ლაშა">ლაშა</option>
+							<option value="თამო">თამო</option>    
 						</select>
 					</td>
 					<td align="left">
@@ -292,7 +292,7 @@
                     <th>დამუშავებულია</th>
                 </tr>
                 <tr id="technik_info">
-                    <td>ზარი</td>
+                    <td>ჩატი</td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -337,14 +337,10 @@
             <td valign="top" width="50%">
 
                 <table width="100%" border="0" cellpadding="0" cellspacing="0">
-                <caption>ნაპასუხები ზარები</caption>
+                <caption>ნაპასუხები ჩატი</caption>
                 <tbody id="answer_call_info">
                 <tr> 
-                  <td class="tdstyle">ნაპასუხები ზარები</td>
-                  <td></td>
-                </tr>
-                <tr> 
-                  <td class="tdstyle">გადამისამართებული ზარები</td>
+                  <td class="tdstyle">ნაპასუხები ჩატი</td>
                   <td></td>
                 </tr>
                 <tr>
@@ -368,15 +364,15 @@
         </table>
         <br>
         <table width="99%" cellpadding="3" cellspacing="3" border="0" class="sortable" id="table1">
-        <caption>ნაპასუხები ზარები ოპერატორების მიხედვით</caption>
+        <caption>ნაპასუხები ჩატი ოპერატორების მიხედვით</caption>
             <thead>
             <tr>
                   <th><a  class="sortheader">ოპერატორი<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-                  <th><a  class="sortheader">ზარები<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-                  <th><a  class="sortheader">% ზარები<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-                  <th><a  class="sortheader">ზარის დრო<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-                  <th><a  class="sortheader">% ზარის დრო<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-                  <th><a  class="sortheader">საშ. ზარის ხანგძლივობა<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
+                  <th><a  class="sortheader">ჩატი<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
+                  <th><a  class="sortheader">% ჩატი<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
+                  <th><a  class="sortheader">ჩატის დრო<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
+                  <th><a  class="sortheader">% ჩატის დრო<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
+                  <th><a  class="sortheader">საშ. ჩატის ხანგძლივობა<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
                   <th><a  class="sortheader">ლოდინის დრო<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
                   <th><a  class="sortheader">საშ. ლოდისნის ხანგძლივობა<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
             </tr>
@@ -410,62 +406,8 @@
             </tr>
             </thead>
             </table>
-        <br>
-        <table width="99%" cellpadding="3" cellspacing="3" border="0">
-            <caption>ნაპასუხები ზარები რიგის მიხედვით</caption>
-            <thead>
-            <tr>
-            <td valign="top" width="50%" bgcolor="#fffdf3">
-                <table width="99%" cellpadding="1" cellspacing="1" border="0" class="sortable" id="table3">
-                <thead>
-                <tr> 
-                       <th><a  class="sortheader" onclick="ts_resortTable(this, 0);return false;">რიგი<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-                    <th><a  class="sortheader" onclick="ts_resortTable(this, 1);return false;">სულ<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-                    <th><a  class="sortheader" onclick="ts_resortTable(this, 2);return false;">%<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-                </tr>
-                </thead>
-                <tbody id="answer_call">
-                
-              </tbody>
-              </table>
-            </td>
-            <td valign="top" width="50%" align="center" bgcolor="#fffdf3">
-                            </td>
-            </tr>
-            </thead>
-            </table>
-            <br>
-            <table width="99%" cellpadding="3" cellspacing="3" border="0">
-            <caption>კავშირის გაწყვეტის მიზეზეი</caption>
-            <thead>
-            <tr>
-            <td valign="top" width="50%" bgcolor="#fffdf3">
-                <table width="50%" cellpadding="1" cellspacing="1" border="0" class="sortable" id="table4">
-                <thead>
-                <tr>
-                    <th><a  class="sortheader" onclick="ts_resortTable(this, 0);return false;">მიზეზი<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-                    <th><a  class="sortheader" onclick="ts_resortTable(this, 1);return false;">სულ<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-                    <th><a  class="sortheader" onclick="ts_resortTable(this, 2);return false;">სულ<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-                </tr>
-                </thead>
-                <tbody id="disconnection_cause">
-	                <tr>
-						<td class="tdstyle">ოპერატორმა გათიშა:</td>
-						<td></td>
-						<td></td>
-					</tr>
-					<tr>
-						<td class="tdstyle">აბონენტმა გათიშა:</td>
-						<td></td>
-						<td></td>
-					</tr>
-                </tbody>
-              </table>
-            </td>
-           
-            </tr>
-            </thead>
-            </table>
+      
+            
 		 </div>
 		 <div id="tab-2">
 		    <table width="99%" cellpadding="3" cellspacing="3" border="0">
@@ -502,7 +444,7 @@
 				<caption>უპასუხო ზარები</caption>
 				<tbody id="unanswer_call">
 		        <tr> 
-                  <td class="tdstyle">უპასუხო ზარების რაოდენობა:</td>
+                  <td class="tdstyle">უპასუხო ჩატის რაოდენობა:</td>
 		          <td></td>
 	            </tr>
                 <tr>
@@ -525,59 +467,8 @@
 		</thead>
 		</table>
 		<br>
-		<table width="99%" cellpadding="3" cellspacing="3" border="0">
-		<caption>კავშირის გაწყვეტის მიზეზი</caption>
-			<thead>
-			<tr>
-			<td valign="top" width="50%" bgcolor="#fffdf3">
-				<table width="50%" cellpadding="1" cellspacing="1" border="0">
-				<thead>
-				<tr>
-					<th>მიზეზი</th>
-					<th>სულ</th>
-					<th>%</th>
-				</tr>
-				</thead >
-				<tbody id="disconnection_cause_unanswer">
-                <tr> 
-                  <td class="tdstyle">აბონენტმა გათიშა</td>
-			      <td></td>
-			      <td></td>
-		        </tr>
-			    <tr> 
-                  <td class="tdstyle">დრო ამოიწურა</td>
-			      <td></td>
-			      <td></td>
-		        </tr>
-				</tbody>
-			  </table>
-			</td>
-			</tr>
-			</thead>
-			</table>
-			<br>
-			<table width="99%" cellpadding="3" cellspacing="3" border="0">
-			<caption>უპასუხო ზარები რიგის მიხედვით</caption>
-			<thead>
-			<tr>
-			<td valign="top" width="50%" bgcolor="#fffdf3">
-				<table width="50%" cellpadding="1" cellspacing="1" border="0">
-				<thead>
-                <tr> 
-				   	<th>რიგი</th>
-					<th>სულ</th>
-					<th>%</th>
-                </tr>
-				</thead>
-				<tbody id="unanswered_calls_by_queue">
-				<tr><td></td><td></td><td></td></tr>
-			  </tbody>
-			  </table>
-			</td>
-			
-			</tr>
-			</thead>
-			</table>
+		
+		
 		 </div>
 		 <div id="tab-3">
 		    <table width="99%" cellpadding="3" cellspacing="3" border="0">
@@ -614,11 +505,11 @@
 				<caption>სულ</caption>
 				<tbody id="totals">
 		        <tr> 
-                  <td class="tdstyle">ნაპასუხები ზარების რაოდენობა:</td>
+                  <td class="tdstyle">ნაპასუხები ჩატის რაოდენობა:</td>
 		          <td></td>
 	            </tr>
                 <tr>
-                  <td class="tdstyle">უპასუხო ზარების რაოდენობა:</td>
+                  <td class="tdstyle">უპასუხო ჩატის რაოდენობა:</td>
                   <td></td>
                 </tr>
 		        <tr>
@@ -638,7 +529,7 @@
 		</table>
 		<br>
 		<table width="99%" cellpadding="1" cellspacing="1" border="0" class="sortable" id="table1">
-			<caption>ზარის განაწილება დღეების მიხედვით</caption>
+			<caption>ჩატის განაწილება დღეების მიხედვით</caption>
 				<thead>
 				<tr>
 					<th><a  class="sortheader" onclick="ts_resortTable(this, 0);return false;">თარირი<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
@@ -668,7 +559,7 @@
 			</table>
 			<br>
 			<table width="99%" cellpadding="1" cellspacing="1" border="0" class="sortable" id="table2">
-			<caption>ზარის განაწილება საათების მიხედვით</caption>
+			<caption>ჩატის განაწილება საათების მიხედვით</caption>
 				<thead>
 				<tr>
                     <th><a  class="sortheader" onclick="ts_resortTable(this, 0);return false;">საათი<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
@@ -698,7 +589,7 @@
 			</table>
 			<br>
 			<table width="99%" cellpadding="1" cellspacing="1" border="0" class="sortable" id="table3">
-			<caption>ზარის განაწილება კვირების მიხედვით</caption>
+			<caption>ჩატის განაწილება კვირების მიხედვით</caption>
 				<thead>
 				<tr>
                     <th><a  class="sortheader" onclick="ts_resortTable(this, 0);return false;">დღე<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
