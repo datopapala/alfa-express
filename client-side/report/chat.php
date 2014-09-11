@@ -70,7 +70,7 @@
 		}
     </style>
 	<script type="text/javascript">
-		var aJaxURL		= "server-side/report/technical.action.php";		//server side folder url
+		var aJaxURL		= "server-side/report/chat.action.php";		//server side folder url
 		var tName		= "example0";										//table name
 		var tbName		= "tabs";											//tabs name
 		var fName		= "add-edit-form";									//form name
