@@ -628,7 +628,7 @@ $row_COMPLETEAGENT = mysql_fetch_assoc(mysql_query("	SELECT	COUNT(*) AS `count`,
 	
 	
 	
-		for($key=0;$key<=24;$key++){
+		for($key=0;$key<24;$key++){
 			
 			$res124 = mysql_query("
 					SELECT  HOUR(qs.datetime) AS `datetime`,
