@@ -96,7 +96,7 @@ $data		= array('page' => array(
                     <td>'.$row_done_blank[count].'</td>
                     <td>'.round((($row_chat[answer_chat] / $row_chat[total_chat]) * 100),2).' %</td>
                     <td>'.round((($row_chat[unanswer_chat] / $row_chat[total_chat]) * 100),2).' %</td>
-                    <td>'.round((($row_done_blank[count] / $row_chat[total_chat]) * 100),2).' %</td>
+                    <td>'.round((($row_done_blank[count] / $row_chat[answer_chat]) * 100),2).' %</td>
                 
 							';
 // -----------------------------------------------------
