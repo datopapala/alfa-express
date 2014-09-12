@@ -49,15 +49,6 @@ $data		= array('page' => array(
 															AND DATE(chat_chat.cur_time) >= '$start_time'
 															AND DATE(chat_chat.cur_time) <= '$end_time'
 														) AS `total_chat`,
-														COUNT(*) AS `answer_chat`,
-														(
-															SELECT COUNT(*)
-															FROM `chat_chat`
-															WHERE chat_chat.department_name = 'MoneyMan'
-															AND chat_chat.chat_status = 1
-															AND DATE(chat_chat.cur_time) >= '$start_time'
-															AND DATE(chat_chat.cur_time) <= '$end_time'
-														) AS `unanswer_chat`,
 														department_name,
 														(
 															SELECT	TIME_FORMAT(SEC_TO_TIME((SUM(time_end) - SUM(time_start))/COUNT(*)), '%H:%i:%s')
@@ -85,30 +76,27 @@ $data		= array('page' => array(
 												AND DATE(chat_chat.cur_time) >= '$start_time'
 												AND DATE(chat_chat.cur_time) <= '$end_time'"));
 	
-	
-	
+	$row_chat_answer = mysql_fetch_assoc(mysql_query("SELECT 	COUNT(DISTINCT chat_id) AS `answer_chat`
+	FROM 	`chat_messages`
+	WHERE 	DATE(FROM_UNIXTIME(time)) >= '$start_time'
+	AND 	DATE(FROM_UNIXTIME(time)) <= '$end_time'
+	AND 	operator_name != ''
+	"));
 	
 	$data['page']['technik_info'] = '
 							
-                    <td>ზარი</td>
+                    <td>ჩატი</td>
                     <td>'.$row_chat[total_chat].'</td>
-                    <td>'.$row_chat[answer_chat].'</td>
-                    <td>'.$row_chat[unanswer_chat].'</td>
+                    <td>'.$row_chat_answer[answer_chat].'</td>
+                    <td>'.($row_chat[total_chat]-$row_chat_answer[answer_chat]).'</td>
                     <td>'.$row_done_blank[count].'</td>
-                    <td>'.round((($row_chat[answer_chat] / $row_chat[total_chat]) * 100),2).' %</td>
-                    <td>'.round((($row_chat[unanswer_chat] / $row_chat[total_chat]) * 100),2).' %</td>
-                    <td>'.round((($row_done_blank[count] / $row_chat[answer_chat]) * 100),2).' %</td>
+                    <td>'.round((($row_chat_answer[answer_chat] / $row_chat[total_chat]) * 100),2).' %</td>
+                    <td>'.round(((($row_chat[total_chat]-$row_chat_answer[answer_chat]) / $row_chat[total_chat]) * 100),2).' %</td>
+                    <td>'.round((($row_done_blank[count] / $row_chat_answer[answer_chat]) * 100),2).' %</td>
                 
 							';
 // -----------------------------------------------------
 
-//------------------------------- ნაპასუხები ზარები რიგის მიხედვით
-
-	$data['page']['answer_call'] = '
-							<tr><td>'.$row_chat[department_name].'</td><td>'.$row_chat[answer_chat].' ზარი</td><td>'.round(((($row_chat[answer_chat]) / ($row_chat[answer_chat])) * 100)).' %</td></tr>
-							';
-
-//-------------------------------------------------------
 
 //------------------------------- მომსახურების დონე(Service Level)
 
@@ -272,7 +260,7 @@ $data		= array('page' => array(
 
                    	<tr>
 					<td class="tdstyle">ნაპასუხები ჩატი</td>
-					<td>'.$row_chat[answer_chat].' ჩატი</td>
+					<td>'.$row_chat_answer[answer_chat].' ჩატი</td>
 					</tr>
 					
 					<tr>
@@ -304,15 +292,23 @@ $data		= array('page' => array(
 								AND 	operator_name != ''
 								GROUP BY operator_name
 								");
+	$row_operator_total = mysql_query("
+								SELECT 	COUNT(DISTINCT chat_id) AS `total`
+								FROM 	`chat_messages`
+								WHERE 	DATE(FROM_UNIXTIME(time)) >= '$start_time'
+								AND 	DATE(FROM_UNIXTIME(time)) <= '$end_time'
+								AND 	operator_name = ''
+										GROUP BY operator_name
+								");
 
 while($row = mysql_fetch_assoc($row_operator)){
-
+	$roww = mysql_fetch_assoc($row_operator_total);
 	$data['page']['answer_call_by_queue'] .= '
 
                    	<tr>
 					<td>'.$row[operator_name].'</td>
 					<td>'.$row[num].'</td>
-					<td>'.round((($row[num] / $row_chat[answer_chat])*100),2).' %</td>
+					<td>'.round((($row[num] / $roww[total])*100),2).' %</td>
 					<td>'.$row_chat[total_time]/$row[num].' წუთი</td>
 					<td>'.$row[call_time_pr].' %</td>
 					<td>'.$row[avg_call_time].' წუთი</td>
@@ -335,20 +331,13 @@ while($row = mysql_fetch_assoc($row_operator)){
 
                    	<tr>
 					<td class="tdstyle">უპასუხო ჩატის რაოდენობა:</td>
-					<td>'.$row_abadon[count].' ჩატი</td>
+					<td>'.($row_chat[total_chat]-$row_chat_answer[answer_chat]).' ჩატი</td>
 					</tr>
 					<tr>
 					<td class="tdstyle">ლოდინის საშ. დრო კავშირის გაწყვეტამდე:</td>
-					<td>'.$row_abadon[sec].' წამი</td>
+					<td>'.round((($row_chat_answer[answer_chat] / $row_chat[total_chat]) * 100),2).' წამი</td>
 					</tr>
-					<tr>
-					<td class="tdstyle">საშ. რიგში პოზიცია კავშირის გაწყვეტამდე:</td>
-					<td>1</td>
-					</tr>
-					<tr>
-					<td class="tdstyle">საშ. საწყისი პოზიცია რიგში:</td>
-					<td>1</td>
-					</tr>
+					
 
 							';
 

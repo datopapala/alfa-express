@@ -74,10 +74,10 @@
 		var tName		= "example0";										//table name
 		var tbName		= "tabs";											//tabs name
 		var fName		= "add-edit-form";									//form name
-		var file_name = '';
-		var rand_file = '';
+		var file_name 	= '';
+		var rand_file 	= '';
 		
-		$(document).ready(function () {     
+		$(document).ready(function () {   
 			GetTabs(tbName);   	
 			GetDate("start_time");
 			GetDate("end_time");
@@ -119,8 +119,6 @@
 			var values = $.map(options ,function(option) {
 			    $("#myform_List_"+par+"_to").append(new Option(option.value, option.value));
 			});
-			
-			
 		}
 
 		function go_first(par){
@@ -163,27 +161,68 @@
 			parame.start_time = $('#start_time').val();
 			parame.end_time = $('#end_time').val();
 			parame.act = 'check';
+			if(parame.queuet==''){
+				alert('აირჩიე რიგი');
+			}else if(parame.agent==''){
+				alert('აირჩიე ოპერატორი');
+			}else{
+				$.ajax({
+			        url: paramm,
+				    data: parame,
+			        success: function(data) {		        	
+						$("#answer_call").html(data.page.answer_call);
+						$("#technik_info").html(data.page.technik_info);
+						$(".report_info").html(data.page.report_info);
+						$("#answer_call_info").html(data.page.answer_call_info);
+						$("#answer_call_by_queue").html(data.page.answer_call_by_queue);
+						$("#disconnection_cause").html(data.page.disconnection_cause);
+						$("#unanswer_call").html(data.page.unanswer_call);
+						$("#disconnection_cause_unanswer").html(data.page.disconnection_cause_unanswer);
+						$("#unanswered_calls_by_queue").html(data.page.unanswered_calls_by_queue);
+						$("#totals").html(data.page.totals);
+						$("#call_distribution_per_day").html(data.page.call_distribution_per_day);
+						$("#call_distribution_per_hour").html(data.page.call_distribution_per_hour);
+						$("#call_distribution_per_day_of_week").html(data.page.call_distribution_per_day_of_week);
+						$("#service_level").html(data.page.service_level);
+				    }
+			    });
+			}
+        });
+
+		$(document).on("click", "#answear_dialog", function () {
+			LoadDialogCalls();
+		});
+		
+		var record;
+		function play(record){
+			
+			link = 'http://212.72.155.176:8181/records/' + record;
+			var newWin = window.open(link, 'newWin','width=420,height=200');
+            newWin.focus();
+            
+		}
+		
+		function LoadDialogCalls(){
+			
+			parame 				= new Object();
+			paramm		= "server-side/report/technical.action.php";
+			parame.start_time 	= $('#start_time').val();
+			parame.end_time 	= $('#end_time').val();
+			parame.act 			= 'answear_dialog';
 			$.ajax({
 		        url: paramm,
 			    data: parame,
-		        success: function(data) {
-					$("#answer_call").html(data.page.answer_call);
-					$("#technik_info").html(data.page.technik_info);
-					$(".report_info").html(data.page.report_info);
-					$("#answer_call_info").html(data.page.answer_call_info);
-					$("#answer_call_by_queue").html(data.page.answer_call_by_queue);
-					$("#disconnection_cause").html(data.page.disconnection_cause);
-					$("#unanswer_call").html(data.page.unanswer_call);
-					$("#disconnection_cause_unanswer").html(data.page.disconnection_cause_unanswer);
-					$("#unanswered_calls_by_queue").html(data.page.unanswered_calls_by_queue);
-					$("#totals").html(data.page.totals);
-					$("#call_distribution_per_day").html(data.page.call_distribution_per_day);
-					$("#call_distribution_per_hour").html(data.page.call_distribution_per_hour);
-					$("#call_distribution_per_day_of_week").html(data.page.call_distribution_per_day_of_week);
-					$("#service_level").html(data.page.service_level);	
+		        success: function(data) {		        	
+					$("#test").html(data.page.answear_dialog);
+					GetDialog("add-edit-form", 800, "auto", "");
+					/* Table ID, aJaxURL, Action, Colum Number, Custom Request, Hidden Colum, Menu Array */
+					GetDataTable("example", aJaxURL, "answear_dialog_table",7, "", 0, "", 1, "desc");
+
 			    }
 		    });
-        });
+		    
+			
+		}
     </script>
     
 </head>
@@ -294,8 +333,8 @@
                 <tr id="technik_info">
                     <td>ზარი</td>
                     <td></td>
-                    <td></td>
-                    <td></td>
+                    <td id="answear_dialog"></td>
+                    <td id="unanswear_dialog"></td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -730,8 +769,8 @@
 		 
 </div>
 <!-- jQuery Dialog -->
-<div id="add-edit-form" class="form-dialog" title="დავალების ფორმირება">
-<!-- aJax -->
+<div id="add-edit-form" class="form-dialog" title="ჩანაწერები">
+<div id="test"></div>
 </div>
 
 <!-- jQuery Dialog -->
