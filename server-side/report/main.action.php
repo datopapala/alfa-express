@@ -64,7 +64,7 @@ switch ($action) {
 												incomming_call.id,
 											  	DATE_FORMAT(incomming_call.`date`,'%y-%m-%d %H:%i:%s'),
 												info_category.`name`,
-												incomming_call.phone,
+												IF(incomming_call.phone != '',incomming_call.phone,'ჩატი'),
 	  											incomming_call.content
 								FROM 			incomming_call
 								LEFT JOIN 		info_category  ON incomming_call.information_category_id=info_category.id

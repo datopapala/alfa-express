@@ -82,7 +82,7 @@ $data		= array('page' => array(
                     <td>'.$row_done_blank[count].'</td>
                     <td>'.round(((($row_answer[count]) / ($row_answer[count] + $row_abadon[count])) * 100),2).' %</td>
                     <td>'.round(((($row_abadon[count]) / ($row_answer[count] + $row_abadon[count])) * 100),2).' %</td>
-                    <td>'.round(((($row_done_blank[count]) / ($row_answer[count] + $row_abadon[count])) * 100),2).' %</td>
+                    <td>'.round(((($row_done_blank[count]) / ($row_answer[count])) * 100),2).' %</td>
                 
 							';
 // -----------------------------------------------------

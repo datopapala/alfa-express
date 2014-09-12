@@ -1,4 +1,4 @@
-<?php
+ <?php
 
 require_once('../../includes/classes/core.php');
 
@@ -63,8 +63,8 @@ $data		= array('page' => array(
 															FROM 		`chat_chat`
 															WHERE 	department_name = 'MoneyMan'
 															AND 		chat_chat.chat_status = 3
-															AND 		DATE(chat_chat.cur_time) >= '2014-09-11'
-															AND 		DATE(chat_chat.cur_time) <= '2014-09-11'
+															AND 		DATE(chat_chat.cur_time) >= '$start_time'
+															AND 		DATE(chat_chat.cur_time) <= '$end_time'
 															AND 		time_end != 0
 															AND 		time_start != 0
 														) AS `avg_time`,
@@ -73,8 +73,8 @@ $data		= array('page' => array(
 															FROM 		`chat_chat`
 															WHERE 	chat_chat.department_name = 'MoneyMan'
 															AND 		chat_chat.chat_status = 3
-															AND 		DATE(chat_chat.cur_time) >= '2014-09-11'
-															AND 		DATE(chat_chat.cur_time) <= '2014-09-11'
+															AND 		DATE(chat_chat.cur_time) >= '$start_time'
+															AND 		DATE(chat_chat.cur_time) <= '$end_time'
 															AND 		time_end != 0
 															AND 		time_start != 0
 														) AS `total_time`
@@ -270,8 +270,8 @@ $data		= array('page' => array(
 	$data['page']['answer_call_info'] = '
 
                    	<tr>
-					<td class="tdstyle">ნაპასუხები ზარები</td>
-					<td>'.$row_chat[answer_chat].' ზარი</td>
+					<td class="tdstyle">ნაპასუხები ჩატი</td>
+					<td>'.$row_chat[answer_chat].' ჩატი</td>
 					</tr>
 					
 					<tr>
@@ -311,8 +311,8 @@ while($row = mysql_fetch_assoc($row_operator)){
                    	<tr>
 					<td>'.$row[operator_name].'</td>
 					<td>'.$row[num].'</td>
-					<td>'.$row[call_pr].' %</td>
-					<td>'.$row[call_time].' წუთი</td>
+					<td>'.round((($row[num] / $row_chat[answer_chat])*100),2).' %</td>
+					<td>'.$row_chat[total_time]/$row[num].' წუთი</td>
 					<td>'.$row[call_time_pr].' %</td>
 					<td>'.$row[avg_call_time].' წუთი</td>
 					<td>'.$row[hold_time].' წამი</td>
@@ -333,8 +333,8 @@ while($row = mysql_fetch_assoc($row_operator)){
 	$data['page']['unanswer_call'] = '
 
                    	<tr>
-					<td class="tdstyle">უპასუხო ზარების რაოდენობა:</td>
-					<td>'.$row_abadon[count].' ზარი</td>
+					<td class="tdstyle">უპასუხო ჩატის რაოდენობა:</td>
+					<td>'.$row_abadon[count].' ჩატი</td>
 					</tr>
 					<tr>
 					<td class="tdstyle">ლოდინის საშ. დრო კავშირის გაწყვეტამდე:</td>
@@ -360,12 +360,12 @@ while($row = mysql_fetch_assoc($row_operator)){
 	$data['page']['totals'] = '
 
                    	<tr> 
-                  <td class="tdstyle">ნაპასუხები ზარების რაოდენობა:</td>
-		          <td>'.$row_answer[count].' ზარი</td>
+                  <td class="tdstyle">ნაპასუხები ჩატის რაოდენობა:</td>
+		          <td>'.$row_answer[count].' ჩატი</td>
 	            </tr>
                 <tr>
-                  <td class="tdstyle">უპასუხო ზარების რაოდენობა:</td>
-                  <td>'.$row_abadon[count].' ზარი</td>
+                  <td class="tdstyle">უპასუხო ჩატის რაოდენობა:</td>
+                  <td>'.$row_abadon[count].' ჩატი</td>
                 </tr>
 		        <tr>
                   <td class="tdstyle">ოპერატორი შევიდა:</td>
