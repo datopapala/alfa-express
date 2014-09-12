@@ -19,6 +19,7 @@ $row_done_blank = mysql_fetch_assoc(mysql_query("	SELECT COUNT(*) AS `count`
 mysql_close();
 $conn = mysql_connect('212.58.116.81', 'adrenali_user', 'TdGroupChat1');
 mysql_select_db('adrenali_chat');
+mysql_query("SET character_set_results = 'utf8', character_set_client = 'utf8', character_set_connection = 'utf8', character_set_database = 'utf8', character_set_server = 'utf8'", $conn);
 
 
 $data		= array('page' => array(
