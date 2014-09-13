@@ -811,7 +811,7 @@ $row_COMPLETEAGENT = mysql_fetch_assoc(mysql_query("	SELECT	COUNT(*) AS `count`,
 	
 	
 	
-		for($key=0;$key<24;$key++){
+
 			
 			$res124 = mysql_query("
 					SELECT  HOUR(qs.datetime) AS `datetime`,
@@ -843,7 +843,6 @@ $row_COMPLETEAGENT = mysql_fetch_assoc(mysql_query("	SELECT	COUNT(*) AS `count`,
 					AND DATE(qs.datetime) <= '$end_time'
 					AND q.queue IN ($queue,'NONE')
 					AND ac.event IN ('COMPLETECALLER','COMPLETEAGENT')
-					AND HOUR(qs.datetime) = $key
 					GROUP BY HOUR(qs.datetime)
 					");
 			
@@ -875,15 +874,15 @@ $row_COMPLETEAGENT = mysql_fetch_assoc(mysql_query("	SELECT	COUNT(*) AS `count`,
 					AND DATE(qs.datetime) <= '$end_time'
 					AND q.queue IN ($queue,'NONE')
 					AND ac.event IN ('ABANDON','EXITWITHTIMEOUT')
-					AND HOUR(qs.datetime) = $key
+					AND HOUR(qs.datetime) > 9
 					GROUP BY HOUR(qs.datetime)
 					");
 			
-		$row = mysql_fetch_assoc($res124);
+		while($row = mysql_fetch_assoc($res124)){
 		$roww = mysql_fetch_assoc($res1244);
 			$data['page']['call_distribution_per_hour'] .= '
 				<tr class="odd">
-						<td>'.$key.':00</td>
+						<td>'.$row[datetime].':00</td>
 						<td>'.(($row[answer_count]!='')?$row[answer_count]:"0").'</td>
 						<td>'.(($row[call_answer_pr]!='')?$row[call_answer_pr]:"0").' %</td>
 						<td>'.(($roww[unanswer_count]!='')?$roww[unanswer_count]:"0").'</td>
@@ -901,7 +900,7 @@ $row_COMPLETEAGENT = mysql_fetch_assoc(mysql_query("	SELECT	COUNT(*) AS `count`,
 
 //------------------------------ ზარის განაწილება კვირების მიხედვით
 
-		for($i=1;$i<=7;$i++){
+
 $res12 = mysql_query("
 					SELECT  CASE
 									WHEN DAYOFWEEK(qs.datetime) = 1 THEN 'კვირა'
@@ -940,7 +939,6 @@ $res12 = mysql_query("
 					AND DATE(qs.datetime) <= '$end_time'
 					AND q.queue IN ($queue,'NONE')
 					AND ac.event IN ('COMPLETECALLER','COMPLETEAGENT')
-					AND DAYOFWEEK(qs.datetime) = $i
 					GROUP BY DAYOFWEEK(qs.datetime)
 					");
 
@@ -972,43 +970,15 @@ $res122 = mysql_query("
 					AND DATE(qs.datetime) <= '$end_time'
 					AND q.queue IN ($queue,'NONE')
 					AND ac.event IN ('ABANDON','EXITWITHTIMEOUT')
-					AND DAYOFWEEK(qs.datetime) = $i
 					GROUP BY DAYOFWEEK(qs.datetime)
 					");
 
-
-	$row = mysql_fetch_assoc($res12);
+	while($row = mysql_fetch_assoc($res12)){
 	$roww = mysql_fetch_assoc($res122);
-	
-	switch ($i)
-	{
-		case 1:
-			$week = 'კვირა';
-			break;
-		case 2:
-			$week = 'ორშაბათი';
-			break;
-		case 3:
-			$week = 'სამშაბათი';
-			break;
-		case 4:
-			$week = 'ოთხშაბათი';
-			break;
-		case 5:
-			$week = 'ხუთშაბათი';
-			break;
-		case 6:
-			$week = 'პარასკევი';
-			break;
-		case 7:
-			$week = 'შაბათი';
-			break;
-	}
-	
 	$data['page']['call_distribution_per_day_of_week'] .= '
 
                    	<tr class="odd">
-					<td>'.$week.'</td>
+					<td>'.$row[datetime].'</td>
 					<td>'.(($row[answer_count]!='')?$row[answer_count]:"0").'</td>
 					<td>'.(($row[call_answer_pr]!='')?$row[call_answer_pr]:"0").' %</td>
 					<td>'.(($roww[unanswer_count]!='')?$roww[unanswer_count]:"0").'</td>
