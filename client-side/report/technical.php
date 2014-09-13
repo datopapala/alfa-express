@@ -212,6 +212,28 @@
 			parame.start_time 	= $('#start_time').val();
 			parame.end_time 	= $('#end_time').val();
 			parame.act 			= 'answear_dialog';
+			parame.agent	= '';
+			parame.queuet = '';
+			
+			
+			var options = $('#myform_List_Queue_to option');
+			var values = $.map(options ,function(option) {
+				if(parame.queuet != ""){
+					parame.queuet+=",";
+					
+				}
+				parame.queuet+="'"+option.value+"'";
+			});
+
+			
+			var options = $('#myform_List_Agent_to option');
+			var values = $.map(options ,function(option) {
+				if(parame.agent != ''){
+					parame.agent+=',';
+					
+				}
+				parame.agent+="'"+option.value+"'";
+			});
 			$.ajax({
 		        url: paramm,
 			    data: parame,
@@ -219,7 +241,7 @@
 					$("#test").html(data.page.answear_dialog);
 					GetDialog("add-edit-form", 800, "auto", "");
 					/* Table ID, aJaxURL, Action, Colum Number, Custom Request, Hidden Colum, Menu Array */
-					GetDataTable("example", aJaxURL, "answear_dialog_table&start_time="+parame.start_time+"&end_time="+parame.end_time,7, "", 0, "", 1, "desc");
+					GetDataTable("example", aJaxURL, "answear_dialog_table&start_time="+parame.start_time+"&end_time="+parame.end_time+"&queuet="+parame.queuet+"&agent="+parame.agent,7, "", 0, "", 1, "desc");
 
 			    }
 		    });
@@ -231,7 +253,10 @@
 			parame.start_time 	= $('#start_time').val();
 			parame.end_time 	= $('#end_time').val();
 			parame.act 			= 'unanswear_dialog';
+			parame.agent	= '';
 			parame.queuet = '';
+			
+			
 			var options = $('#myform_List_Queue_to option');
 			var values = $.map(options ,function(option) {
 				if(parame.queuet != ""){
@@ -239,6 +264,16 @@
 					
 				}
 				parame.queuet+="'"+option.value+"'";
+			});
+
+			
+			var options = $('#myform_List_Agent_to option');
+			var values = $.map(options ,function(option) {
+				if(parame.agent != ''){
+					parame.agent+=',';
+					
+				}
+				parame.agent+="'"+option.value+"'";
 			});
 			$.ajax({
 		        url: paramm,

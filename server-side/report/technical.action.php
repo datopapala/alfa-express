@@ -24,14 +24,22 @@ if($_REQUEST['act'] =='answear_dialog_table'){
 	));
 	$count = 		$_REQUEST['count'];
 	$hidden = 		$_REQUEST['hidden'];
-	$rResult = mysql_query("SELECT  cdr.`calldate` as `hiden`,
-									cdr.`calldate`,
-									cdr.`src`,
-									cdr.`dst`,
+	$rResult = mysql_query("SELECT 	cdr.calldate,
+									cdr.calldate,
+									cdr.src,
+									cdr.dst,
+									qagent.agent,
 									CONCAT(SUBSTR((cdr.duration / 60), 1, 1), ':', cdr.duration % 60) as `time`,
 									CONCAT('<p onclick=play(', '\'', SUBSTRING(cdr.userfield, 35),'.wav', '\'',  ')>მოსმენა</p>', '<a download=\"image.jpg\" href=\"http://212.72.155.176:8181/records/', SUBSTRING(cdr.userfield, 35),'.wav', '\">ჩამოტვირთვა</a>') AS `dwn`
-							FROM    `cdr`
-							WHERE   (`dst` = '2470017' && `userfield` != '' && DATE(`calldate`) >= '$start_time' && DATE(`calldate`) <= '$end_time' )");
+							FROM 	queue_stats
+							JOIN 	cdr ON queue_stats.uniqueid = cdr.uniqueid
+							JOIN 	qagent ON queue_stats.qagent = qagent.agent_id
+							JOIN 	qname ON queue_stats.qname = qname.qname_id
+							WHERE 	queue_stats.qevent in (7,8)
+							AND 	DATE(queue_stats.`datetime`) >= '$start_time'
+							AND 	DATE(queue_stats.`datetime`) <= '$end_time'
+							AND 	qname.queue IN ($queue)
+							AND		qagent.agent IN ($agent)");
 	$data = array(
 			"aaData"	=> array()
 	);
@@ -100,8 +108,9 @@ if($_REQUEST['act'] =='answear_dialog'){
 												                        <tr id="datatable_header">
 												                            <th>ID</th>
 												                            <th style="width: 100%;">თარიღი</th>
-												                             <th style="width: 120px;">წყარო</th>
+												                            <th style="width: 120px;">წყარო</th>
 												                            <th style="width: 120px;">ადრესატი</th>
+																			<th style="width: 120px;">ოპერატორი</th>
 												                            <th style="width: 120px;">დრო</th>
 												                            <th style="width: 100%;">ქმედება</th>
 												                        </tr>
@@ -124,6 +133,9 @@ if($_REQUEST['act'] =='answear_dialog'){
 												                                <input type="text" name="search_phone" value="ფილტრი" class="search_init" style="width: 90px;"/>
 												                            </th>
 												                            <th>
+												                                <input type="text" name="search_category" value="ფილტრი" class="search_init" style="width: 90px;" />
+												                            </th>
+																			<th>
 												                                <input type="text" name="search_category" value="ფილტრი" class="search_init" style="width: 90px;" />
 												                            </th>
 												                            
