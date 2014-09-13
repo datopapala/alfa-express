@@ -216,7 +216,7 @@
 					$("#test").html(data.page.answear_dialog);
 					GetDialog("add-edit-form", 800, "auto", "");
 					/* Table ID, aJaxURL, Action, Colum Number, Custom Request, Hidden Colum, Menu Array */
-					GetDataTable("example", aJaxURL, "answear_dialog_table",7, "", 0, "", 1, "desc");
+					GetDataTable("example", aJaxURL, "answear_dialog_table&start_time="+parame.start_time+"&end_time="+parame.end_time,7, "", 0, "", 1, "desc");
 
 			    }
 		    });
@@ -333,8 +333,8 @@
                 <tr id="technik_info">
                     <td>ზარი</td>
                     <td></td>
-                    <td id="answear_dialog"></td>
-                    <td id="unanswear_dialog"></td>
+                    <td id="answear_dialog" style="cursor: pointer; text-decoration: underline;"></td>
+                    <td id="unanswear_dialog" style="cursor: pointer; text-decoration: underline;"></td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -769,7 +769,7 @@
 		 
 </div>
 <!-- jQuery Dialog -->
-<div id="add-edit-form" class="form-dialog" title="ჩანაწერები">
+<div id="add-edit-form" class="form-dialog" title="ნაპასუხები ზარები">
 <div id="test"></div>
 </div>
 

@@ -31,7 +31,7 @@ if($_REQUEST['act'] =='answear_dialog_table'){
 									CONCAT(SUBSTR((cdr.duration / 60), 1, 1), ':', cdr.duration % 60) as `time`,
 									CONCAT('<p onclick=play(', '\'', SUBSTRING(cdr.userfield, 35),'.wav', '\'',  ')>მოსმენა</p>', '<a download=\"image.jpg\" href=\"http://212.72.155.176:8181/records/', SUBSTRING(cdr.userfield, 35),'.wav', '\">ჩამოტვირთვა</a>') AS `dwn`
 							FROM    `cdr`
-							WHERE   (`dst` = '2470017' && `userfield` != '' && DATE(`calldate`) >= '2014-09-12' && DATE(`calldate`) <= '2014-09-12' )");
+							WHERE   (`dst` = '2470017' && `userfield` != '' && DATE(`calldate`) >= '$start_time' && DATE(`calldate`) <= '$end_time' )");
 	$data = array(
 			"aaData"	=> array()
 	);
@@ -104,7 +104,7 @@ $row_done_blank = mysql_fetch_assoc(mysql_query("	SELECT COUNT(*) AS `count`
 
 mysql_close();
 $conn = mysql_connect('212.72.155.176', 'root', 'Gl-1114');
-mysql_select_db('stats');
+mysql_select_db('asteriskcdrdb');
 
 
 $data		= array('page' => array(
@@ -163,8 +163,8 @@ $data['error'] = $error;
 							
                     <td>ზარი</td>
                     <td>'.($row_answer[count] + $row_abadon[count]).'</td>
-                    <td id="answear_dialog">'.$row_answer[count].'</td>
-                    <td id="unanswear_dialog">'.$row_abadon[count].'</td>
+                    <td id="answear_dialog" style="cursor: pointer; text-decoration: underline;">'.$row_answer[count].'</td>
+                    <td id="unanswear_dialog" style="cursor: pointer; text-decoration: underline;">'.$row_abadon[count].'</td>
                     <td>'.$row_done_blank[count].'</td>
                     <td>'.round(((($row_answer[count]) / ($row_answer[count] + $row_abadon[count])) * 100),2).' %</td>
                     <td>'.round(((($row_abadon[count]) / ($row_answer[count] + $row_abadon[count])) * 100),2).' %</td>
