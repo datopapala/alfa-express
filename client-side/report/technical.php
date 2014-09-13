@@ -190,7 +190,11 @@
         });
 
 		$(document).on("click", "#answear_dialog", function () {
-			LoadDialogCalls();
+			LoadDialog();
+		});
+		
+		$(document).on("click", "#unanswear_dialog", function () {
+			LoadDialog1();
 		});
 		
 		var record;
@@ -202,8 +206,7 @@
             
 		}
 		
-		function LoadDialogCalls(){
-			
+		function LoadDialog(){
 			parame 				= new Object();
 			paramm		= "server-side/report/technical.action.php";
 			parame.start_time 	= $('#start_time').val();
@@ -220,8 +223,34 @@
 
 			    }
 		    });
-		    
-			
+		}
+		
+		function LoadDialog1(){
+			parame 				= new Object();
+			paramm		= "server-side/report/technical.action.php";
+			parame.start_time 	= $('#start_time').val();
+			parame.end_time 	= $('#end_time').val();
+			parame.act 			= 'unanswear_dialog';
+			parame.queuet = '';
+			var options = $('#myform_List_Queue_to option');
+			var values = $.map(options ,function(option) {
+				if(parame.queuet != ""){
+					parame.queuet+=",";
+					
+				}
+				parame.queuet+="'"+option.value+"'";
+			});
+			$.ajax({
+		        url: paramm,
+			    data: parame,
+		        success: function(data) {		        	
+					$("#test").html(data.page.answear_dialog);
+					GetDialog("add-edit-form", 500, "auto", "");
+					/* Table ID, aJaxURL, Action, Colum Number, Custom Request, Hidden Colum, Menu Array */
+					GetDataTable("example", aJaxURL, "unanswear_dialog_table&start_time="+parame.start_time+"&end_time="+parame.end_time+"&queuet="+parame.queuet,4, "", 0, "", 1, "desc");
+
+			    }
+		    });
 		}
     </script>
     

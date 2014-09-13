@@ -49,6 +49,47 @@ if($_REQUEST['act'] =='answear_dialog_table'){
 		
 }
 else
+if($_REQUEST['act'] =='unanswear_dialog_table'){
+	mysql_close();
+	$conn = mysql_connect('212.72.155.176', 'root', 'Gl-1114');
+	if (!$conn) {
+		$error = 'dgfhg';
+	}
+	mysql_select_db('asteriskcdrdb');
+	$data		= array('page' => array(
+			'answear_dialog' => ''
+	));
+	$count = 		$_REQUEST['count'];
+	$hidden = 		$_REQUEST['hidden'];
+	$rResult = mysql_query("SELECT 	cdr.calldate,
+									cdr.calldate,
+									cdr.src,
+									cdr.dst
+							FROM	queue_stats
+							JOIN	qname ON	queue_stats.qname = qname.qname_id
+							JOIN	qevent ON	queue_stats.qevent = qevent.event_id
+							JOIN	cdr ON	queue_stats.uniqueid = cdr.uniqueid
+							WHERE 	DATE(queue_stats.datetime) >= '$start_time'
+							AND 	DATE(queue_stats.datetime) <= '$end_time' 
+							AND 	qname.queue IN ($queue) 
+							AND 	qevent.`event` IN ('ABANDON')");
+	$data = array(
+			"aaData"	=> array()
+	);
+
+	while ( $aRow = mysql_fetch_array( $rResult ) )
+	{
+		$row = array();
+		for ( $i = 0 ; $i < $count ; $i++ )
+		{
+			/* General output */
+			$row[] = $aRow[$i];
+		}
+		$data['aaData'][] = $row;
+	}
+
+}
+else
 if($_REQUEST['act'] =='answear_dialog'){
 
 				$data['page']['answear_dialog'] = '
@@ -94,7 +135,47 @@ if($_REQUEST['act'] =='answear_dialog'){
 													';
 			
 			
-}else{
+}
+else
+if($_REQUEST['act'] =='unanswear_dialog'){
+
+	$data['page']['answear_dialog'] = '
+								
+							
+												                <table class="display" id="example">
+												                    <thead>
+												                        <tr id="datatable_header">
+												                            <th>ID</th>
+												                            <th style="width: 100%;">თარიღი</th>
+												                             <th style="width: 120px;">წყარო</th>
+												                            <th style="width: 120px;">ადრესატი</th>
+												                        </tr>
+												                    </thead>
+												                    <thead>
+												                        <tr class="search_header">
+												                            <th class="colum_hidden">
+												                            	<input type="text" name="search_id" value="ფილტრი" class="search_init" style=""/>
+												                            </th>
+												                            <th>
+												                            	<input type="text" name="search_number" value="ფილტრი" class="search_init" style="">
+																			</th>
+												                            <th>
+												                                <input type="text" name="search_date" value="ფილტრი" class="search_init" style="width: 100px;"/>
+												                            </th>
+												                            <th>
+												                                <input type="text" name="search_category" value="ფილტრი" class="search_init" style="width: 80px;" />
+												                            </th>
+												                        </tr>
+												                    </thead>
+												                </table>
+
+
+													';
+		
+		
+}
+else
+{
 	
 require_once('../../includes/classes/core.php');
 
