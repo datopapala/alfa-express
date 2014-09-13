@@ -72,7 +72,8 @@ if($_REQUEST['act'] =='unanswear_dialog_table'){
 	$rResult = mysql_query("SELECT 	cdr.calldate,
 									cdr.calldate,
 									cdr.src,
-									cdr.dst
+									cdr.dst,
+									CONCAT(SUBSTR((cdr.duration / 60), 1, 1), ':', cdr.duration % 60) as `time`
 							FROM	queue_stats
 							JOIN	qname ON	queue_stats.qname = qname.qname_id
 							JOIN	qevent ON	queue_stats.qevent = qevent.event_id
@@ -110,9 +111,9 @@ if($_REQUEST['act'] =='answear_dialog'){
 												                            <th style="width: 100%;">თარიღი</th>
 												                            <th style="width: 120px;">წყარო</th>
 												                            <th style="width: 120px;">ადრესატი</th>
-																			<th style="width: 120px;">ოპერატორი</th>
-												                            <th style="width: 120px;">დრო</th>
-												                            <th style="width: 100%;">ქმედება</th>
+																			<th style="width: 80px;">ოპერატორი</th>
+												                            <th style="width: 80px;">დრო</th>
+												                            <th style="width: 100px;">ქმედება</th>
 												                        </tr>
 												                    </thead>
 												                    <thead>
@@ -130,13 +131,13 @@ if($_REQUEST['act'] =='answear_dialog'){
 												                                <input type="text" name="search_category" value="ფილტრი" class="search_init" style="width: 80px;" />
 												                            </th>
 												                            <th>
-												                                <input type="text" name="search_phone" value="ფილტრი" class="search_init" style="width: 90px;"/>
+												                                <input type="text" name="search_phone" value="ფილტრი" class="search_init" style="width: 70px;"/>
 												                            </th>
 												                            <th>
-												                                <input type="text" name="search_category" value="ფილტრი" class="search_init" style="width: 90px;" />
+												                                <input type="text" name="search_category" value="ფილტრი" class="search_init" style="width: 70px;" />
 												                            </th>
 																			<th>
-												                                <input type="text" name="search_category" value="ფილტრი" class="search_init" style="width: 90px;" />
+												                                <input type="text" name="search_category" value="ფილტრი" class="search_init" style="width: 80px;" />
 												                            </th>
 												                            
 												                        </tr>
@@ -159,8 +160,9 @@ if($_REQUEST['act'] =='unanswear_dialog'){
 												                        <tr id="datatable_header">
 												                            <th>ID</th>
 												                            <th style="width: 100%;">თარიღი</th>
-												                             <th style="width: 120px;">წყარო</th>
-												                            <th style="width: 120px;">ადრესატი</th>
+												                            <th style="width: 120px;">წყარო</th>
+												                            <th style="width: 100px;">ადრესატი</th>
+												                            <th style="width: 80px;">დრო</th>
 												                        </tr>
 												                    </thead>
 												                    <thead>
@@ -176,6 +178,9 @@ if($_REQUEST['act'] =='unanswear_dialog'){
 												                            </th>
 												                            <th>
 												                                <input type="text" name="search_category" value="ფილტრი" class="search_init" style="width: 80px;" />
+												                            </th>
+																			<th>
+												                                <input type="text" name="search_category" value="ფილტრი" class="search_init" style="width: 70px;" />
 												                            </th>
 												                        </tr>
 												                    </thead>
