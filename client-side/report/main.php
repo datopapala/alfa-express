@@ -28,7 +28,7 @@
 
 		$(document).on("click", ".download", function () {
             var linkk = $(this).attr("str");
-            link = 'http://212.72.155.176:8181/records/' + linkk + '.wav';
+            link = 'http://212.72.155.175:8181/records/' + linkk + '.wav';
 
             var newWin = window.open(link, "width=420,height=230,resizable=yes,scrollbars=yes,status=yes");
             newWin.focus();
@@ -44,6 +44,9 @@
 			      icons: {
 			        primary: " ui-icon-contact"
 			      }
+			});
+			$( ".download" ).button({
+			    
 			});
 		}
 

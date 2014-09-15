@@ -200,7 +200,7 @@
 		var record;
 		function play(record){
 			
-			link = 'http://212.72.155.176:8181/records/' + record;
+			link = 'http://212.72.155.175:8181/records/' + record;
 			var newWin = window.open(link, 'newWin','width=420,height=200');
             newWin.focus();
             
