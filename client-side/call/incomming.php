@@ -89,7 +89,7 @@ if(isset($_SESSION['QSTATS']['hideloggedoff'])) {
 
 		$(document).on("click", ".download", function () {
             var link = $(this).attr("str");
-            link = 'http://212.72.155.176:8181/records/' + link + '.wav';
+            link = 'http://212.72.155.175:8181/records/' + link + '.wav';
 
             window.open(link, 'chatwindow', "width=420,height=230,resizable=yes,scrollbars=yes,status=yes");
             

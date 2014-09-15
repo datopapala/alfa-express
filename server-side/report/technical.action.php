@@ -14,7 +14,7 @@ $day_format = ($day / (60*60*24)) + 1;
 
 if($_REQUEST['act'] =='answear_dialog_table'){
 	mysql_close();
-	$conn = mysql_connect('212.72.155.176', 'root', 'Gl-1114');
+	$conn = mysql_connect('212.72.155.175', 'root', 'Gl-1114');
 	if (!$conn) {
 		$error = 'dgfhg';
 	}
@@ -59,7 +59,7 @@ if($_REQUEST['act'] =='answear_dialog_table'){
 else
 if($_REQUEST['act'] =='unanswear_dialog_table'){
 	mysql_close();
-	$conn = mysql_connect('212.72.155.176', 'root', 'Gl-1114');
+	$conn = mysql_connect('212.72.155.175', 'root', 'Gl-1114');
 	if (!$conn) {
 		$error = 'dgfhg';
 	}
@@ -201,7 +201,7 @@ $row_done_blank = mysql_fetch_assoc(mysql_query("	SELECT COUNT(*) AS `count`
 		WHERE DATE(date) >= '$start_time' AND DATE(date) <= '$end_time' AND phone != '' "));
 
 mysql_close();
-$conn = mysql_connect('212.72.155.176', 'root', 'Gl-1114');
+$conn = mysql_connect('212.72.155.175', 'root', 'Gl-1114');
 mysql_select_db('asteriskcdrdb');
 
 
