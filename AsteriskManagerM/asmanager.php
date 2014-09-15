@@ -68,7 +68,7 @@ class AsteriskManager
         return $parameters;
     }
     
-    function connect($server='212.72.155.176', $username='admin', $secret='amp111') {
+    function connect($server='212.72.155.175', $username='admin', $secret='amp111') {
         // Extract port if specified
         if(strpos($server, ':') !== false) {
             $parts = explode(':', $server);

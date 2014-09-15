@@ -38,6 +38,6 @@ class asterisk_sql_db {
 	
 }
 
-$asteriskdb = new asterisk_sql_db("212.72.155.176", "root", "Gl-1114", "asteriskcdrdb");
+$asteriskdb = new asterisk_sql_db("212.72.155.175", "root", "Gl-1114", "asteriskcdrdb");
 
 ?>

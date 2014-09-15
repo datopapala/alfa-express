@@ -584,7 +584,7 @@ function Getpersons($persons_id)
 }
 
 function getCalls(){
-	$db1 = new sql_db ( "212.72.155.176", "root", "Gl-1114", "asteriskcdrdb" );
+	$db1 = new sql_db ( "212.72.155.175", "root", "Gl-1114", "asteriskcdrdb" );
 
 	$req = mysql_query("
 

@@ -30,7 +30,7 @@ if($_REQUEST['act'] =='answear_dialog_table'){
 									cdr.dst,
 									qagent.agent,
 									CONCAT(SUBSTR((cdr.duration / 60), 1, 1), ':', cdr.duration % 60) as `time`,
-									CONCAT('<p onclick=play(', '\'', SUBSTRING(cdr.userfield, 35),'.wav', '\'',  ')>მოსმენა</p>', '<a download=\"image.jpg\" href=\"http://212.72.155.176:8181/records/', SUBSTRING(cdr.userfield, 35),'.wav', '\">ჩამოტვირთვა</a>') AS `dwn`
+									CONCAT('<p onclick=play(', '\'', SUBSTRING(cdr.userfield, 35),'.wav', '\'',  ')>მოსმენა</p>', '<a download=\"image.jpg\" href=\"http://212.72.155.175:8181/records/', SUBSTRING(cdr.userfield, 35),'.wav', '\">ჩამოტვირთვა</a>') AS `dwn`
 							FROM 	queue_stats
 							JOIN 	cdr ON queue_stats.uniqueid = cdr.uniqueid
 							JOIN 	qagent ON queue_stats.qagent = qagent.agent_id
