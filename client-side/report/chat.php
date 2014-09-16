@@ -193,9 +193,9 @@
 <div id="tabs" style="width: 95%; margin: 0 auto; min-height: 768px; margin-top: 50px;">
 		<ul>
 			<li><a href="#tab-0">მთავარი</a></li>
-			<li><a href="#tab-1">ნაპასუხები</a></li>
+			<!--<li><a href="#tab-1">ნაპასუხები</a></li>
 			<li><a href="#tab-2">უპასუხო</a></li>
-			<li><a href="#tab-3">ჩატის განაწილება</a></li>
+			<li><a href="#tab-3">ჩატის განაწილება</a></li>-->
 		</ul>
 		<div id="tab-0">
 			<div style="width: 48%; float:left;">
@@ -303,266 +303,317 @@
                 </tr>
                 </tbody>
                 </table>
+                <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                 <caption>რეპორტ ინფო</caption>
+                 <tbody class="report_info">
+               	 <tr>
+                    	<td class="tdstyle">რიგი:</td>
+                     	<td></td>
+                 	</tr>
+                 	<tr>
+	                	<td class="tdstyle">საწყისი თარიღი:</td>
+ 	                    <td></td>
+                 	</tr>
+                 	<tr>
+                      	<td class="tdstyle">დასრულების თარიღი:</td>
+                        <td></td>
+                 	</tr>
+                	<tr>
+                       	<td class="tdstyle">პერიოდი:</td>
+                        <td></td>
+                	</tr>
+                 </tbody>
+                </table>
 		</div>
 		 </div>
-		<div id="tab-1">
-		   <table width="99%" cellpadding="3" cellspacing="3" border="0">
-        <thead>
-        <tr>
-            <td valign="top" width="50%" style="padding:0 5px 0 0;">
-                <table width="100%" border="0" cellpadding="0" cellspacing="0">
-                <caption>რეპორტ ინფო</caption>
-                <tbody class="report_info">
-                <tr>
-                    <td class="tdstyle">რიგი:</td>
-                    <td></td>
-                </tr>
-                <tr>
-	                	<td class="tdstyle">საწყისი თარიღი:</td>
-	                    <td></td>
-                </tr>
+<!-- 		<div id="tab-1"> -->
+<!-- 		   <table width="99%" cellpadding="3" cellspacing="3" border="0"> -->
+<!--         <thead> -->
+<!--         <tr> -->
+<!--           <td valign="top" width="50%" style="padding:0 5px 0 0;">
+<!--                 <table width="100%" border="0" cellpadding="0" cellspacing="0"> -->
+<!--                 <caption>რეპორტ ინფო</caption> -->
+<!--                 <tbody class="report_info"> -->
+<!--                 <tr> -->
+<!--                     <td class="tdstyle">რიგი:</td> -->
+<!--                     <td></td> -->
+<!--                 </tr> -->
+<!--                 <tr> -->
+<!-- 	                	<td class="tdstyle">საწყისი თარიღი:</td> -->
+<!-- 	                    <td></td> -->
+<!--                 </tr> -->
                 
-                <tr>
-                       <td class="tdstyle">დასრულების თარიღი:</td>
-                       <td></td>
-                </tr>
-                <tr>
-                       <td class="tdstyle">პერიოდი:</td>
-                       <td></td>
-                </tr>
-                </tbody>
-                </table>
+<!--                 <tr> -->
+<!--                        <td class="tdstyle">დასრულების თარიღი:</td> -->
+<!--                        <td></td> -->
+<!--                 </tr> -->
+<!--                 <tr> -->
+<!--                        <td class="tdstyle">პერიოდი:</td> -->
+<!--                        <td></td> -->
+<!--                 </tr> -->
+<!--                 </tbody> -->
+<!--                 </table> -->
 
-            </td>
-            <td valign="top" width="50%">
+<!--             </td> -->
+<!--             <td valign="top" width="50%"> -->
 
-                <table width="100%" border="0" cellpadding="0" cellspacing="0">
-                <caption>ნაპასუხები ჩატი</caption>
-                <tbody id="answer_call_info">
-                <tr> 
-                  <td class="tdstyle">ნაპასუხები ჩატი</td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td class="tdstyle">საშ. ხანგძლივობა:</td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td class="tdstyle">სულ საუბრის ხანგძლივობა:</td>
-                  <td> </td>
-                </tr>
-                <tr>
-                  <td class="tdstyle">ლოდინის საშ. ხანგძლივობა:</td>
-                  <td></td>
-                </tr>
-                </tbody>
-              </table>
+<!--                 <table width="100%" border="0" cellpadding="0" cellspacing="0"> -->
+<!--                 <caption>ნაპასუხები ჩატი</caption> -->
+<!--                 <tbody id="answer_call_info"> -->
+<!--                 <tr>  -->
+<!--                   <td class="tdstyle">ნაპასუხები ჩატი</td> -->
+<!--                   <td></td> -->
+<!--                 </tr> -->
+<!--                 <tr> -->
+<!--                   <td class="tdstyle">საშ. ხანგძლივობა:</td> -->
+<!--                   <td></td> -->
+<!--                 </tr> -->
+<!--                 <tr> -->
+<!--                   <td class="tdstyle">სულ საუბრის ხანგძლივობა:</td> -->
+<!--                   <td> </td> -->
+<!--                 </tr> -->
+<!--                 <tr> -->
+<!--                   <td class="tdstyle">ლოდინის საშ. ხანგძლივობა:</td> -->
+<!--                   <td></td> -->
+<!--                 </tr> -->
+<!--                 </tbody> -->
+<!--               </table> -->
 
-            </td>
-        </tr>
-        </thead>
-        </table>
-        <br>
-        <table width="99%" cellpadding="3" cellspacing="3" border="0" class="sortable" id="table1">
-        <caption>ნაპასუხები ჩატი ოპერატორების მიხედვით</caption>
-            <thead>
-            <tr>
-                  <th><a  class="sortheader">ოპერატორი<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-                  <th><a  class="sortheader">ჩატი<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-                  <th><a  class="sortheader">% ჩატი<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-                  <th><a  class="sortheader">ჩატის დრო<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-                  <th><a  class="sortheader">% ჩატის დრო<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-                  <th><a  class="sortheader">საშ. ჩატის ხანგძლივობა<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-                  <th><a  class="sortheader">ლოდინის დრო<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-                  <th><a  class="sortheader">საშ. ლოდისნის ხანგძლივობა<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-            </tr>
-            </thead>
-            <tbody id="answer_call_by_queue">
+<!--             </td> -->
+<!--         </tr> -->
+<!--         </thead> -->
+<!--         </table> -->
+<!--         <br> -->
+<!--         <table width="99%" cellpadding="3" cellspacing="3" border="0" class="sortable" id="table1"> -->
+<!--         <caption>ნაპასუხები ჩატი ოპერატორების მიხედვით</caption> -->
+<!--             <thead> -->
+<!--             <tr> -->
+<!--                   <th><a  class="sortheader">ოპერატორი<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th> -->
+<!--                   <th><a  class="sortheader">ჩატი<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th> -->
+<!--                   <th><a  class="sortheader">% ჩატი<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th> -->
+<!--                   <th><a  class="sortheader">ჩატის დრო<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th> -->
+<!--                   <th><a  class="sortheader">% ჩატის დრო<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th> -->
+<!--                   <th><a  class="sortheader">საშ. ჩატის ხანგძლივობა<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th> -->
+<!--                   <th><a  class="sortheader">ლოდინის დრო<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th> -->
+<!--                   <th><a  class="sortheader">საშ. ლოდისნის ხანგძლივობა<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th> -->
+<!--             </tr> -->
+<!--             </thead> -->
+<!--             <tbody id="answer_call_by_queue"> -->
                 
-			</tbody>
-        </table>
-        <br>
-        <table width="99%" cellpadding="3" cellspacing="3" border="0">
-            <caption>მომსახურების დონე(Service Level)</caption>
-            <thead>
-            <tr>
-            <td valign="top" width="50%" bgcolor="#fffdf3">
-                <table width="99%" cellpadding="1" cellspacing="1" border="0" class="sortable" id="table3">
-                <thead>
-                <tr> 
-                    <th><a  class="sortheader">პასუხი<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-                    <th><a  class="sortheader">რაოდენობა<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-                    <th><a  class="sortheader">დელტა<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-                    <th><a  class="sortheader">%<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-                </tr>
-                </thead>
-                <tbody id="service_level">
+<!-- 			</tbody> -->
+<!--         </table> -->
+<!--         <br> -->
+<!--         <table width="99%" cellpadding="3" cellspacing="3" border="0"> -->
+<!--             <caption>მომსახურების დონე(Service Level)</caption> -->
+<!--             <thead> -->
+<!--             <tr> -->
+<!--             <td valign="top" width="50%" bgcolor="#fffdf3"> -->
+<!--                 <table width="99%" cellpadding="1" cellspacing="1" border="0" class="sortable" id="table3"> -->
+<!--                 <thead> -->
+<!--                 <tr>  -->
+<!--                     <th><a  class="sortheader">პასუხი<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th> -->
+<!--                     <th><a  class="sortheader">რაოდენობა<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th> -->
+<!--                     <th><a  class="sortheader">დელტა<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th> -->
+<!--                     <th><a  class="sortheader">%<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th> -->
+<!--                 </tr> -->
+<!--                 </thead> -->
+<!--                 <tbody id="service_level"> -->
                 
-              </tbody>
-              </table>
-            </td>
-            <td valign="top" width="50%" align="center" bgcolor="#fffdf3">
-                            </td>
-            </tr>
-            </thead>
-            </table>
+<!--               </tbody> -->
+<!--               </table> -->
+<!--             </td> -->
+<!--             <td valign="top" width="50%" align="center" bgcolor="#fffdf3"> -->
+<!--                             </td> -->
+<!--             </tr> -->
+<!--             </thead> -->
+<!--             </table> -->
       
             
-		 </div>
-		 <div id="tab-2">
-		    <table width="99%" cellpadding="3" cellspacing="3" border="0">
-		<thead>
-		<tr>
-			<td valign="top" width="50%" style="padding: 0 5px 0 0;">
-				<table width="100%" border="0" cellpadding="0" cellspacing="0">
-				<caption>რეპორტ ინფო</caption>
-				<tbody class="report_info">
-				<tr>
-                    <td class="tdstyle">რიგი:</td>
-                    <td></td>
-                </tr>
+<!-- 		 </div> -->
+<!-- 		 <div id="tab-2"> -->
+<!-- 		    <table width="99%" cellpadding="3" cellspacing="3" border="0"> -->
+<!-- 		<thead> -->
+<!-- 		<tr> -->
+<!--			<td valign="top" width="50%" style="padding: 0 5px 0 0;">
+<!-- 				<table width="100%" border="0" cellpadding="0" cellspacing="0"> -->
+<!-- 				<caption>რეპორტ ინფო</caption> -->
+<!-- 				<tbody class="report_info"> -->
+<!-- 				<tr> -->
+<!--                     <td class="tdstyle">რიგი:</td> -->
+<!--                     <td></td> -->
+<!--                 </tr> -->
                 
-                       <tr><td class="tdstyle">საწყისი თარიღი:</td>
-                       <td></td>
-                </tr>
+<!--                        <tr><td class="tdstyle">საწყისი თარიღი:</td> -->
+<!--                        <td></td> -->
+<!--                 </tr> -->
                 
-                <tr>
-                       <td class="tdstyle">დასრულების თარიღი:</td>
-                       <td></td>
-                </tr>
-                <tr>
-                       <td class="tdstyle">პერიოდი:</td>
-                       <td></td>
-                </tr>
-				</tbody>
-				</table>
+<!--                 <tr> -->
+<!--                        <td class="tdstyle">დასრულების თარიღი:</td> -->
+<!--                        <td></td> -->
+<!--                 </tr> -->
+<!--                 <tr> -->
+<!--                        <td class="tdstyle">პერიოდი:</td> -->
+<!--                        <td></td> -->
+<!--                 </tr> -->
+<!-- 				</tbody> -->
+<!-- 				</table> -->
 
-			</td>
-			<td valign="top" width="50%">
+<!-- 			</td> -->
+<!-- 			<td valign="top" width="50%"> -->
 
-				<table width="100%" border="0" cellpadding="0" cellspacing="0">
-				<caption>უპასუხო ზარები</caption>
-				<tbody id="unanswer_call">
-		        <tr> 
-                  <td class="tdstyle">უპასუხო ჩატის რაოდენობა:</td>
-		          <td></td>
-	            </tr>
-                <tr>
-                  <td class="tdstyle">ლოდინის საშ. დრო კავშირის გაწყვეტამდე:</td>
-                  <td></td>
-                </tr>
-		        <tr>
-                  <td class="tdstyle">საშ. რიგში პოზიცია კავშირის გაწყვეტამდე:</td>
-		          <td></td>
-	            </tr>
-                <tr>
-                  <td class="tdstyle">საშ. საწყისი პოზიცია რიგში:</td>
-                  <td></td>
-                </tr>
-				</tbody>
-	          </table>
+<!-- 				<table width="100%" border="0" cellpadding="0" cellspacing="0"> -->
+<!-- 				<caption>უპასუხო ზარები</caption> -->
+<!-- 				<tbody id="unanswer_call"> -->
+<!-- 		        <tr>  -->
+<!--                   <td class="tdstyle">უპასუხო ჩატის რაოდენობა:</td> -->
+<!-- 		          <td></td> -->
+<!-- 	            </tr> -->
+<!--                 <tr> -->
+<!--                   <td class="tdstyle">ლოდინის საშ. დრო კავშირის გაწყვეტამდე:</td> -->
+<!--                   <td></td> -->
+<!--                 </tr> -->
+<!-- 		        <tr> -->
+<!--                   <td class="tdstyle">საშ. რიგში პოზიცია კავშირის გაწყვეტამდე:</td> -->
+<!-- 		          <td></td> -->
+<!-- 	            </tr> -->
+<!--                 <tr> -->
+<!--                   <td class="tdstyle">საშ. საწყისი პოზიცია რიგში:</td> -->
+<!--                   <td></td> -->
+<!--                 </tr> -->
+<!-- 				</tbody> -->
+<!-- 	          </table> -->
 
-			</td>
-		</tr>
-		</thead>
-		</table>
-		<br>
+<!-- 			</td> -->
+<!-- 		</tr> -->
+<!-- 		</thead> -->
+<!-- 		</table> -->
+<!-- 		<br> -->
 		
 		
-		 </div>
-		 <div id="tab-3">
-		    <table width="99%" cellpadding="3" cellspacing="3" border="0">
-		<thead>
-		<tr>
-			<td valign="top" width="50%" style="padding: 0 5px 0 0;">
-				<table width="100%" border="0" cellpadding="0" cellspacing="0">
-				<caption>რეპორტ ინფო</caption>
-				<tbody class="report_info">
-				<tr>
-                    <td class="tdstyle">რიგი:</td>
-                    <td></td>
-                </tr>
+<!-- 		 </div> -->
+<!-- 		 <div id="tab-3"> -->
+<!-- 		    <table width="99%" cellpadding="3" cellspacing="3" border="0"> -->
+<!-- 		<thead> -->
+<!-- 		<tr> -->
+<!--			<td valign="top" width="50%" style="padding: 0 5px 0 0;">
+<!-- 				<table width="100%" border="0" cellpadding="0" cellspacing="0"> -->
+<!-- 				<caption>რეპორტ ინფო</caption> -->
+<!-- 				<tbody class="report_info"> -->
+<!-- 				<tr> -->
+<!--                     <td class="tdstyle">რიგი:</td> -->
+<!--                     <td></td> -->
+<!--                 </tr> -->
                 
-                       <tr><td class="tdstyle">საწყისი თარიღი:</td>
-                       <td></td>
-                </tr>
+<!--                        <tr><td class="tdstyle">საწყისი თარიღი:</td> -->
+<!--                        <td></td> -->
+<!--                 </tr> -->
                 
-                <tr>
-                       <td class="tdstyle">დასრულების თარიღი:</td>
-                       <td></td>
-                </tr>
-                <tr>
-                       <td class="tdstyle">პერიოდი:</td>
-                       <td></td>
-                </tr>
-				</tbody>
-				</table>
+<!--                 <tr> -->
+<!--                        <td class="tdstyle">დასრულების თარიღი:</td> -->
+<!--                        <td></td> -->
+<!--                 </tr> -->
+<!--                 <tr> -->
+<!--                        <td class="tdstyle">პერიოდი:</td> -->
+<!--                        <td></td> -->
+<!--                 </tr> -->
+<!-- 				</tbody> -->
+<!-- 				</table> -->
 
-			</td>
-			<td valign="top" width="50%">
+<!-- 			</td> -->
+<!-- 			<td valign="top" width="50%"> -->
 
-				<table width="100%" border="0" cellpadding="0" cellspacing="0">
-				<caption>სულ</caption>
-				<tbody id="totals">
-		        <tr> 
-                  <td class="tdstyle">ნაპასუხები ჩატის რაოდენობა:</td>
-		          <td></td>
-	            </tr>
-                <tr>
-                  <td class="tdstyle">უპასუხო ჩატის რაოდენობა:</td>
-                  <td></td>
-                </tr>
-		        <tr>
-                  <td class="tdstyle">ოპერატორი შევიდა:</td>
-		          <td></td>
-	            </tr>
-                <tr>
-                  <td class="tdstyle">ოპერატორი გავიდა:</td>
-                  <td></td>
-                </tr>
-				</tbody>
-	          </table>
+<!-- 				<table width="100%" border="0" cellpadding="0" cellspacing="0"> -->
+<!-- 				<caption>სულ</caption> -->
+<!-- 				<tbody id="totals"> -->
+<!-- 		        <tr>  -->
+<!--                   <td class="tdstyle">ნაპასუხები ჩატის რაოდენობა:</td> -->
+<!-- 		          <td></td> -->
+<!-- 	            </tr> -->
+<!--                 <tr> -->
+<!--                   <td class="tdstyle">უპასუხო ჩატის რაოდენობა:</td> -->
+<!--                   <td></td> -->
+<!--                 </tr> -->
+<!-- 		        <tr> -->
+<!--                   <td class="tdstyle">ოპერატორი შევიდა:</td> -->
+<!-- 		          <td></td> -->
+<!-- 	            </tr> -->
+<!--                 <tr> -->
+<!--                   <td class="tdstyle">ოპერატორი გავიდა:</td> -->
+<!--                   <td></td> -->
+<!--                 </tr> -->
+<!-- 				</tbody> -->
+<!-- 	          </table> -->
 
-			</td>
-		</tr>
-		</thead>
-		</table>
-		<br>
-		<table width="99%" cellpadding="1" cellspacing="1" border="0" class="sortable" id="table1">
-			<caption>ჩატის განაწილება დღეების მიხედვით</caption>
-				<thead>
-				<tr>
-					<th><a  class="sortheader" onclick="ts_resortTable(this, 0);return false;">თარირი<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-					<th><a  class="sortheader" onclick="ts_resortTable(this, 1);return false;">ნაპასუხები<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-					<th><a  class="sortheader" onclick="ts_resortTable(this, 2);return false;">% ნაპასუხები<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-					<th><a  class="sortheader" onclick="ts_resortTable(this, 3);return false;">უპასუხო<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-					<th><a  class="sortheader" onclick="ts_resortTable(this, 4);return false;">% უპასუხო<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-					<th><a  class="sortheader" onclick="ts_resortTable(this, 5);return false;">საშ. ხანგძლივობა<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-					<th><a  class="sortheader" onclick="ts_resortTable(this, 6);return false;">საშ. ლოდინის ხანგძლივობა<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-					<th><a  class="sortheader" onclick="ts_resortTable(this, 7);return false;">შესვლა<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-					<th><a  class="sortheader" onclick="ts_resortTable(this, 8);return false;">გასვლა<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-				</tr>
-				</thead>
-				<tbody id="call_distribution_per_day">
-				<tr class="odd">
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					</tr>
-				</tbody>
-			</table>
-			<br>
-			<table width="99%" cellpadding="1" cellspacing="1" border="0" class="sortable" id="table2">
-			<caption>ჩატის განაწილება საათების მიხედვით</caption>
-				<thead>
-				<tr>
-                    <th><a  class="sortheader" onclick="ts_resortTable(this, 0);return false;">საათი<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
+<!-- 			</td> -->
+<!-- 		</tr> -->
+<!-- 		</thead> -->
+<!-- 		</table> -->
+<!-- 		<br> -->
+<!-- 		<table width="99%" cellpadding="1" cellspacing="1" border="0" class="sortable" id="table1"> -->
+<!-- 			<caption>ჩატის განაწილება დღეების მიხედვით</caption> -->
+<!-- 				<thead> -->
+<!-- 				<tr> -->
+<!--					<th><a  class="sortheader" onclick="ts_resortTable(this, 0);return false;">თარირი<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
+<!--					<th><a  class="sortheader" onclick="ts_resortTable(this, 1);return false;">ნაპასუხები<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
+<!--					<th><a  class="sortheader" onclick="ts_resortTable(this, 2);return false;">% ნაპასუხები<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
+<!--					<th><a  class="sortheader" onclick="ts_resortTable(this, 3);return false;">უპასუხო<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
+<!--					<th><a  class="sortheader" onclick="ts_resortTable(this, 4);return false;">% უპასუხო<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
+<!--					<th><a  class="sortheader" onclick="ts_resortTable(this, 5);return false;">საშ. ხანგძლივობა<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
+<!--					<th><a  class="sortheader" onclick="ts_resortTable(this, 6);return false;">საშ. ლოდინის ხანგძლივობა<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
+<!--					<th><a  class="sortheader" onclick="ts_resortTable(this, 7);return false;">შესვლა<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
+<!--					<th><a  class="sortheader" onclick="ts_resortTable(this, 8);return false;">გასვლა<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
+<!-- 				</tr> -->
+<!-- 				</thead> -->
+<!-- 				<tbody id="call_distribution_per_day"> -->
+<!-- 				<tr class="odd"> -->
+<!-- 					<td></td> -->
+<!-- 					<td></td> -->
+<!-- 					<td></td> -->
+<!-- 					<td></td> -->
+<!-- 					<td></td> -->
+<!-- 					<td></td> -->
+<!-- 					<td></td> -->
+<!-- 					<td></td> -->
+<!-- 					<td></td> -->
+<!-- 					</tr> -->
+<!-- 				</tbody> -->
+<!-- 			</table> -->
+<!-- 			<br> -->
+<!-- 			<table width="99%" cellpadding="1" cellspacing="1" border="0" class="sortable" id="table2"> -->
+<!-- 			<caption>ჩატის განაწილება საათების მიხედვით</caption> -->
+<!-- 				<thead> -->
+<!-- 				<tr> -->
+<!--                    <th><a  class="sortheader" onclick="ts_resortTable(this, 0);return false;">საათი<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
+<!--                    <th><a  class="sortheader" onclick="ts_resortTable(this, 1);return false;">ნაპასუხები<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
+                    <th><a  class="sortheader" onclick="ts_resortTable(this, 2);return false;">% ნაპასუხები<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
+                    <th><a  class="sortheader" onclick="ts_resortTable(this, 3);return false;">უპასუხო<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
+                    <th><a  class="sortheader" onclick="ts_resortTable(this, 4);return false;">% უპასუხო<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
+                    <th><a  class="sortheader" onclick="ts_resortTable(this, 5);return false;">საშ. ხანგძლივობა<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
+                    <th><a  class="sortheader" onclick="ts_resortTable(this, 6);return false;">საშ. ლოდინის ხანგძლივობა<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
+                    <th><a  class="sortheader" onclick="ts_resortTable(this, 7);return false;">შესვლა<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
+                    <th><a  class="sortheader" onclick="ts_resortTable(this, 8);return false;">გასვლა<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
+<!-- 				</tr> -->
+<!-- 				</thead> -->
+<!-- 				<tbody id="call_distribution_per_hour"> -->
+<!-- 				<tr class="odd"> -->
+<!-- 					<td></td> -->
+<!-- 					<td></td> -->
+<!-- 					<td></td> -->
+<!-- 					<td></td> -->
+<!-- 					<td></td> -->
+<!-- 					<td></td> -->
+<!-- 					<td></td> -->
+<!-- 					<td></td> -->
+<!-- 					<td></td> -->
+<!-- 					</tr> -->
+<!-- 			</tbody> -->
+<!-- 			</table> -->
+<!-- 			<br> -->
+<!-- 			<table width="99%" cellpadding="1" cellspacing="1" border="0" class="sortable" id="table3"> -->
+<!-- 			<caption>ჩატის განაწილება კვირების მიხედვით</caption> -->
+<!-- 				<thead> -->
+<!-- 				<tr> -->
+<!--                    <th><a  class="sortheader" onclick="ts_resortTable(this, 0);return false;">დღე<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
                     <th><a  class="sortheader" onclick="ts_resortTable(this, 1);return false;">ნაპასუხები<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
                     <th><a  class="sortheader" onclick="ts_resortTable(this, 2);return false;">% ნაპასუხები<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
                     <th><a  class="sortheader" onclick="ts_resortTable(this, 3);return false;">უპასუხო<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
@@ -571,53 +622,23 @@
                     <th><a  class="sortheader" onclick="ts_resortTable(this, 6);return false;">საშ. ლოდინის ხანგძლივობა<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
                     <th><a  class="sortheader" onclick="ts_resortTable(this, 7);return false;">შესვლა<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
                     <th><a  class="sortheader" onclick="ts_resortTable(this, 8);return false;">გასვლა<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-				</tr>
-				</thead>
-				<tbody id="call_distribution_per_hour">
-				<tr class="odd">
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					</tr>
-			</tbody>
-			</table>
-			<br>
-			<table width="99%" cellpadding="1" cellspacing="1" border="0" class="sortable" id="table3">
-			<caption>ჩატის განაწილება კვირების მიხედვით</caption>
-				<thead>
-				<tr>
-                    <th><a  class="sortheader" onclick="ts_resortTable(this, 0);return false;">დღე<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-                    <th><a  class="sortheader" onclick="ts_resortTable(this, 1);return false;">ნაპასუხები<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-                    <th><a  class="sortheader" onclick="ts_resortTable(this, 2);return false;">% ნაპასუხები<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-                    <th><a  class="sortheader" onclick="ts_resortTable(this, 3);return false;">უპასუხო<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-                    <th><a  class="sortheader" onclick="ts_resortTable(this, 4);return false;">% უპასუხო<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-                    <th><a  class="sortheader" onclick="ts_resortTable(this, 5);return false;">საშ. ხანგძლივობა<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-                    <th><a  class="sortheader" onclick="ts_resortTable(this, 6);return false;">საშ. ლოდინის ხანგძლივობა<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-                    <th><a  class="sortheader" onclick="ts_resortTable(this, 7);return false;">შესვლა<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-                    <th><a  class="sortheader" onclick="ts_resortTable(this, 8);return false;">გასვლა<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
-				</tr>
-				</thead>
-				<tbody id="call_distribution_per_day_of_week">
-				<tr class="odd">
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					</tr>
-			</tbody>
-			</table>
-		 </div>
+<!-- 				</tr> -->
+<!-- 				</thead> -->
+<!-- 				<tbody id="call_distribution_per_day_of_week"> -->
+<!-- 				<tr class="odd"> -->
+<!-- 					<td></td> -->
+<!-- 					<td></td> -->
+<!-- 					<td></td> -->
+<!-- 					<td></td> -->
+<!-- 					<td></td> -->
+<!-- 					<td></td> -->
+<!-- 					<td></td> -->
+<!-- 					<td></td> -->
+<!-- 					<td></td> -->
+<!-- 					</tr> -->
+<!-- 			</tbody> -->
+<!-- 			</table> -->
+<!-- 		 </div> -->
 		 
 </div>
 <!-- jQuery Dialog -->

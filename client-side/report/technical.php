@@ -69,8 +69,11 @@
 			vertical-align:middle;
 		}
     </style>
+    <script src="js/highcharts.js"></script>
+     <script src="js/exporting.js"></script>
 	<script type="text/javascript">
 		var aJaxURL		= "server-side/report/technical.action.php";		//server side folder url
+		var aJaxURL1	= "server-side/report/sales_statistics.action.php";		//server side folder url
 		var tName		= "example0";										//table name
 		var tbName		= "tabs";											//tabs name
 		var fName		= "add-edit-form";									//form name
@@ -89,15 +92,1123 @@
 		$(document).on("tabsactivate", "#tabs", function() {
         	var tab = GetSelectedTab(tbName);
         	if (tab == 0) {
-        		
+        		$(this).css('height','500px');
         	}else if(tab == 1){
-        		
+        		getData();
+       			getData11();
+       			getData7();
+       			getData1();
+       			$(this).css('height','1600px');
             }else if(tab == 2){
-            	
+            	getData5();
+            	getData6();
+            	$(this).css('height','800px');
             }else if(tab == 3){
-            	
+            	getData4();
+            	getData8();
+            	getData2();
+            	getData9();
+            	getData3();
+            	getData10();
+            	$(this).css('height','1700px');
             }
         });
+
+		function getData(){
+			 var options = {
+			        chart: {
+			            renderTo: 'chart_container',
+			            margin: [ 50, 50, 100, 80]
+			        },
+			        title: {
+			            text: 'ნაპასუხები ზარები ოპერატორების მიხედვით',
+			            x: -20 
+			        },
+			        subtitle: {
+			            text: '',
+			            x: -20
+			        },
+			        xAxis: {
+			            categories: [],
+			            labels: {
+				            
+			            	align: 'center'
+			            }
+			        },
+			        yAxis: {
+			            title: {
+			                text: 'ზარები'
+			            },
+			            plotLines: [{
+			                value: 0,
+			                width: 1,
+			                color: '#808080'
+			            }]
+			        },
+			        tooltip: {
+			        	//valueSuffix: ' áƒªáƒ�áƒšáƒ˜'
+			                
+			        },
+			        legend: {
+		                layout: 'vertical',
+		                align: 'right',
+		                verticalAlign: 'top',
+		                borderWidth: 0
+			        },
+			        series: []
+			    }
+
+			 var i=0;
+			
+				agent	= '';
+				queuet = '';
+			
+				var optionss = $('#myform_List_Queue_to option');
+				var values = $.map(optionss ,function(option) {
+					if(queuet != ""){
+						queuet+=",";
+						
+					}
+					queuet+="'"+option.value+"'";
+				});
+			
+			var optionss = $('#myform_List_Agent_to option');
+			var values = $.map(optionss ,function(option) {
+				if(agent != ''){
+					agent+=',';
+					
+				}
+				agent+="'"+option.value+"'";
+			});
+			
+			start_time = $('#start_time').val();
+			end_time = $('#end_time').val();
+
+			    $.getJSON("server-side/report/sales_statistics.action.php?start="+start_time + "&end=" + end_time + "&agent=" + agent + "&queuet=" + queuet, function(json) {
+				    
+			    	options.xAxis.categories = json[1]['agent'];
+			    	options.tooltip.valueSuffix = json[1]['unit'];
+			    	options.series[0] = {};
+			    	options.series[0].name = json[1]['name'];
+			    	options.series[0].data = json[1]['call_count'];
+			    	options.series[0].type = "column";
+			    	
+			        chart = new Highcharts.Chart(options);
+			        
+			    });
+		}
+		function getData1(){
+			 var options = {
+			        chart: {
+			            renderTo: 'chart_container1',
+			            margin: [ 50, 50, 100, 80]
+			        },
+			        title: {
+			            text: 'კავშირის გაწყვეტის მიზეზეი',
+			            x: -20 
+			        },
+			        subtitle: {
+			            text: '',
+			            x: -20
+			        },
+			        xAxis: {
+			            categories: [],
+			            labels: {
+			            	align: 'center'
+			            }
+			        },
+			        yAxis: {
+			            title: {
+			                text: 'ზარები'
+			            },
+			            plotLines: [{
+			                value: 0,
+			                width: 1,
+			                color: '#808080'
+			            }]
+			        },
+			        tooltip: {
+			        	//valueSuffix: ' áƒªáƒ�áƒšáƒ˜'
+			                
+			        },
+			        legend: {
+		                layout: 'vertical',
+		                align: 'right',
+		                verticalAlign: 'top',
+		                borderWidth: 0
+			        },
+			        series: []
+			    }
+
+			 var i=0;
+			
+				agent	= '';
+				queuet = '';
+			
+				var optionss = $('#myform_List_Queue_to option');
+				var values = $.map(optionss ,function(option) {
+					if(queuet != ""){
+						queuet+=",";
+						
+					}
+					queuet+="'"+option.value+"'";
+				});
+			
+			var optionss = $('#myform_List_Agent_to option');
+			var values = $.map(optionss ,function(option) {
+				if(agent != ''){
+					agent+=',';
+					
+				}
+				agent+="'"+option.value+"'";
+			});
+			
+			start_time = $('#start_time').val();
+			end_time = $('#end_time').val();
+
+			    $.getJSON("server-side/report/sales_statistics.action.php?start="+start_time + "&end=" + end_time + "&agent=" + agent + "&queuet=" + queuet, function(json) {
+				    
+			    	options.xAxis.categories = json[0]['cause'];
+			    	options.tooltip.valueSuffix = json[0]['unit'];
+			    	options.series[0] = {};
+			    	options.series[0].name = json[0]['name'];
+			    	options.series[0].data = json[0]['quantity'];
+			    	options.series[0].type = "column";
+			    	
+			        chart = new Highcharts.Chart(options);
+			        
+			    });
+		}
+		function getData2(){
+			 var options = {
+			        chart: {
+			            renderTo: 'chart_container2',
+			            margin: [ 50, 50, 100, 80]
+			        },
+			        title: {
+			            text: 'ნაპასუხები ზარები საათების მიხედვით',
+			            x: -20 
+			        },
+			        subtitle: {
+			            text: '',
+			            x: -20
+			        },
+			        xAxis: {
+			            categories: [],
+			            labels: {
+			            	align: 'center'
+			            }
+			        },
+			        yAxis: {
+			            title: {
+			                text: 'ზარები'
+			            },
+			            plotLines: [{
+			                value: 0,
+			                width: 1,
+			                color: '#808080'
+			            }]
+			        },
+			        tooltip: {
+			        	//valueSuffix: ' áƒªáƒ�áƒšáƒ˜'
+			                
+			        },
+			        legend: {
+		                layout: 'vertical',
+		                align: 'right',
+		                verticalAlign: 'top',
+		                borderWidth: 0
+			        },
+			        series: []
+			    }
+
+			 var i=0;
+			
+				agent	= '';
+				queuet = '';
+			
+				var optionss = $('#myform_List_Queue_to option');
+				var values = $.map(optionss ,function(option) {
+					if(queuet != ""){
+						queuet+=",";
+						
+					}
+					queuet+="'"+option.value+"'";
+				});
+			
+			var optionss = $('#myform_List_Agent_to option');
+			var values = $.map(optionss ,function(option) {
+				if(agent != ''){
+					agent+=',';
+					
+				}
+				agent+="'"+option.value+"'";
+			});
+			
+			start_time = $('#start_time').val();
+			end_time = $('#end_time').val();
+
+			    $.getJSON("server-side/report/sales_statistics.action.php?start="+start_time + "&end=" + end_time + "&agent=" + agent + "&queuet=" + queuet, function(json) {
+				    
+			    	options.xAxis.categories = json[2]['datetime'];
+			    	options.tooltip.valueSuffix = json[2]['unit'];
+			    	options.series[0] = {};
+			    	options.series[0].name = json[2]['name'];
+			    	options.series[0].data = json[2]['answer_count'];
+			    	options.series[0].type = "column";
+			    	
+			        chart = new Highcharts.Chart(options);
+			        
+			    });
+		}
+		function getData3(){
+			 var options = {
+			        chart: {
+			            renderTo: 'chart_container3',
+			            margin: [ 50, 50, 100, 80]
+			        },
+			        title: {
+			            text: 'ნაპასუხები ზარები კვირეების მიხედვით',
+			            x: -20 
+			        },
+			        subtitle: {
+			            text: '',
+			            x: -20
+			        },
+			        xAxis: {
+			            categories: [],
+			            labels: {
+			            	align: 'center'
+			            }
+			        },
+			        yAxis: {
+			            title: {
+			                text: 'ზარები'
+			            },
+			            plotLines: [{
+			                value: 0,
+			                width: 1,
+			                color: '#808080'
+			            }]
+			        },
+			        tooltip: {
+			        	//valueSuffix: ' áƒªáƒ�áƒšáƒ˜'
+			                
+			        },
+			        legend: {
+		                layout: 'vertical',
+		                align: 'right',
+		                verticalAlign: 'top',
+		                borderWidth: 0
+			        },
+			        series: []
+			    }
+
+			 var i=0;
+			
+				agent	= '';
+				queuet = '';
+			
+				var optionss = $('#myform_List_Queue_to option');
+				var values = $.map(optionss ,function(option) {
+					if(queuet != ""){
+						queuet+=",";
+						
+					}
+					queuet+="'"+option.value+"'";
+				});
+			
+			var optionss = $('#myform_List_Agent_to option');
+			var values = $.map(optionss ,function(option) {
+				if(agent != ''){
+					agent+=',';
+					
+				}
+				agent+="'"+option.value+"'";
+			});
+			
+			start_time = $('#start_time').val();
+			end_time = $('#end_time').val();
+
+			    $.getJSON("server-side/report/sales_statistics.action.php?start="+start_time + "&end=" + end_time + "&agent=" + agent + "&queuet=" + queuet, function(json) {
+				    
+			    	options.xAxis.categories = json[3]['datetime1'];
+			    	options.tooltip.valueSuffix = json[3]['unit'];
+			    	options.series[0] = {};
+			    	options.series[0].name = json[3]['name'];
+			    	options.series[0].data = json[3]['answer_count1'];
+			    	options.series[0].type = "column";
+			    	
+			        chart = new Highcharts.Chart(options);
+			        
+			    });
+		}
+
+
+
+
+		function getData4(){
+			 var options = {
+			        chart: {
+			            renderTo: 'chart_container4',
+			            margin: [ 50, 50, 100, 80]
+			        },
+			        title: {
+			            text: 'ნაპასუხები ზარები დღეების მიხედვით',
+			            x: -20 
+			        },
+			        subtitle: {
+			            text: '',
+			            x: -20
+			        },
+			        xAxis: {
+			            categories: [],
+			            labels: {
+			            	 rotation: -45,
+			            	align: 'right'
+			            }
+			        },
+			        yAxis: {
+			            title: {
+			                text: 'ზარები'
+			            },
+			            plotLines: [{
+			                value: 0,
+			                width: 1,
+			                color: '#808080'
+			            }]
+			        },
+			        tooltip: {
+			        	//valueSuffix: ' áƒªáƒ�áƒšáƒ˜'
+			                
+			        },
+			        legend: {
+		                layout: 'vertical',
+		                align: 'right',
+		                verticalAlign: 'top',
+		                borderWidth: 0
+			        },
+			        series: []
+			    }
+
+			 var i=0;
+			
+				agent	= '';
+				queuet = '';
+			
+				var optionss = $('#myform_List_Queue_to option');
+				var values = $.map(optionss ,function(option) {
+					if(queuet != ""){
+						queuet+=",";
+						
+					}
+					queuet+="'"+option.value+"'";
+				});
+			
+			var optionss = $('#myform_List_Agent_to option');
+			var values = $.map(optionss ,function(option) {
+				if(agent != ''){
+					agent+=',';
+					
+				}
+				agent+="'"+option.value+"'";
+			});
+			
+			start_time = $('#start_time').val();
+			end_time = $('#end_time').val();
+
+			    $.getJSON("server-side/report/sales_statistics.action.php?start="+start_time + "&end=" + end_time + "&agent=" + agent + "&queuet=" + queuet, function(json) {
+				    
+			    	options.xAxis.categories = json[4]['datetime2'];
+			    	options.tooltip.valueSuffix = json[4]['unit'];
+			    	options.series[0] = {};
+			    	options.series[0].name = json[4]['name'];
+			    	options.series[0].data = json[4]['answer_count2'];
+			    	options.series[0].type = "column";
+			    	
+			        chart = new Highcharts.Chart(options);
+			        
+			    });
+		}
+
+		function getData5(){
+			 var options = {
+			        chart: {
+			            renderTo: 'chart_container5',
+			            margin: [ 50, 50, 100, 80]
+			        },
+			        title: {
+			            text: 'კავშირის გაწყვეტის მიზეზი',
+			            x: -20 
+			        },
+			        subtitle: {
+			            text: '',
+			            x: -20
+			        },
+			        xAxis: {
+			            categories: [],
+			            labels: {
+			            	 rotation: -45,
+			            	align: 'right'
+			            }
+			        },
+			        yAxis: {
+			            title: {
+			                text: 'ზარები'
+			            },
+			            plotLines: [{
+			                value: 0,
+			                width: 1,
+			                color: '#808080'
+			            }]
+			        },
+			        tooltip: {
+			        	//valueSuffix: ' áƒªáƒ�áƒšáƒ˜'
+			                
+			        },
+			        legend: {
+		                layout: 'vertical',
+		                align: 'right',
+		                verticalAlign: 'top',
+		                borderWidth: 0
+			        },
+			        series: []
+			    }
+
+			 var i=0;
+			
+				agent	= '';
+				queuet = '';
+			
+				var optionss = $('#myform_List_Queue_to option');
+				var values = $.map(optionss ,function(option) {
+					if(queuet != ""){
+						queuet+=",";
+						
+					}
+					queuet+="'"+option.value+"'";
+				});
+			
+			var optionss = $('#myform_List_Agent_to option');
+			var values = $.map(optionss ,function(option) {
+				if(agent != ''){
+					agent+=',';
+					
+				}
+				agent+="'"+option.value+"'";
+			});
+			
+			start_time = $('#start_time').val();
+			end_time = $('#end_time').val();
+
+			    $.getJSON("server-side/report/sales_statistics.action.php?start="+start_time + "&end=" + end_time + "&agent=" + agent + "&queuet=" + queuet, function(json) {
+				    
+			    	options.xAxis.categories = json[5]['cause1'];
+			    	options.tooltip.valueSuffix = json[5]['unit'];
+			    	options.series[0] = {};
+			    	options.series[0].name = json[5]['name'];
+			    	options.series[0].data = json[5]['answer_count3'];
+			    	options.series[0].type = "column";
+			    	
+			        chart = new Highcharts.Chart(options);
+			        
+			    });
+		}
+
+		function getData6(){
+			 var options = {
+			        chart: {
+			            renderTo: 'chart_container6',
+			            margin: [ 50, 50, 100, 80]
+			        },
+			        title: {
+			            text: 'უპასუხო ზარები რიგის მიხედვით',
+			            x: -20 
+			        },
+			        subtitle: {
+			            text: '',
+			            x: -20
+			        },
+			        xAxis: {
+			            categories: [],
+			            labels: {
+			            	 rotation: -45,
+			            	align: 'right'
+			            }
+			        },
+			        yAxis: {
+			            title: {
+			                text: 'ზარები'
+			            },
+			            plotLines: [{
+			                value: 0,
+			                width: 1,
+			                color: '#808080'
+			            }]
+			        },
+			        tooltip: {
+			        	//valueSuffix: ' áƒªáƒ�áƒšáƒ˜'
+			                
+			        },
+			        legend: {
+		                layout: 'vertical',
+		                align: 'right',
+		                verticalAlign: 'top',
+		                borderWidth: 0
+			        },
+			        series: []
+			    }
+
+			 var i=0;
+			
+				agent	= '';
+				queuet = '';
+			
+				var optionss = $('#myform_List_Queue_to option');
+				var values = $.map(optionss ,function(option) {
+					if(queuet != ""){
+						queuet+=",";
+						
+					}
+					queuet+="'"+option.value+"'";
+				});
+			
+			var optionss = $('#myform_List_Agent_to option');
+			var values = $.map(optionss ,function(option) {
+				if(agent != ''){
+					agent+=',';
+					
+				}
+				agent+="'"+option.value+"'";
+			});
+			
+			start_time = $('#start_time').val();
+			end_time = $('#end_time').val();
+
+			    $.getJSON("server-side/report/sales_statistics.action.php?start="+start_time + "&end=" + end_time + "&agent=" + agent + "&queuet=" + queuet, function(json) {
+				    
+			    	options.xAxis.categories = json[6]['queue1'];
+			    	options.tooltip.valueSuffix = json[6]['unit'];
+			    	options.series[0] = {};
+			    	options.series[0].name = json[6]['name'];
+			    	options.series[0].data = json[6]['count1'];
+			    	options.series[0].type = "column";
+			    	
+			        chart = new Highcharts.Chart(options);
+			        
+			    });
+		}
+
+		function getData7(){
+			 var options = {
+			        chart: {
+			            renderTo: 'chart_container7',
+			            margin: [ 50, 50, 100, 80]
+			        },
+			        title: {
+			            text: 'ნაპასუხები ზარები რიგის მიხედვით',
+			            x: -20 
+			        },
+			        subtitle: {
+			            text: '',
+			            x: -20
+			        },
+			        xAxis: {
+			            categories: [],
+			            labels: {
+			            	 rotation: -45,
+			            	align: 'right'
+			            }
+			        },
+			        yAxis: {
+			            title: {
+			                text: 'ზარები'
+			            },
+			            plotLines: [{
+			                value: 0,
+			                width: 1,
+			                color: '#808080'
+			            }]
+			        },
+			        tooltip: {
+			        	//valueSuffix: ' áƒªáƒ�áƒšáƒ˜'
+			                
+			        },
+			        legend: {
+		                layout: 'vertical',
+		                align: 'right',
+		                verticalAlign: 'top',
+		                borderWidth: 0
+			        },
+			        series: []
+			    }
+
+			 var i=0;
+			
+				agent	= '';
+				queuet = '';
+			
+				var optionss = $('#myform_List_Queue_to option');
+				var values = $.map(optionss ,function(option) {
+					if(queuet != ""){
+						queuet+=",";
+						
+					}
+					queuet+="'"+option.value+"'";
+				});
+			
+			var optionss = $('#myform_List_Agent_to option');
+			var values = $.map(optionss ,function(option) {
+				if(agent != ''){
+					agent+=',';
+					
+				}
+				agent+="'"+option.value+"'";
+			});
+			
+			start_time = $('#start_time').val();
+			end_time = $('#end_time').val();
+
+			    $.getJSON("server-side/report/sales_statistics.action.php?start="+start_time + "&end=" + end_time + "&agent=" + agent + "&queuet=" + queuet, function(json) {
+				    
+			    	options.xAxis.categories = json[7]['queue2'];
+			    	options.tooltip.valueSuffix = json[7]['unit'];
+			    	options.series[0] = {};
+			    	options.series[0].name = json[7]['name'];
+			    	options.series[0].data = json[7]['count2'];
+			    	options.series[0].type = "column";
+			    	
+			        chart = new Highcharts.Chart(options);
+			        
+			    });
+		}
+
+
+		 function getData8(){
+			 var options = {
+			        chart: {
+			            renderTo: 'chart_container8',
+			            margin: [ 50, 50, 100, 80]
+			        },
+			        title: {
+			            text: 'უპასუხო ზარები დღეების მიხედვით',
+			            x: -20 
+			        },
+			        subtitle: {
+			            text: '',
+			            x: -20
+			        },
+			        xAxis: {
+			            categories: [],
+			            labels: {
+			            	 rotation: -45,
+			            	align: 'right'
+			            }
+			        },
+			        yAxis: {
+			            title: {
+			                text: 'ზარები'
+			            },
+			            plotLines: [{
+			                value: 0,
+			                width: 1,
+			                color: '#808080'
+			            }]
+			        },
+			        tooltip: {
+			        	//valueSuffix: ' áƒªáƒ�áƒšáƒ˜'
+			                
+			        },
+			        legend: {
+		                layout: 'vertical',
+		                align: 'right',
+		                verticalAlign: 'top',
+		                borderWidth: 0
+			        },
+			        series: []
+			    }
+
+			 var i=0;
+			
+				agent	= '';
+				queuet = '';
+			
+				var optionss = $('#myform_List_Queue_to option');
+				var values = $.map(optionss ,function(option) {
+					if(queuet != ""){
+						queuet+=",";
+						
+					}
+					queuet+="'"+option.value+"'";
+				});
+			
+			var optionss = $('#myform_List_Agent_to option');
+			var values = $.map(optionss ,function(option) {
+				if(agent != ''){
+					agent+=',';
+					
+				}
+				agent+="'"+option.value+"'";
+			});
+			
+			start_time = $('#start_time').val();
+			end_time = $('#end_time').val();
+
+			    $.getJSON("server-side/report/sales_statistics.action.php?start="+start_time + "&end=" + end_time + "&agent=" + agent + "&queuet=" + queuet, function(json) {
+				    
+			    	options.xAxis.categories = json[8]['times'];
+			    	options.tooltip.valueSuffix = json[8]['unit'];
+			    	options.series[0] = {};
+			    	options.series[0].name = json[8]['name'];
+			    	options.series[0].data = json[8]['unanswer_call'];
+			    	options.series[0].type = "column";
+			    	
+			        chart = new Highcharts.Chart(options);
+			        
+			    });
+		}
+
+
+
+		 function getData9(){
+			 var options = {
+			        chart: {
+			            renderTo: 'chart_container9',
+			            margin: [ 50, 50, 100, 80]
+			        },
+			        title: {
+			            text: 'უპასუხო ზარები საათების  მიხედვით',
+			            x: -20 
+			        },
+			        subtitle: {
+			            text: '',
+			            x: -20
+			        },
+			        xAxis: {
+			            categories: [],
+			            labels: {
+			            	 rotation: -45,
+			            	align: 'right'
+			            }
+			        },
+			        yAxis: {
+			            title: {
+			                text: 'ზარები'
+			            },
+			            plotLines: [{
+			                value: 0,
+			                width: 1,
+			                color: '#808080'
+			            }]
+			        },
+			        tooltip: {
+			        	//valueSuffix: ' áƒªáƒ�áƒšáƒ˜'
+			                
+			        },
+			        legend: {
+		                layout: 'vertical',
+		                align: 'right',
+		                verticalAlign: 'top',
+		                borderWidth: 0
+			        },
+			        series: []
+			    }
+
+			 var i=0;
+			
+				agent	= '';
+				queuet = '';
+			
+				var optionss = $('#myform_List_Queue_to option');
+				var values = $.map(optionss ,function(option) {
+					if(queuet != ""){
+						queuet+=",";
+						
+					}
+					queuet+="'"+option.value+"'";
+				});
+			
+			var optionss = $('#myform_List_Agent_to option');
+			var values = $.map(optionss ,function(option) {
+				if(agent != ''){
+					agent+=',';
+					
+				}
+				agent+="'"+option.value+"'";
+			});
+			
+			start_time = $('#start_time').val();
+			end_time = $('#end_time').val();
+
+			    $.getJSON("server-side/report/sales_statistics.action.php?start="+start_time + "&end=" + end_time + "&agent=" + agent + "&queuet=" + queuet, function(json) {
+				    
+			    	options.xAxis.categories = json[9]['times2'];
+			    	options.tooltip.valueSuffix = json[9]['unit'];
+			    	options.series[0] = {};
+			    	options.series[0].name = json[9]['name'];
+			    	options.series[0].data = json[9]['unanswer_count1'];
+			    	options.series[0].type = "column";
+			    	
+			        chart = new Highcharts.Chart(options);
+			        
+			    });
+		}
+
+		 function getData10(){
+			 var options = {
+			        chart: {
+			            renderTo: 'chart_container10',
+			            margin: [ 50, 50, 100, 80]
+			        },
+			        title: {
+			            text: 'უპასუხო ზარები კვირის დღეების მიხედვით',
+			            x: -20 
+			        },
+			        subtitle: {
+			            text: '',
+			            x: -20
+			        },
+			        xAxis: {
+			            categories: [],
+			            labels: {
+			            	 rotation: -45,
+			            	align: 'right'
+			            }
+			        },
+			        yAxis: {
+			            title: {
+			                text: 'ზარები'
+			            },
+			            plotLines: [{
+			                value: 0,
+			                width: 1,
+			                color: '#808080'
+			            }]
+			        },
+			        tooltip: {
+			        	//valueSuffix: ' áƒªáƒ�áƒšáƒ˜'
+			                
+			        },
+			        legend: {
+		                layout: 'vertical',
+		                align: 'right',
+		                verticalAlign: 'top',
+		                borderWidth: 0
+			        },
+			        series: []
+			    }
+
+			 var i=0;
+			
+				agent	= '';
+				queuet = '';
+			
+				var optionss = $('#myform_List_Queue_to option');
+				var values = $.map(optionss ,function(option) {
+					if(queuet != ""){
+						queuet+=",";
+						
+					}
+					queuet+="'"+option.value+"'";
+				});
+			
+			var optionss = $('#myform_List_Agent_to option');
+			var values = $.map(optionss ,function(option) {
+				if(agent != ''){
+					agent+=',';
+					
+				}
+				agent+="'"+option.value+"'";
+			});
+			
+			start_time = $('#start_time').val();
+			end_time = $('#end_time').val();
+
+			    $.getJSON("server-side/report/sales_statistics.action.php?start="+start_time + "&end=" + end_time + "&agent=" + agent + "&queuet=" + queuet, function(json) {
+				    
+			    	options.xAxis.categories = json[10]['date1'];
+			    	options.tooltip.valueSuffix = json[10]['unit'];
+			    	options.series[0] = {};
+			    	options.series[0].name = json[10]['name'];
+			    	options.series[0].data = json[10]['unanswer_count2'];
+			    	options.series[0].type = "column";
+			    	
+			        chart = new Highcharts.Chart(options);
+			        
+			    });
+			    
+		}
+
+		 function drawFirstLevel(){
+			 
+
+		        // Build the chart
+			 var options = {
+		                chart: {
+		                    renderTo: 'chart_container0',
+		                    plotBackgroundColor: null,
+		                    plotBorderWidth: null,
+		                    plotShadow: false
+		                },
+		                title: {
+		                    text: 'რეპორტ ინფო'
+		                },
+		                tooltip: {
+		                    formatter: function() {
+		                        return '<b>'+ this.point.name +'</b>: '+ this.percentage.toFixed(2) +' %';
+		                    }
+		                },
+		                plotOptions: {
+		                	pie: {
+		                        allowPointSelect: true,
+		                        cursor: 'pointer',
+		                        dataLabels: {
+		                            enabled: true,
+		                            color: '#000000',
+		                            connectorColor: '#000000',
+		                            formatter: function() {
+		                                return '<b>'+ this.point.name +'</b>: '+ this.percentage.toFixed(2) +' %';
+		                            }
+		                        },
+		                        point: {
+		                            events: {
+		                                click: function() {
+			                                var nm = this.name.split("<",1);
+			                                $("#hidden_name").val(nm);
+			                                var st	= $("#search_start").val();
+			                        		var en		= $("#search_end").val();
+		                                	drawSecondLevel(this.name, st, en);  
+		                                	GetProductionSum(nm, st, en);
+		                                	LoadTable2(nm, st, en);                      
+		                                }
+		                            }
+		                        }
+		                    }
+		                },
+		                series: [{
+		                    type: 'pie',
+		                    name: 'áƒ™áƒ�áƒ¢áƒ”áƒ’áƒ�áƒ áƒ˜áƒ”áƒ‘áƒ˜',
+		                    data: []
+		                }]
+			 }
+			 var i=0;
+				
+				agent	= '';
+				queuet = '';
+			
+				var optionss = $('#myform_List_Queue_to option');
+				var values = $.map(optionss ,function(option) {
+					if(queuet != ""){
+						queuet+=",";
+						
+					}
+					queuet+="'"+option.value+"'";
+				});
+			
+			var optionss = $('#myform_List_Agent_to option');
+			var values = $.map(optionss ,function(option) {
+				if(agent != ''){
+					agent+=',';
+					
+				}
+				agent+="'"+option.value+"'";
+			});
+			
+			start_time = $('#start_time').val();
+			end_time = $('#end_time').val();
+		            
+		            $.getJSON("server-side/report/prod_category_statistics.action.php?start="+start_time + "&end=" + end_time + "&queuet=" + queuet, function(json) {
+		                options.series[0].data = json;
+		               // alert(options);
+		                chart = new Highcharts.Chart(parseInt(options[0]));
+		                
+		            });
+		 }
+		 function getData11(){
+			 var options = {
+			        chart: {
+			            renderTo: 'chart_container11',
+			            margin: [ 50, 50, 100, 80]
+			        },
+			        title: {
+			            text: 'ნაპასუხები ზარები წამების მიხედვით',
+			            x: -20 
+			        },
+			        subtitle: {
+			            text: '',
+			            x: -20
+			        },
+			        xAxis: {
+			            categories: [],
+			            labels: {
+			            	 rotation: -45,
+			            	align: 'right'
+			            }
+			        },
+			        yAxis: {
+			            title: {
+			                text: 'ზარები'
+			            },
+			            plotLines: [{
+			                value: 0,
+			                width: 1,
+			                color: '#808080'
+			            }]
+			        },
+			        tooltip: {
+			        	//valueSuffix: ' áƒªáƒ�áƒšáƒ˜'
+			                
+			        },
+			        legend: {
+		                layout: 'vertical',
+		                align: 'right',
+		                verticalAlign: 'top',
+		                borderWidth: 0
+			        },
+			        series: []
+			    }
+
+			 var i=0;
+			
+				agent	= '';
+				queuet = '';
+			
+				var optionss = $('#myform_List_Queue_to option');
+				var values = $.map(optionss ,function(option) {
+					if(queuet != ""){
+						queuet+=",";
+						
+					}
+					queuet+="'"+option.value+"'";
+				});
+			
+			var optionss = $('#myform_List_Agent_to option');
+			var values = $.map(optionss ,function(option) {
+				if(agent != ''){
+					agent+=',';
+					
+				}
+				agent+="'"+option.value+"'";
+			});
+			
+			start_time = $('#start_time').val();
+			end_time = $('#end_time').val();
+
+			    $.getJSON("server-side/report/sales_statistics.action.php?start="+start_time + "&end=" + end_time + "&agent=" + agent + "&queuet=" + queuet, function(json) {
+				    
+			    	options.xAxis.categories = json[11]['call_second'];
+			    	options.tooltip.valueSuffix = json[11]['unit'];
+			    	options.series[0] = {};
+			    	options.series[0].name = json[11]['name'];
+			    	options.series[0].data = json[11]['mas'];
+			    	options.series[0].type = "column";
+			    	
+			        chart = new Highcharts.Chart(options);
+			        
+			    });
+			    
+		}
+      
 
 		function go_next(val,par){
 			if(val != undefined){
@@ -138,6 +1249,18 @@
 			parame.queuet = '';
 			paramm		= "server-side/report/technical.action.php";
 			
+			//getData();
+			//getData1();
+			//getData2();
+			//getData3();
+			//getData4();
+			//getData5();
+			//getData6();
+			//getData7();
+			//getData8();
+			//getData9();
+			//getData10();
+			//getData11();
 			
 			var options = $('#myform_List_Queue_to option');
 			var values = $.map(options ,function(option) {
@@ -293,7 +1416,7 @@
 
 <body>
 
-<div id="tabs" style="width: 95%; margin: 0 auto; min-height: 768px; margin-top: 50px;">
+<div id="tabs" style="width: 95%; margin: 0 auto; height:500px; margin-top: 50px;">
 		<ul>
 			<li><a href="#tab-0">მთავარი</a></li>
 			<li><a href="#tab-1">ნაპასუხები</a></li>
@@ -489,12 +1612,14 @@
 			</tbody>
         </table>
         <br>
-        <table width="99%" cellpadding="3" cellspacing="3" border="0">
+          <div id="chart_container" style="float:left; width: 90%; height: 300px; margin-left: 20px;"></div>
+      <br>
+        <table width="47%" cellpadding="3" cellspacing="3" border="0" style="float:left;">
             <caption>მომსახურების დონე(Service Level)</caption>
             <thead>
             <tr>
-            <td valign="top" width="50%" bgcolor="#fffdf3">
-                <table width="99%" cellpadding="1" cellspacing="1" border="0" class="sortable" id="table3">
+            <td valign="top" width="100%" bgcolor="#fffdf3">
+                <table width="100%" cellpadding="1" cellspacing="1" border="0" class="sortable" id="table3">
                 <thead>
                 <tr> 
                     <th><a  class="sortheader">პასუხი<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
@@ -513,13 +1638,14 @@
             </tr>
             </thead>
             </table>
+            <div id="chart_container11" bgcolor="#fffdf3" style="float:left; width: 50%; height: 300px;"></div>
         <br>
-        <table width="99%" cellpadding="3" cellspacing="3" border="0">
+        <table width="47%" cellpadding="3" cellspacing="3" border="0" style="float:left;">
             <caption>ნაპასუხები ზარები რიგის მიხედვით</caption>
             <thead>
             <tr>
-            <td valign="top" width="50%" bgcolor="#fffdf3">
-                <table width="99%" cellpadding="1" cellspacing="1" border="0" class="sortable" id="table3">
+            <td valign="top" width="100%" bgcolor="#fffdf3">
+                <table width="100%" cellpadding="1" cellspacing="1" border="0" class="sortable" id="table3">
                 <thead>
                 <tr> 
                        <th><a  class="sortheader" onclick="ts_resortTable(this, 0);return false;">რიგი<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
@@ -538,12 +1664,14 @@
             </thead>
             </table>
             <br>
-            <table width="99%" cellpadding="3" cellspacing="3" border="0">
+            <div id="chart_container7" bgcolor="#fffdf3" style="float:left; width: 50%; height: 300px;"></div>
+            <br>
+            <table width="47%" cellpadding="3" cellspacing="3" border="0" style="float:left;">
             <caption>კავშირის გაწყვეტის მიზეზეი</caption>
             <thead>
             <tr>
-            <td valign="top" width="50%" bgcolor="#fffdf3">
-                <table width="50%" cellpadding="1" cellspacing="1" border="0" class="sortable" id="table4">
+            <td valign="top" width="100%" bgcolor="#fffdf3">
+                <table width="100%" cellpadding="1" cellspacing="1" border="0" class="sortable" id="table4">
                 <thead>
                 <tr>
                     <th><a  class="sortheader" onclick="ts_resortTable(this, 0);return false;">მიზეზი<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
@@ -569,6 +1697,8 @@
             </tr>
             </thead>
             </table>
+            <br>
+              <div id="chart_container1" style="float:left; width: 50%; height: 300px;"></div>
 		 </div>
 		 <div id="tab-2">
 		    <table width="99%" cellpadding="3" cellspacing="3" border="0">
@@ -628,12 +1758,12 @@
 		</thead>
 		</table>
 		<br>
-		<table width="99%" cellpadding="3" cellspacing="3" border="0">
+		<table width="47%" cellpadding="3" cellspacing="3" border="0" style="float:left;">
 		<caption>კავშირის გაწყვეტის მიზეზი</caption>
 			<thead>
 			<tr>
-			<td valign="top" width="50%" bgcolor="#fffdf3">
-				<table width="50%" cellpadding="1" cellspacing="1" border="0">
+			<td valign="top" width="100%" bgcolor="#fffdf3">
+				<table width="100%" cellpadding="1" cellspacing="1" border="0">
 				<thead>
 				<tr>
 					<th>მიზეზი</th>
@@ -658,13 +1788,14 @@
 			</tr>
 			</thead>
 			</table>
+			<div id="chart_container5" style="float:left; width: 50%; height: 300px;"></div>
 			<br>
-			<table width="99%" cellpadding="3" cellspacing="3" border="0">
+			<table width="47%" cellpadding="3" cellspacing="3" border="0" style="float:left;">
 			<caption>უპასუხო ზარები რიგის მიხედვით</caption>
 			<thead>
 			<tr>
-			<td valign="top" width="50%" bgcolor="#fffdf3">
-				<table width="50%" cellpadding="1" cellspacing="1" border="0">
+			<td valign="top" width="100%" bgcolor="#fffdf3">
+				<table width="100%" cellpadding="1" cellspacing="1" border="0">
 				<thead>
                 <tr> 
 				   	<th>რიგი</th>
@@ -681,6 +1812,8 @@
 			</tr>
 			</thead>
 			</table>
+			<br>
+			  <div id="chart_container6" style="float:left; width: 50%; height: 300px;"></div>
 		 </div>
 		 <div id="tab-3">
 		    <table width="99%" cellpadding="3" cellspacing="3" border="0">
@@ -770,6 +1903,9 @@
 				</tbody>
 			</table>
 			<br>
+			<div id="chart_container4" style="float:left; width: 47%; height: 300px; margin-left: 20px;"></div>
+			<div id="chart_container8" style="float:right; width: 47%; height: 300px; margin-left: 20px;"></div>
+			<br>
 			<table width="99%" cellpadding="1" cellspacing="1" border="0" class="sortable" id="table2">
 			<caption>ზარის განაწილება საათების მიხედვით</caption>
 				<thead>
@@ -799,6 +1935,8 @@
 					</tr>
 			</tbody>
 			</table>
+			<div id="chart_container2" style="float:left; width: 47%; height: 300px; margin-left: 20px;"></div>
+			  <div id="chart_container9" style="float:right; width: 47%; height: 300px; margin-left: 20px;"></div>
 			<br>
 			<table width="99%" cellpadding="1" cellspacing="1" border="0" class="sortable" id="table3">
 			<caption>ზარის განაწილება კვირების მიხედვით</caption>
@@ -829,6 +1967,9 @@
 					</tr>
 			</tbody>
 			</table>
+			<br>
+			 <div id="chart_container3" style="float:left; width: 47%; height: 300px; margin-left: 20px;"></div>
+			<div id="chart_container10" style="float:right; width: 47%; height: 300px; margin-left: 20px;"></div>
 		 </div>
 		 
 </div>

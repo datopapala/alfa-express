@@ -42,57 +42,44 @@ $data		= array('page' => array(
 
 //------------------------------- ტექნიკური ინფორმაცია
 
-	$row_chat = mysql_fetch_assoc(mysql_query("	SELECT 	(
-															SELECT COUNT(*)
-															FROM `chat_chat`
-															WHERE chat_chat.department_name = 'MoneyMan'
-															AND DATE(chat_chat.cur_time) >= '$start_time'
-															AND DATE(chat_chat.cur_time) <= '$end_time'
-														) AS `total_chat`,
-														department_name,
-														(
-															SELECT	TIME_FORMAT(SEC_TO_TIME((SUM(time_end) - SUM(time_start))/COUNT(*)), '%H:%i:%s')
-															FROM 		`chat_chat`
-															WHERE 	department_name = 'MoneyMan'
-															AND 		chat_chat.chat_status = 3
-															AND 		DATE(chat_chat.cur_time) >= '$start_time'
-															AND 		DATE(chat_chat.cur_time) <= '$end_time'
-															AND 		time_end != 0
-															AND 		time_start != 0
-														) AS `avg_time`,
-														(
-															SELECT	TIME_FORMAT(SEC_TO_TIME(SUM(time_end) - SUM(time_start)), '%H:%i:%s')
-															FROM 		`chat_chat`
-															WHERE 	chat_chat.department_name = 'MoneyMan'
-															AND 		chat_chat.chat_status = 3
-															AND 		DATE(chat_chat.cur_time) >= '$start_time'
-															AND 		DATE(chat_chat.cur_time) <= '$end_time'
-															AND 		time_end != 0
-															AND 		time_start != 0
-														) AS `total_time`
-												FROM `chat_chat`
-												WHERE chat_chat.department_name = 'MoneyMan'
-												AND chat_chat.chat_status = 3
+	$row_chat = mysql_fetch_assoc(mysql_query("	SELECT 		COUNT(*) AS `answer_chat`,
+															(
+																SELECT COUNT(*)
+																FROM `chat_chat`
+																WHERE DATE(chat_chat.cur_time) >= '$start_time'
+																AND DATE(chat_chat.cur_time) <= '$end_time'
+																AND chat_chat.department_name IN ($queue)
+																AND chat_chat.chat_status IN (1,2)
+															) AS `unanswer_chat`,
+															(
+																SELECT COUNT(*)
+																FROM `chat_chat`
+																WHERE DATE(chat_chat.cur_time) >= '$start_time'
+																AND DATE(chat_chat.cur_time) <= '$end_time'
+																AND chat_chat.department_name IN ($queue)
+																AND chat_chat.chat_status IN (1,2,3)
+															) AS `total_chat`,
+															department_name,
+															SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF(from_unixtime(chat_chat.time_end), from_unixtime(chat_chat.time_start))))) AS `total_time`,
+															SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF(from_unixtime(chat_chat.time_end), from_unixtime(chat_chat.time_start))))/COUNT(*)) AS `avg_time`
+												FROM   		chat_chat
+												WHERE  		chat_chat.chat_status = 3
 												AND DATE(chat_chat.cur_time) >= '$start_time'
-												AND DATE(chat_chat.cur_time) <= '$end_time'"));
+												AND DATE(chat_chat.cur_time) <= '$end_time'
+												AND chat_chat.department_name IN ($queue)
+												"));
 	
-	$row_chat_answer = mysql_fetch_assoc(mysql_query("SELECT 	COUNT(DISTINCT chat_id) AS `answer_chat`
-	FROM 	`chat_messages`
-	WHERE 	DATE(FROM_UNIXTIME(time)) >= '$start_time'
-	AND 	DATE(FROM_UNIXTIME(time)) <= '$end_time'
-	AND 	operator_name != ''
-	"));
 	
 	$data['page']['technik_info'] = '
 							
                     <td>ჩატი</td>
                     <td>'.$row_chat[total_chat].'</td>
-                    <td>'.$row_chat_answer[answer_chat].'</td>
-                    <td>'.($row_chat[total_chat]-$row_chat_answer[answer_chat]).'</td>
+                    <td>'.$row_chat[answer_chat].'</td>
+                    <td>'.$row_chat[unanswer_chat].'</td>
                     <td>'.$row_done_blank[count].'</td>
-                    <td>'.round((($row_chat_answer[answer_chat] / $row_chat[total_chat]) * 100),2).' %</td>
-                    <td>'.round(((($row_chat[total_chat]-$row_chat_answer[answer_chat]) / $row_chat[total_chat]) * 100),2).' %</td>
-                    <td>'.round((($row_done_blank[count] / $row_chat_answer[answer_chat]) * 100),2).' %</td>
+                    <td>'.round((($row_chat[answer_chat] / $row_chat[total_chat]) * 100),2).' %</td>
+                    <td>'.round((($row_chat[unanswer_chat] / $row_chat[total_chat]) * 100),2).' %</td>
+                    <td>'.round((($row_done_blank[count] / $row_chat[answer_chat]) * 100),2).' %</td>
                 
 							';
 // -----------------------------------------------------
@@ -260,7 +247,7 @@ $data		= array('page' => array(
 
                    	<tr>
 					<td class="tdstyle">ნაპასუხები ჩატი</td>
-					<td>'.$row_chat_answer[answer_chat].' ჩატი</td>
+					<td>'.$row_chat[answer_chat].' ჩატი</td>
 					</tr>
 					
 					<tr>
@@ -308,10 +295,10 @@ while($row = mysql_fetch_assoc($row_operator)){
                    	<tr>
 					<td>'.$row[operator_name].'</td>
 					<td>'.$row[num].'</td>
-					<td>'.round((($row[num] / $roww[total])*100),2).' %</td>
-					<td>'.$row_chat[total_time]/$row[num].' წუთი</td>
-					<td>'.$row[call_time_pr].' %</td>
-					<td>'.$row[avg_call_time].' წუთი</td>
+					<td>'.round((($row[num] / $row_chat_answer[answer_chat])*100),2).' %</td>
+					<td>'.gmdate("H:i:s", ($row_chat[chat_total] / $row[num])).' წუთი</td>
+					<td>'.round((($row[num] / $row_chat_answer[answer_chat])*100),2).' %</td>
+					<td>'.gmdate("H:i:s", ($row_chat[avg_time_op]/$row[num])).' წუთი</td>
 					<td>'.$row[hold_time].' წამი</td>
 					<td>'.$row[avg_hold_time].' წამი</td>
 					</tr>
@@ -351,11 +338,11 @@ while($row = mysql_fetch_assoc($row_operator)){
 
                    	<tr> 
                   <td class="tdstyle">ნაპასუხები ჩატის რაოდენობა:</td>
-		          <td>'.$row_answer[count].' ჩატი</td>
+		          <td>'.$row_chat_answer[answer_chat].' ჩატი</td>
 	            </tr>
                 <tr>
                   <td class="tdstyle">უპასუხო ჩატის რაოდენობა:</td>
-                  <td>'.$row_abadon[count].' ჩატი</td>
+                  <td>'.($row_chat[total_chat]-$row_chat_answer[answer_chat]).' ჩატი</td>
                 </tr>
 		        <tr>
                   <td class="tdstyle">ოპერატორი შევიდა:</td>
