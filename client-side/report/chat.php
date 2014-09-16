@@ -277,7 +277,27 @@
             	
             		<input style="margin-left: 15px;" id="show_report" name="show_report" type="submit" value="რეპორტების ჩვენება">
             	
-				
+				 <table width="70%" border="0" cellpadding="0" cellspacing="0" style="margin-top: 50px;">
+                 <caption>რეპორტ ინფო</caption>
+                 <tbody class="report_info">
+               	 <tr>
+                    	<td class="tdstyle">რიგი:</td>
+                     	<td></td>
+                 	</tr>
+                 	<tr>
+	                	<td class="tdstyle">საწყისი თარიღი:</td>
+ 	                    <td></td>
+                 	</tr>
+                 	<tr>
+                      	<td class="tdstyle">დასრულების თარიღი:</td>
+                        <td></td>
+                 	</tr>
+                	<tr>
+                       	<td class="tdstyle">პერიოდი:</td>
+                        <td></td>
+                	</tr>
+                 </tbody>
+                </table>
                 <table width="70%" border="0" cellpadding="0" cellspacing="0" style="margin-top: 50px">
                 <caption>ტექნიკური ინფორმაცია</caption>
                 <tbody>
@@ -302,27 +322,6 @@
                     <td></td>
                 </tr>
                 </tbody>
-                </table>
-                <table width="100%" border="0" cellpadding="0" cellspacing="0">
-                 <caption>რეპორტ ინფო</caption>
-                 <tbody class="report_info">
-               	 <tr>
-                    	<td class="tdstyle">რიგი:</td>
-                     	<td></td>
-                 	</tr>
-                 	<tr>
-	                	<td class="tdstyle">საწყისი თარიღი:</td>
- 	                    <td></td>
-                 	</tr>
-                 	<tr>
-                      	<td class="tdstyle">დასრულების თარიღი:</td>
-                        <td></td>
-                 	</tr>
-                	<tr>
-                       	<td class="tdstyle">პერიოდი:</td>
-                        <td></td>
-                	</tr>
-                 </tbody>
                 </table>
 		</div>
 		 </div>

@@ -38,6 +38,7 @@ $name[]     = 'რაოდენობა';
 												WHERE qs.qname = q.qname_id
 												AND qs.qagent = ag.agent_id
 												AND qs.qevent = ac.event_id
+												AND q.queue IN ($queuet)
 												AND DATE(qs.datetime) >= '$start' AND DATE(qs.datetime) <= '$end'
 												AND ac.event IN ( 'COMPLETEAGENT')
 												
@@ -53,6 +54,7 @@ $name[]     = 'რაოდენობა';
 														WHERE qs.qname = q.qname_id
 														AND qs.qagent = ag.agent_id
 														AND qs.qevent = ac.event_id
+														AND q.queue IN ($queuet)
 														AND DATE(qs.datetime) >= '$start' AND DATE(qs.datetime) <= '$end'
 														AND ac.event IN (  'COMPLETECALLER')
 														");
@@ -71,6 +73,7 @@ while($row = mysql_fetch_assoc($res)){
 																qs.qname = q.qname_id and qs.qevent = ev.event_id
 																AND DATE(qs.datetime) >= '$start'
 																AND DATE(qs.datetime) <= '$end'
+																AND q.queue IN ($queuet)
 																AND ev.event IN ('COMPLETECALLER', 'COMPLETEAGENT')
 																GROUP BY ag.agent");
 			
