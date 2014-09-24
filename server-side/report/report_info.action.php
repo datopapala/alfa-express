@@ -8,30 +8,34 @@ $departament= $_REQUEST['departament'];
 $type       = $_REQUEST['type'];
 $category   = $_REQUEST['category'];
 $s_category = $_REQUEST['sub_category'];
-$done 		= $_REQUEST['done']%4;
+$done 		= $_REQUEST['done']%2;
 $name 		= $_REQUEST['name'];
 $title 		= $_REQUEST['title'];
 $text[0] 	= "გაცემული ინფორმაცია";
-$text[1] 	= "'$departament' შემოსული ზარები  '$type' მიხედვით";
-$text[2] 	= "'$departament' შემოსული ზარები  '$category' მიხედვით";
-$text[3] 	= "'$departament' შემოსული ზარები ქვე–კატეგორიის მიხედვით";
+$text[1] 	= "'გაცემული ინფორმაცია ქვე–კატეგორიის მიხედვით  მიხედვით";
+//$text[2] 	= "'$departament' შემოსული ზარები  '$category' მიხედვით";
+//$text[3] 	= "'$departament' შემოსული ზარები ქვე–კატეგორიის მიხედვით";
 $c="3 or incomming_call.call_type_id=0";
 if ($type=="ინფორმაციული")  $c=1;
 elseif ($type=="პრეტენზია") $c=2;
 //------------------------------------------------query-------------------------------------------
 switch ($done){
 	case  1:
-		$result = mysql_query("	SELECT IF(incomming_call.call_type_id=1,'ინფორმაციული',IF(incomming_call.call_type_id=2,'პრეტენზია','სხვა')) as type,
-										COUNT(*),
-										CONCAT(ROUND(COUNT(*)/(SELECT COUNT(*) FROM incomming_call JOIN department ON incomming_call.department_id=department.id
-																WHERE department.`name`='$departament' and DATE(`incomming_call`.`date`) >= '$start' AND DATE(`incomming_call`.`date`) <= '$end')*100,2),'%')
-								FROM 	incomming_call
-								JOIN 	department ON incomming_call.department_id=department.id
-								WHERE 	department.`name`='$departament' and DATE(`incomming_call`.`date`) >= '$start' and  DATE(`incomming_call`.`date`) <= '$end'
-								GROUP BY 	type");
+		$result = mysql_query("SELECT info_category.`name` AS d_name,
+								COUNT(incomming_call.id),
+								CONCAT(ROUND(COUNT(incomming_call.id)/(SELECT 		COUNT(incomming_call.id)
+																	FROM 			info_category
+																	JOIN 			info_category AS par ON par.id=info_category.parent_id AND par.`name`='$category'
+																	LEFT JOIN incomming_call  ON incomming_call.information_sub_category_id=info_category.id
+																	AND DATE(`incomming_call`.`date`) >= '$start' AND DATE(`incomming_call`.`date`) <= '$end')*100,2),'%')
+								FROM info_category
+								JOIN info_category AS par ON par.id=info_category.parent_id AND par.`name`='$category'
+								LEFT JOIN incomming_call  ON incomming_call.information_sub_category_id=info_category.id
+								AND DATE(`incomming_call`.`date`) >= '$start' AND DATE(`incomming_call`.`date`) <= '$end'
+								GROUP BY d_name");
 		$text[0]=$text[1];
 	break;
-	case 2:
+	/* case 2:
 			$result = mysql_query("SELECT info_category.`name`,
 											COUNT(*),
 											CONCAT(ROUND(COUNT(*)/(SELECT COUNT(*)
@@ -65,15 +69,15 @@ switch ($done){
 								WHERE (incomming_call.call_type_id=$c) and DATE(`incomming_call`.`date`) >= '$start' AND DATE(`incomming_call`.`date`) <= '$end' AND department.`name`='$departament'
 								GROUP BY c_name");
 		$text[0]=$text[3];
-		break;
+		break; */
 	default:
-		$result = mysql_query("	SELECT  info_category.`name` AS d_name,
+	$result = mysql_query("	SELECT  info_category.`name` AS d_name,
 								COUNT(incomming_call.id),
 								CONCAT(ROUND(COUNT(incomming_call.id)/(SELECT COUNT(incomming_call.id) FROM info_category
-																		left JOIN incomming_call ON incomming_call.information_category_id=info_category.id AND DATE(`incomming_call`.`date`) >= '2014-09-23' AND DATE(`incomming_call`.`date`) <= '2014-09-24'
+																		left JOIN incomming_call ON incomming_call.information_category_id=info_category.id AND DATE(`incomming_call`.`date`) >= '$start' AND DATE(`incomming_call`.`date`) <= '$end'
 																		WHERE 	info_category.parent_id=0 AND info_category.actived=1)*100,2),'%')
 								FROM 		info_category
-								left JOIN incomming_call ON incomming_call.information_category_id=info_category.id AND DATE(`incomming_call`.`date`) >= '2014-09-23' AND DATE(`incomming_call`.`date`) <= '2014-09-24'
+								left JOIN incomming_call ON incomming_call.information_category_id=info_category.id AND DATE(`incomming_call`.`date`) >= '$start' AND DATE(`incomming_call`.`date`) <= '$end'
 								WHERE 	info_category.parent_id=0 AND info_category.actived=1
 								GROUP BY 	d_name");
 
