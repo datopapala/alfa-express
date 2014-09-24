@@ -53,7 +53,7 @@ function drawFirstLevel(){
 	                            	return '<b>'+ this.point.name +'-'+this.point.y+' ზარი :  '+this.percentage.toFixed(2) +' %</b>';
 	                            }
 	                        },
-/* 	                        point: {
+ 	                        point: {
 	                            events: {
 	                                click: function() {
 	                                	$("#back").button({ disabled: false });
@@ -62,7 +62,7 @@ function drawFirstLevel(){
 		                        		drawFirstLevel();
 	                                }
 	                            }
-	                        } */
+	                        }
 	                    }
 	                },
 	                series: [{
@@ -73,7 +73,7 @@ function drawFirstLevel(){
 	            }
 		var start	= $("#search_start").val();
 		var end		= $("#search_end").val();
-		var d_url   ="&start="+start+"&end="+end+"&done="+i+"&category="+done[0]+"&type="+done[1]+"&sf="+done[2]+"&sub_category="+done[3];
+		var d_url   ="&start="+start+"&end="+end+"&done="+i+"&type="+done[0]+"&category="+done[1]+"&sub_category="+done[2];
 		var url     = aJaxURL+"?act=get_category"+d_url;
 		GetDataTable(tName, aJaxURL, "get_list", 4, d_url, 0, "",'','',[2]);
         $.getJSON(url, function(json) {
