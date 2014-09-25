@@ -17,7 +17,7 @@ $text[2] 	= "'$type - $category' ტიპის ზარები  ქვე�
 $text[3] 	= "'$type - $category - $s_category' შემოსული ზარები ქვე–კატეგორიის მიხედვით";
 $c="3 or incomming_call.call_vote=0";
 if ($type=="პოზიტიური")  $c=1;
-elseif ($type=="ნეგატიური") $c=2;
+elseif ($type=="ნეიტრალური") $c=2;
 //------------------------------------------------query-------------------------------------------
 switch ($done){
 	case  1:
@@ -65,7 +65,7 @@ switch ($done){
 		$text[0]=$text[3];
 		break;
 	default:
-	$result = mysql_query(" SELECT IF(call_vote=1,'პოზიტიური', IF(call_vote=2,'ნეგატიური','ნეიტრალური'))AS vote,
+	$result = mysql_query(" SELECT IF(call_vote=1,'პოზიტიური', IF(call_vote=2,'ნეიტრალური','ნეგატიური'))AS vote,
 							COUNT(*),
 							CONCAT(ROUND(COUNT(*)/(
 							SELECT COUNT(*) FROM incomming_call where DATE(`incomming_call`.`date`) >= '$start' AND DATE(`incomming_call`.`date`) <= '$end'
