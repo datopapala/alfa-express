@@ -42,15 +42,14 @@ $data		= array('page' => array(
 
 //------------------------------- ტექნიკური ინფორმაცია
 
-	$row_chat = mysql_fetch_assoc(mysql_query("	SELECT 		COUNT(*) AS `answer_chat`,
+	$row_chat = mysql_fetch_assoc(mysql_query("	SELECT 		COUNT(*) AS `unanswer_chat`,
 															(
-																SELECT COUNT(*)
-																FROM `chat_chat`
-																WHERE DATE(chat_chat.cur_time) >= '$start_time'
-																AND DATE(chat_chat.cur_time) <= '$end_time'
-																AND chat_chat.department_name IN ($queue)
-																AND chat_chat.chat_status IN (1,2)
-															) AS `unanswer_chat`,
+																SELECT count(DISTINCT chat_id)
+																FROM `chat_messages`
+																WHERE operator_name !='' 
+																AND DATE(FROM_UNIXTIME(time)) >= '$start_time'
+																AND DATE(FROM_UNIXTIME(time)) <= '$end_time'
+															) AS `answer_chat`,
 															(
 																SELECT COUNT(*)
 																FROM `chat_chat`
@@ -75,7 +74,7 @@ $data		= array('page' => array(
                     <td>ჩატი</td>
                     <td>'.$row_chat[total_chat].'</td>
                     <td>'.$row_chat[answer_chat].'</td>
-                    <td>'.$row_chat[unanswer_chat].'</td>
+                    <td>'.$row_chat[unanswer_chat] - $row_chat[answer_chat].'</td>
                     <td>'.$row_done_blank[count].'</td>
                     <td>'.round((($row_chat[answer_chat] / $row_chat[total_chat]) * 100),2).' %</td>
                     <td>'.round((($row_chat[unanswer_chat] / $row_chat[total_chat]) * 100),2).' %</td>
