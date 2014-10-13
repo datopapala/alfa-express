@@ -25,18 +25,7 @@ mysql_query("SET character_set_results = 'utf8', character_set_client = 'utf8', 
 $data		= array('page' => array(
 										'answer_call' => '',
 										'technik_info' => '',
-										'report_info' => '',
-										'answer_call_info' => '',
-										'answer_call_by_queue' => '',
-										'disconnection_cause' => '',
-										'unanswer_call' => '',
-										'disconnection_cause_unanswer' => '',
-										'unanswered_calls_by_queue' => '',
-										'totals' => '',
-										'call_distribution_per_day' => '',
-										'call_distribution_per_hour' => '',
-										'call_distribution_per_day_of_week' => '',
-										'service_level' => ''
+										'report_info' => ''
 								));
 
 
@@ -107,79 +96,6 @@ $data		= array('page' => array(
 							';
 	
 //----------------------------------------------
-
-
-//------------------------------------ ნაპასუხები ზარები
-
-
-
-
-
-	$data['page']['answer_call_info'] = '
-
-                   	<tr>
-					<td class="tdstyle">ნაპასუხები ჩატი</td>
-					<td>'.$row_chat[answer_chat].' ჩატი</td>
-					</tr>
-					
-					<tr>
-					<td class="tdstyle">საშ. ხანგძლივობა:</td>
-					<td>'.$row_chat[avg_time].' დრო</td>
-					</tr>
-					<tr>
-					<td class="tdstyle">სულ საუბრის ხანგძლივობა:</td>
-					<td>'.$row_chat[total_time].' დრო</td>
-					</tr>
-					<tr>
-					<td class="tdstyle">ლოდინის საშ. ხანგძლივობა:</td>
-					<td>'.$row_clock[hold].' წამი</td>
-					</tr>
-
-							';
-	
-//---------------------------------------------
-
-	
-//--------------------------- ნაპასუხები ზარები ოპერატორების მიხედვით
-
-	$row_operator = mysql_query("
-								SELECT 	COUNT(DISTINCT chat_id) AS `num`, 
-										operator_name
-								FROM 	`chat_messages`
-								WHERE 	DATE(FROM_UNIXTIME(time)) >= '$start_time'
-								AND 	DATE(FROM_UNIXTIME(time)) <= '$end_time'
-								AND 	operator_name != ''
-								GROUP BY operator_name
-								");
-	$row_operator_total = mysql_query("
-								SELECT 	COUNT(DISTINCT chat_id) AS `total`
-								FROM 	`chat_messages`
-								WHERE 	DATE(FROM_UNIXTIME(time)) >= '$start_time'
-								AND 	DATE(FROM_UNIXTIME(time)) <= '$end_time'
-								AND 	operator_name = ''
-										GROUP BY operator_name
-								");
-
-while($row = mysql_fetch_assoc($row_operator)){
-	$roww = mysql_fetch_assoc($row_operator_total);
-	$data['page']['answer_call_by_queue'] .= '
-
-                   	<tr>
-					<td>'.$row[operator_name].'</td>
-					<td>'.$row[num].'</td>
-					<td>'.round((($row[num] / $row_chat_answer[answer_chat])*100),2).' %</td>
-					<td>'.gmdate("H:i:s", ($row_chat[chat_total] / $row[num])).' წუთი</td>
-					<td>'.round((($row[num] / $row_chat_answer[answer_chat])*100),2).' %</td>
-					<td>'.gmdate("H:i:s", ($row_chat[avg_time_op]/$row[num])).' წუთი</td>
-					<td>'.$row[hold_time].' წამი</td>
-					<td>'.$row[avg_hold_time].' წამი</td>
-					</tr>
-
-							';
-
-}
-
-//----------------------------------------------------
 
 
 echo json_encode($data);
