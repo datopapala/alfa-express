@@ -87,12 +87,61 @@
 			$("#show_report").button({
 	            
 		    });
+			$("#excel_tech_info").button({
+	            
+		    });
+			$(".excel_report_info").button({
+	            
+		    });
+			$("#excel_answer_call_info").button({
+	            
+		    });
+			$("#excel_answer_call_by_agent_info").button({
+	            
+		    });
+			$("#excel_answer_service_level_info").button({
+	            
+		    });
+			$("#excel_answer_call_by_queue_info").button({
+	            
+		    });
+			$("#excel_disconnection_cause_info").button({
+	            
+		    });
+			$("#excel_unanswer_call_info").button({
+	            
+		    });
+			$("#excel_disconnection_cause_unanswer_info").button({
+	            
+		    });
+			$("#excel_unanswer_call_by_queue_info").button({
+	            
+		    });
+			$("#excel_unanswer_call_by_queue_info").button({
+	            
+		    });
+			$("#excel_total_info").button({
+	            
+		    });
+			$("#excel_answer_call_by_day_info").button({
+	            
+		    });
+			$("#excel_answer_call_by_time_info").button({
+	            
+		    });
+			$("#excel_answer_call_by_weak_info").button({
+	            
+		    });
+			
+			
 		});
 
 		$(document).on("tabsactivate", "#tabs", function() {
         	var tab = GetSelectedTab(tbName);
         	if (tab == 0) {
-        		$(this).css('height','500px');
+        		drawFirstLevel();
+        		drawFirstLevel1();
+        		$(this).css('height','700px');
         	}else if(tab == 1){
         		getData();
        			getData11();
@@ -124,10 +173,7 @@
 			            text: 'ნაპასუხები ზარები ოპერატორების მიხედვით',
 			            x: -20 
 			        },
-			        subtitle: {
-			            text: '',
-			            x: -20
-			        },
+			       
 			        xAxis: {
 			            categories: [],
 			            labels: {
@@ -151,7 +197,7 @@
 			        },
 			        legend: {
 		                layout: 'vertical',
-		                align: 'right',
+		                align: 'left',
 		                verticalAlign: 'top',
 		                borderWidth: 0
 			        },
@@ -233,7 +279,7 @@
 			        },
 			        legend: {
 		                layout: 'vertical',
-		                align: 'right',
+		                align: 'left',
 		                verticalAlign: 'top',
 		                borderWidth: 0
 			        },
@@ -315,7 +361,7 @@
 			        },
 			        legend: {
 		                layout: 'vertical',
-		                align: 'right',
+		                align: 'left',
 		                verticalAlign: 'top',
 		                borderWidth: 0
 			        },
@@ -368,7 +414,7 @@
 			            margin: [ 50, 50, 100, 80]
 			        },
 			        title: {
-			            text: 'ნაპასუხები ზარები კვირეების მიხედვით',
+			            text: 'ნაპასუხები ზარები კვირის დღეების მიხედვით',
 			            x: -20 
 			        },
 			        subtitle: {
@@ -397,7 +443,7 @@
 			        },
 			        legend: {
 		                layout: 'vertical',
-		                align: 'right',
+		                align: 'left',
 		                verticalAlign: 'top',
 		                borderWidth: 0
 			        },
@@ -484,7 +530,7 @@
 			        },
 			        legend: {
 		                layout: 'vertical',
-		                align: 'right',
+		                align: 'left',
 		                verticalAlign: 'top',
 		                borderWidth: 0
 			        },
@@ -568,7 +614,7 @@
 			        },
 			        legend: {
 		                layout: 'vertical',
-		                align: 'right',
+		                align: 'left',
 		                verticalAlign: 'top',
 		                borderWidth: 0
 			        },
@@ -652,7 +698,7 @@
 			        },
 			        legend: {
 		                layout: 'vertical',
-		                align: 'right',
+		                align: 'left',
 		                verticalAlign: 'top',
 		                borderWidth: 0
 			        },
@@ -736,7 +782,7 @@
 			        },
 			        legend: {
 		                layout: 'vertical',
-		                align: 'right',
+		                align: 'left',
 		                verticalAlign: 'top',
 		                borderWidth: 0
 			        },
@@ -821,7 +867,7 @@
 			        },
 			        legend: {
 		                layout: 'vertical',
-		                align: 'right',
+		                align: 'left',
 		                verticalAlign: 'top',
 		                borderWidth: 0
 			        },
@@ -907,7 +953,7 @@
 			        },
 			        legend: {
 		                layout: 'vertical',
-		                align: 'right',
+		                align: 'left',
 		                verticalAlign: 'top',
 		                borderWidth: 0
 			        },
@@ -991,7 +1037,7 @@
 			        },
 			        legend: {
 		                layout: 'vertical',
-		                align: 'right',
+		                align: 'left',
 		                verticalAlign: 'top',
 		                borderWidth: 0
 			        },
@@ -1040,90 +1086,152 @@
 		}
 
 		 function drawFirstLevel(){
-			 
-
-		        // Build the chart
-			 var options = {
-		                chart: {
-		                    renderTo: 'chart_container0',
-		                    plotBackgroundColor: null,
-		                    plotBorderWidth: null,
-		                    plotShadow: false
-		                },
-		                title: {
-		                    text: 'რეპორტ ინფო'
-		                },
-		                tooltip: {
-		                    formatter: function() {
-		                        return '<b>'+ this.point.name +'</b>: '+ this.percentage.toFixed(2) +' %';
-		                    }
-		                },
-		                plotOptions: {
-		                	pie: {
-		                        allowPointSelect: true,
-		                        cursor: 'pointer',
-		                        dataLabels: {
-		                            enabled: true,
-		                            color: '#000000',
-		                            connectorColor: '#000000',
-		                            formatter: function() {
-		                                return '<b>'+ this.point.name +'</b>: '+ this.percentage.toFixed(2) +' %';
-		                            }
-		                        },
-		                        point: {
-		                            events: {
-		                                click: function() {
-			                                var nm = this.name.split("<",1);
-			                                $("#hidden_name").val(nm);
-			                                var st	= $("#search_start").val();
-			                        		var en		= $("#search_end").val();
-		                                	drawSecondLevel(this.name, st, en);  
-		                                	GetProductionSum(nm, st, en);
-		                                	LoadTable2(nm, st, en);                      
-		                                }
-		                            }
-		                        }
-		                    }
-		                },
-		                series: [{
-		                    type: 'pie',
-		                    name: 'áƒ™áƒ�áƒ¢áƒ”áƒ’áƒ�áƒ áƒ˜áƒ”áƒ‘áƒ˜',
-		                    data: []
-		                }]
-			 }
-			 var i=0;
-				
-				agent	= '';
-				queuet = '';
-			
-				var optionss = $('#myform_List_Queue_to option');
-				var values = $.map(optionss ,function(option) {
-					if(queuet != ""){
-						queuet+=",";
-						
-					}
-					queuet+="'"+option.value+"'";
-				});
-			
-			var optionss = $('#myform_List_Agent_to option');
-			var values = $.map(optionss ,function(option) {
-				if(agent != ''){
-					agent+=',';
-					
-				}
-				agent+="'"+option.value+"'";
-			});
-			
-			start_time = $('#start_time').val();
-			end_time = $('#end_time').val();
-		            
-		            $.getJSON("server-side/report/prod_category_statistics.action.php?start="+start_time + "&end=" + end_time + "&queuet=" + queuet, function(json) {
-		                options.series[0].data = json;
-		               // alert(options);
-		                chart = new Highcharts.Chart(parseInt(options[0]));
-		                
-		            });
-		 }
+			    var options = {
+			                  chart: {
+			                      renderTo: 'chart_container0',
+			                      plotBackgroundColor: null,
+			                      plotBorderWidth: null,
+			                      plotShadow: '#FA3A3A'
+			                  },
+			                  title: {
+			                      text: 'ტექნიკური ინფორმაცია'
+			                  },
+			                  tooltip: {
+			                      formatter: function() {
+			                          return '<b>'+ this.point.name +'</b>: '+ this.percentage.toFixed(2) +' %';
+			                      }
+			                  },
+			                  plotOptions: {
+			                   pie: {
+			                          allowPointSelect: true,
+			                          cursor: 'pointer',
+			                          dataLabels: {
+			                              enabled: true,
+			                              color: '#000000',
+			                              connectorColor: '#FA3A3A',
+			                              formatter: function() {
+			                                  return '<b>'+ this.point.name +'</b>: '+ this.percentage.toFixed(2) +' %';
+			                              }
+			                          },
+			                          point: {
+			                              events: {
+			                                  click: function() {                   
+			                                  }
+			                              }
+			                          }
+			                      }
+			                  },
+			                  series: [{
+			                      type: 'pie',
+			                      name: 'კატეგორიები',
+			                     // color: '#FA3A3A',
+			                      data: []
+			                  }]
+			              }
+			    var i=0;
+			    
+			    agent = '';
+			    queuet = '';
+			   
+			    var optionss = $('#myform_List_Queue_to option');
+			    var values = $.map(optionss ,function(option) {
+			     if(queuet != ""){
+			      queuet+=",";
+			      
+			     }
+			     queuet+="'"+option.value+"'";
+			    });
+			   
+			   var optionss = $('#myform_List_Agent_to option');
+			   var values = $.map(optionss ,function(option) {
+			    if(agent != ''){
+			     agent+=',';
+			     
+			    }
+			    agent+="'"+option.value+"'";
+			   });
+			   
+			   start_time = $('#start_time').val();
+			   end_time = $('#end_time').val();
+			              $.getJSON("server-side/report/prod_category_statistics.action.php?start="+start_time + "&end=" + end_time + "&agent=" + agent + "&queuet=" + queuet, function(json) {
+			                  options.series[0].data = json;
+			                  chart = new Highcharts.Chart(options);
+			              });
+			   }
+		 function drawFirstLevel1(){
+			    var options = {
+			                  chart: {
+			                      renderTo: 'chart_container0r',
+			                      plotBackgroundColor: null,
+			                      plotBorderWidth: null,
+			                      plotShadow: '#FA3A3A'
+			                  },
+			                  title: {
+			                      text: 'ტექნიკური ინფორმაცია'
+			                  },
+			                  tooltip: {
+			                      formatter: function() {
+			                          return '<b>'+ this.point.name +'</b>: '+ this.percentage.toFixed(2) +' %';
+			                      }
+			                  },
+			                  plotOptions: {
+			                   pie: {
+			                          allowPointSelect: true,
+			                          cursor: 'pointer',
+			                          dataLabels: {
+			                              enabled: true,
+			                              color: '#000000',
+			                              connectorColor: '#FA3A3A',
+			                              formatter: function() {
+			                                  return '<b>'+ this.point.name +'</b>: '+ this.percentage.toFixed(2) +' %';
+			                              }
+			                          },
+			                          point: {
+			                              events: {
+			                                  click: function() {                   
+			                                  }
+			                              }
+			                          }
+			                      }
+			                  },
+			                  series: [{
+			                      type: 'pie',
+			                      name: 'კატეგორიები',
+			                     // color: '#FA3A3A',
+			                      data: []
+			                  }]
+			              }
+			    var i=0;
+			    
+			    agent = '';
+			    queuet = '';
+			   
+			    var optionss = $('#myform_List_Queue_to option');
+			    var values = $.map(optionss ,function(option) {
+			     if(queuet != ""){
+			      queuet+=",";
+			      
+			     }
+			     queuet+="'"+option.value+"'";
+			    });
+			   
+			   var optionss = $('#myform_List_Agent_to option');
+			   var values = $.map(optionss ,function(option) {
+			    if(agent != ''){
+			     agent+=',';
+			     
+			    }
+			    agent+="'"+option.value+"'";
+			   });
+			   
+			   start_time = $('#start_time').val();
+			   end_time = $('#end_time').val();
+			              $.getJSON("server-side/report/prod_category_statistics1.action.php?start="+start_time + "&end=" + end_time + "&agent=" + agent + "&queuet=" + queuet, function(json) {
+			                  options.series[0].data = json;
+			                  chart = new Highcharts.Chart(options);
+			              });
+			   }
+		 
 		 function getData11(){
 			 var options = {
 			        chart: {
@@ -1161,7 +1269,7 @@
 			        },
 			        legend: {
 		                layout: 'vertical',
-		                align: 'right',
+		                align: 'left',
 		                verticalAlign: 'top',
 		                borderWidth: 0
 			        },
@@ -1249,18 +1357,8 @@
 			parame.queuet = '';
 			paramm		= "server-side/report/technical.action.php";
 			
-			//getData();
-			//getData1();
-			//getData2();
-			//getData3();
-			//getData4();
-			//getData5();
-			//getData6();
-			//getData7();
-			//getData8();
-			//getData9();
-			//getData10();
-			//getData11();
+			drawFirstLevel();
+			drawFirstLevel1();
 			
 			var options = $('#myform_List_Queue_to option');
 			var values = $.map(options ,function(option) {
@@ -1323,7 +1421,7 @@
 		var record;
 		function play(record){
 			
-			link = 'http://212.72.155.175:8181/records/' + record;
+			link = 'http://109.234.117.182:8181/records/' + record;
 			var newWin = window.open(link, 'newWin','width=420,height=200');
             newWin.focus();
             
@@ -1361,8 +1459,17 @@
 		        url: paramm,
 			    data: parame,
 		        success: function(data) {		        	
-					$("#test").html(data.page.answear_dialog);
-					GetDialog("add-edit-form", 700, "auto", "");
+					$("#add-edit-form").html(data.page.answear_dialog);
+					var button = {
+							"cancel": {
+					            text: "დახურვა",
+					            id: "cancel-dialog",
+					            click: function () {
+					                $(this).dialog("close");
+					            }
+					        }
+						};
+					GetDialog("add-edit-form", 700, "auto", button);
 					/* Table ID, aJaxURL, Action, Colum Number, Custom Request, Hidden Colum, Menu Array */
 					GetDataTable("example", aJaxURL, "answear_dialog_table&start_time="+parame.start_time+"&end_time="+parame.end_time+"&queuet="+parame.queuet+"&agent="+parame.agent,7, "", 0, "", 1, "desc");
 
@@ -1402,21 +1509,658 @@
 		        url: paramm,
 			    data: parame,
 		        success: function(data) {		        	
-					$("#test").html(data.page.answear_dialog);
-					GetDialog("add-edit-form", 500, "auto", "");
+					$("#add-edit-form-unanswer").html(data.page.answear_dialog);
+					var button = {
+							"cancel": {
+					            text: "დახურვა",
+					            id: "cancel-dialog",
+					            click: function () {
+					                $(this).dialog("close");
+					            }
+					        }
+						};
+					GetDialog("add-edit-form-unanswer", 500, "auto", button);
 					/* Table ID, aJaxURL, Action, Colum Number, Custom Request, Hidden Colum, Menu Array */
-					GetDataTable("example", aJaxURL, "unanswear_dialog_table&start_time="+parame.start_time+"&end_time="+parame.end_time+"&queuet="+parame.queuet,5, "", 0, "", 1, "desc");
+					GetDataTable("example1", aJaxURL, "unanswear_dialog_table&start_time="+parame.start_time+"&end_time="+parame.end_time+"&queuet="+parame.queuet,5, "", 0, "", 1, "desc");
 
 			    }
 		    });
 		}
+
+
+
+		 $(document).on("click", "#excel_tech_info", function () {	
+			 var i=0;
+				
+				parame 			= new Object();
+				parame.agent	= '';
+				parame.queuet = '';
+
+				var options = $('#myform_List_Queue_to option');
+				var values = $.map(options ,function(option) {
+					if(parame.queuet != ""){
+						parame.queuet+=",";
+						
+					}
+					parame.queuet+="'"+option.value+"'";
+				});
+
+				
+				var options = $('#myform_List_Agent_to option');
+				var values = $.map(options ,function(option) {
+					if(parame.agent != ''){
+						parame.agent+=',';
+						
+					}
+					parame.agent+="'"+option.value+"'";
+				});
+				
+				parame.start_time = $('#start_time').val();
+				parame.end_time = $('#end_time').val();
+
+		    	$.ajax({
+	 		        url: 'server-side/report/technical/excel_tech_info.php',
+	 			    data: parame,
+			        success: function(data) {
+				        if(data == 1){
+					        alert('ჩანაწერი არ მოიძებნა');
+				        }else{
+			        	SaveToDisk('server-side/report/technical/excel.xls', 'excel.xls');
+				        }
+	 			    }
+	 		    });
+		    	
+			});
+
+		 $(document).on("click", ".excel_report_info", function () {	
+			 var i=0;
+				
+				parame 			= new Object();
+				parame.agent	= '';
+				parame.queuet = '';
+
+				var options = $('#myform_List_Queue_to option');
+				var values = $.map(options ,function(option) {
+					if(parame.queuet != ""){
+						parame.queuet+=",";
+						
+					}
+					parame.queuet+="'"+option.value+"'";
+				});
+
+				
+				var options = $('#myform_List_Agent_to option');
+				var values = $.map(options ,function(option) {
+					if(parame.agent != ''){
+						parame.agent+=',';
+						
+					}
+					parame.agent+="'"+option.value+"'";
+				});
+				
+				parame.start_time = $('#start_time').val();
+				parame.end_time = $('#end_time').val();
+
+		    	$.ajax({
+	 		        url: 'server-side/report/technical/excel_report_info.php',
+	 			    data: parame,
+			        success: function(data) {
+				        if(data == 1){
+					        alert('ჩანაწერი არ მოიძებნა');
+				        }else{
+			        	SaveToDisk('server-side/report/technical/excel.xls', 'excel.xls');
+				        }
+	 			    }
+	 		    });
+		    	
+			});
+
+		 $(document).on("click", "#excel_answer_call_info", function () {	
+			 var i=0;
+				
+				parame 			= new Object();
+				parame.agent	= '';
+				parame.queuet = '';
+
+				var options = $('#myform_List_Queue_to option');
+				var values = $.map(options ,function(option) {
+					if(parame.queuet != ""){
+						parame.queuet+=",";
+						
+					}
+					parame.queuet+="'"+option.value+"'";
+				});
+
+				
+				var options = $('#myform_List_Agent_to option');
+				var values = $.map(options ,function(option) {
+					if(parame.agent != ''){
+						parame.agent+=',';
+						
+					}
+					parame.agent+="'"+option.value+"'";
+				});
+				
+				parame.start_time = $('#start_time').val();
+				parame.end_time = $('#end_time').val();
+
+		    	$.ajax({
+	 		        url: 'server-side/report/technical/excel_answer_call_info.php',
+	 			    data: parame,
+			        success: function(data) {
+				        if(data == 1){
+					        alert('ჩანაწერი არ მოიძებნა');
+				        }else{
+			        	SaveToDisk('server-side/report/technical/excel.xls', 'excel.xls');
+				        }
+	 			    }
+	 		    });
+		    	
+			});
+
+		 $(document).on("click", "#excel_answer_call_by_agent_info", function () {	
+			 var i=0;
+				
+				parame 			= new Object();
+				parame.agent	= '';
+				parame.queuet = '';
+
+				var options = $('#myform_List_Queue_to option');
+				var values = $.map(options ,function(option) {
+					if(parame.queuet != ""){
+						parame.queuet+=",";
+						
+					}
+					parame.queuet+="'"+option.value+"'";
+				});
+
+				
+				var options = $('#myform_List_Agent_to option');
+				var values = $.map(options ,function(option) {
+					if(parame.agent != ''){
+						parame.agent+=',';
+						
+					}
+					parame.agent+="'"+option.value+"'";
+				});
+				
+				parame.start_time = $('#start_time').val();
+				parame.end_time = $('#end_time').val();
+
+		    	$.ajax({
+	 		        url: 'server-side/report/technical/excel_answer_call_by_agent_info.php',
+	 			    data: parame,
+			        success: function(data) {
+				        if(data == 1){
+					        alert('ჩანაწერი არ მოიძებნა');
+				        }else{
+			        	SaveToDisk('server-side/report/technical/excel.xls', 'excel.xls');
+				        }
+	 			    }
+	 		    });
+		    	
+			});
+			
+		 $(document).on("click", "#excel_answer_service_level_info", function () {	
+			 var i=0;
+				
+				parame 			= new Object();
+				parame.agent	= '';
+				parame.queuet = '';
+
+				var options = $('#myform_List_Queue_to option');
+				var values = $.map(options ,function(option) {
+					if(parame.queuet != ""){
+						parame.queuet+=",";
+						
+					}
+					parame.queuet+="'"+option.value+"'";
+				});
+
+				
+				var options = $('#myform_List_Agent_to option');
+				var values = $.map(options ,function(option) {
+					if(parame.agent != ''){
+						parame.agent+=',';
+						
+					}
+					parame.agent+="'"+option.value+"'";
+				});
+				
+				parame.start_time = $('#start_time').val();
+				parame.end_time = $('#end_time').val();
+
+		    	$.ajax({
+	 		        url: 'server-side/report/technical/excel_answer_service_level_info.php',
+	 			    data: parame,
+			        success: function(data) {
+				        if(data == 1){
+					        alert('ჩანაწერი არ მოიძებნა');
+				        }else{
+			        	SaveToDisk('server-side/report/technical/excel.xls', 'excel.xls');
+				        }
+	 			    }
+	 		    });
+		    	
+			});
+
+		 $(document).on("click", "#excel_answer_call_by_queue_info", function () {	
+			 var i=0;
+				
+				parame 			= new Object();
+				parame.agent	= '';
+				parame.queuet = '';
+
+				var options = $('#myform_List_Queue_to option');
+				var values = $.map(options ,function(option) {
+					if(parame.queuet != ""){
+						parame.queuet+=",";
+						
+					}
+					parame.queuet+="'"+option.value+"'";
+				});
+
+				
+				var options = $('#myform_List_Agent_to option');
+				var values = $.map(options ,function(option) {
+					if(parame.agent != ''){
+						parame.agent+=',';
+						
+					}
+					parame.agent+="'"+option.value+"'";
+				});
+				
+				parame.start_time = $('#start_time').val();
+				parame.end_time = $('#end_time').val();
+
+		    	$.ajax({
+	 		        url: 'server-side/report/technical/excel_answer_call_by_queue_info.php',
+	 			    data: parame,
+			        success: function(data) {
+				        if(data == 1){
+					        alert('ჩანაწერი არ მოიძებნა');
+				        }else{
+			        	SaveToDisk('server-side/report/technical/excel.xls', 'excel.xls');
+				        }
+	 			    }
+	 		    });
+		    	
+			});
+			
+		 $(document).on("click", "#excel_disconnection_cause_info", function () {	
+			 var i=0;
+				
+				parame 			= new Object();
+				parame.agent	= '';
+				parame.queuet = '';
+
+				var options = $('#myform_List_Queue_to option');
+				var values = $.map(options ,function(option) {
+					if(parame.queuet != ""){
+						parame.queuet+=",";
+						
+					}
+					parame.queuet+="'"+option.value+"'";
+				});
+
+				
+				var options = $('#myform_List_Agent_to option');
+				var values = $.map(options ,function(option) {
+					if(parame.agent != ''){
+						parame.agent+=',';
+						
+					}
+					parame.agent+="'"+option.value+"'";
+				});
+				
+				parame.start_time = $('#start_time').val();
+				parame.end_time = $('#end_time').val();
+
+		    	$.ajax({
+	 		        url: 'server-side/report/technical/excel_disconnection_cause_info.php',
+	 			    data: parame,
+			        success: function(data) {
+				        if(data == 1){
+					        alert('ჩანაწერი არ მოიძებნა');
+				        }else{
+			        	SaveToDisk('server-side/report/technical/excel.xls', 'excel.xls');
+				        }
+	 			    }
+	 		    });
+		    	
+			});
+
+		 $(document).on("click", "#excel_unanswer_call_info", function () {	
+			 var i=0;
+				
+				parame 			= new Object();
+				parame.agent	= '';
+				parame.queuet = '';
+
+				var options = $('#myform_List_Queue_to option');
+				var values = $.map(options ,function(option) {
+					if(parame.queuet != ""){
+						parame.queuet+=",";
+						
+					}
+					parame.queuet+="'"+option.value+"'";
+				});
+
+				
+				var options = $('#myform_List_Agent_to option');
+				var values = $.map(options ,function(option) {
+					if(parame.agent != ''){
+						parame.agent+=',';
+						
+					}
+					parame.agent+="'"+option.value+"'";
+				});
+				
+				parame.start_time = $('#start_time').val();
+				parame.end_time = $('#end_time').val();
+
+		    	$.ajax({
+	 		        url: 'server-side/report/technical/excel_unanswer_call_info.php',
+	 			    data: parame,
+			        success: function(data) {
+				        if(data == 1){
+					        alert('ჩანაწერი არ მოიძებნა');
+				        }else{
+			        	SaveToDisk('server-side/report/technical/excel.xls', 'excel.xls');
+				        }
+	 			    }
+	 		    });
+		    	
+			});
+			
+		 $(document).on("click", "#excel_disconnection_cause_unanswer_info", function () {	
+			 var i=0;
+				
+				parame 			= new Object();
+				parame.agent	= '';
+				parame.queuet = '';
+
+				var options = $('#myform_List_Queue_to option');
+				var values = $.map(options ,function(option) {
+					if(parame.queuet != ""){
+						parame.queuet+=",";
+						
+					}
+					parame.queuet+="'"+option.value+"'";
+				});
+
+				
+				var options = $('#myform_List_Agent_to option');
+				var values = $.map(options ,function(option) {
+					if(parame.agent != ''){
+						parame.agent+=',';
+						
+					}
+					parame.agent+="'"+option.value+"'";
+				});
+				
+				parame.start_time = $('#start_time').val();
+				parame.end_time = $('#end_time').val();
+
+		    	$.ajax({
+	 		        url: 'server-side/report/technical/excel_disconnection_cause_unanswer_info.php',
+	 			    data: parame,
+			        success: function(data) {
+				        if(data == 1){
+					        alert('ჩანაწერი არ მოიძებნა');
+				        }else{
+			        	SaveToDisk('server-side/report/technical/excel.xls', 'excel.xls');
+				        }
+	 			    }
+	 		    });
+		    	
+			});
+
+		 $(document).on("click", "#excel_unanswer_call_by_queue_info", function () {	
+			 var i=0;
+				
+				parame 			= new Object();
+				parame.agent	= '';
+				parame.queuet = '';
+
+				var options = $('#myform_List_Queue_to option');
+				var values = $.map(options ,function(option) {
+					if(parame.queuet != ""){
+						parame.queuet+=",";
+						
+					}
+					parame.queuet+="'"+option.value+"'";
+				});
+
+				
+				var options = $('#myform_List_Agent_to option');
+				var values = $.map(options ,function(option) {
+					if(parame.agent != ''){
+						parame.agent+=',';
+						
+					}
+					parame.agent+="'"+option.value+"'";
+				});
+				
+				parame.start_time = $('#start_time').val();
+				parame.end_time = $('#end_time').val();
+
+		    	$.ajax({
+	 		        url: 'server-side/report/technical/excel_unanswer_call_by_queue_info.php',
+	 			    data: parame,
+			        success: function(data) {
+				        if(data == 1){
+					        alert('ჩანაწერი არ მოიძებნა');
+				        }else{
+			        	SaveToDisk('server-side/report/technical/excel.xls', 'excel.xls');
+				        }
+	 			    }
+	 		    });
+		    	
+			});
+
+		 $(document).on("click", "#excel_total_info", function () {	
+			 var i=0;
+				
+				parame 			= new Object();
+				parame.agent	= '';
+				parame.queuet = '';
+
+				var options = $('#myform_List_Queue_to option');
+				var values = $.map(options ,function(option) {
+					if(parame.queuet != ""){
+						parame.queuet+=",";
+						
+					}
+					parame.queuet+="'"+option.value+"'";
+				});
+
+				
+				var options = $('#myform_List_Agent_to option');
+				var values = $.map(options ,function(option) {
+					if(parame.agent != ''){
+						parame.agent+=',';
+						
+					}
+					parame.agent+="'"+option.value+"'";
+				});
+				
+				parame.start_time = $('#start_time').val();
+				parame.end_time = $('#end_time').val();
+
+		    	$.ajax({
+	 		        url: 'server-side/report/technical/excel_total_info.php',
+	 			    data: parame,
+			        success: function(data) {
+				        if(data == 1){
+					        alert('ჩანაწერი არ მოიძებნა');
+				        }else{
+			        	SaveToDisk('server-side/report/technical/excel.xls', 'excel.xls');
+				        }
+	 			    }
+	 		    });
+		    	
+			});
+
+		 $(document).on("click", "#excel_answer_call_by_day_info", function () {	
+			 var i=0;
+				
+				parame 			= new Object();
+				parame.agent	= '';
+				parame.queuet = '';
+
+				var options = $('#myform_List_Queue_to option');
+				var values = $.map(options ,function(option) {
+					if(parame.queuet != ""){
+						parame.queuet+=",";
+						
+					}
+					parame.queuet+="'"+option.value+"'";
+				});
+
+				
+				var options = $('#myform_List_Agent_to option');
+				var values = $.map(options ,function(option) {
+					if(parame.agent != ''){
+						parame.agent+=',';
+						
+					}
+					parame.agent+="'"+option.value+"'";
+				});
+				
+				parame.start_time = $('#start_time').val();
+				parame.end_time = $('#end_time').val();
+
+		    	$.ajax({
+	 		        url: 'server-side/report/technical/excel_answer_call_by_day_info.php',
+	 			    data: parame,
+			        success: function(data) {
+				        if(data == 1){
+					        alert('ჩანაწერი არ მოიძებნა');
+				        }else{
+			        	SaveToDisk('server-side/report/technical/excel.xls', 'excel.xls');
+				        }
+	 			    }
+	 		    });
+		    	
+			});
+
+		 $(document).on("click", "#excel_answer_call_by_time_info", function () {	
+			 var i=0;
+				
+				parame 			= new Object();
+				parame.agent	= '';
+				parame.queuet = '';
+
+				var options = $('#myform_List_Queue_to option');
+				var values = $.map(options ,function(option) {
+					if(parame.queuet != ""){
+						parame.queuet+=",";
+						
+					}
+					parame.queuet+="'"+option.value+"'";
+				});
+
+				
+				var options = $('#myform_List_Agent_to option');
+				var values = $.map(options ,function(option) {
+					if(parame.agent != ''){
+						parame.agent+=',';
+						
+					}
+					parame.agent+="'"+option.value+"'";
+				});
+				
+				parame.start_time = $('#start_time').val();
+				parame.end_time = $('#end_time').val();
+
+		    	$.ajax({
+	 		        url: 'server-side/report/technical/excel_answer_call_by_time_info.php',
+	 			    data: parame,
+			        success: function(data) {
+				        if(data == 1){
+					        alert('ჩანაწერი არ მოიძებნა');
+				        }else{
+			        	SaveToDisk('server-side/report/technical/excel.xls', 'excel.xls');
+				        }
+	 			    }
+	 		    });
+
+			});
+			
+		 $(document).on("click", "#excel_answer_call_by_weak_info", function () {	
+			 var i=0;
+				
+				parame 			= new Object();
+				parame.agent	= '';
+				parame.queuet = '';
+
+				var options = $('#myform_List_Queue_to option');
+				var values = $.map(options ,function(option) {
+					if(parame.queuet != ""){
+						parame.queuet+=",";
+						
+					}
+					parame.queuet+="'"+option.value+"'";
+				});
+
+				
+				var options = $('#myform_List_Agent_to option');
+				var values = $.map(options ,function(option) {
+					if(parame.agent != ''){
+						parame.agent+=',';
+						
+					}
+					parame.agent+="'"+option.value+"'";
+				});
+				
+				parame.start_time = $('#start_time').val();
+				parame.end_time = $('#end_time').val();
+
+		    	$.ajax({
+	 		        url: 'server-side/report/technical/excel_answer_call_by_weak_info.php',
+	 			    data: parame,
+			        success: function(data) {
+				        if(data == 1){
+					        alert('ჩანაწერი არ მოიძებნა');
+				        }else{
+			        	SaveToDisk('server-side/report/technical/excel.xls', 'excel.xls');
+				        }
+	 			    }
+	 		    });
+		    	
+			});
+		 
+
+		 function SaveToDisk(fileURL, fileName) {
+		        // for non-IE
+		        if (!window.ActiveXObject) {
+		            var save = document.createElement('a');
+		            save.href = fileURL;
+		            save.target = '_blank';
+		            save.download = fileName || 'unknown';
+
+		            var event = document.createEvent('Event');
+		            event.initEvent('click', true, true);
+		            save.dispatchEvent(event);
+		            (window.URL || window.webkitURL).revokeObjectURL(save.href);
+		        }
+			     // for IE
+		        else if ( !! window.ActiveXObject && document.execCommand)     {
+		            var _window = window.open(fileURL, "_blank");
+		            _window.document.close();
+		            _window.document.execCommand('SaveAs', true, fileName || fileURL)
+		            _window.close();
+		        }
+		    } 
+		
     </script>
     
 </head>
 
 <body>
 
-<div id="tabs" style="width: 95%; margin: 0 auto; height:500px; margin-top: 50px;">
+<div id="tabs" style="width: 99%; margin: 0 auto; height:800px; margin-top: 50px;">
 		<ul>
 			<li><a href="#tab-0">მთავარი</a></li>
 			<li><a href="#tab-1">ნაპასუხები</a></li>
@@ -1424,7 +2168,7 @@
 			<li><a href="#tab-3">ზარების განაწილება</a></li>
 		</ul>
 		<div id="tab-0">
-			<div style="width: 48%; float:left;">
+			<div style="width: 27%; float:left;">
 			<span>აირჩიე რიგი</span>
 			<hr>
 			
@@ -1434,8 +2178,7 @@
 					   	<td>
 							ხელმისაწვდომია<br><br>
 						    <select name="List_Queue_available" multiple="multiple" id="myform_List_Queue_from" size="10" style="height: 100px;width: 125px;" >
-								
-							    <option value="2470017">2470017</option>
+								<option value="2470017">2470017</option>
 						    </select>
 						</td>
 						<td align="left">
@@ -1456,7 +2199,7 @@
 					</tbody>
 				</table>
 			</div>
-			<div style="width: 50%; float:left; margin-left:20px;">
+			<div style="width: 27%; float:left; margin-left:20px;">
 				<span>აირჩიე ოპერატორი</span>
 				<hr>
 				<table border="0" cellspacing="0" cellpadding="8">
@@ -1467,7 +2210,7 @@
 							<option value="ALF2">ALF2</option>
 							<option value="ALF3">ALF3</option>
 							<option value="ALF4">ALF4</option>    
-							<option value="ALF5">ALF5</option> 
+							<option value="ALF5">ALF5</option>    
 						</select>
 					</td>
 					<td align="left">
@@ -1504,9 +2247,9 @@
             	
             		<input style="margin-left: 15px;" id="show_report" name="show_report" type="submit" value="რეპორტების ჩვენება">
             	
-				
-                <table width="70%" border="0" cellpadding="0" cellspacing="0" style="margin-top: 50px">
-                <caption>ტექნიკური ინფორმაცია</caption>
+				<div style="margin-top: 55px; position: absolute; right: 30px;"><button id="excel_tech_info">Excel</button></div>
+                <table width="100%" border="0" cellpadding="0" cellspacing="0" style="margin-top: 50px">
+                <caption>ტექნიკური ინფორმაცია</caption> 
                 <tbody>
                 <tr>
                 	<th></th>
@@ -1530,9 +2273,13 @@
                 </tr>
                 </tbody>
                 </table>
+                <br>
+                <div id="chart_container0" style="float:left;" width: 50%; height: 300px;"></div>
+                 <div id="chart_container0r" style="float:left;" width: 50%; height: 300px;"></div>
 		</div>
 		 </div>
 		<div id="tab-1">
+		<div style="margin-top: 5px; position: absolute; left: 600px;"><button class="excel_report_info">Excel</button></div>
 		   <table width="99%" cellpadding="3" cellspacing="3" border="0">
         <thead>
         <tr>
@@ -1562,7 +2309,7 @@
 
             </td>
             <td valign="top" width="50%">
-
+				<div style="margin-top: 5px; position: absolute; right: 40px;"><button id="excel_answer_call_info">Excel</button></div>
                 <table width="100%" border="0" cellpadding="0" cellspacing="0">
                 <caption>ნაპასუხები ზარები</caption>
                 <tbody id="answer_call_info">
@@ -1594,6 +2341,7 @@
         </thead>
         </table>
         <br>
+        <div style="margin-top: 5px; position: absolute; right: 40px;"><button id="excel_answer_call_by_agent_info">Excel</button></div>
         <table width="99%" cellpadding="3" cellspacing="3" border="0" class="sortable" id="table1">
         <caption>ნაპასუხები ზარები ოპერატორების მიხედვით</caption>
             <thead>
@@ -1615,6 +2363,7 @@
         <br>
           <div id="chart_container" style="float:left; width: 90%; height: 300px; margin-left: 20px;"></div>
       <br>
+      <div style="margin-top: 290px; position: absolute; left: 570px;"><button id="excel_answer_service_level_info">Excel</button></div>
         <table width="47%" cellpadding="3" cellspacing="3" border="0" style="float:left;">
             <caption>მომსახურების დონე(Service Level)</caption>
             <thead>
@@ -1641,6 +2390,7 @@
             </table>
             <div id="chart_container11" bgcolor="#fffdf3" style="float:left; width: 50%; height: 300px;"></div>
         <br>
+        <div style="margin-top: 580px; position: absolute; left: 570px;"><button id="excel_answer_call_by_queue_info">Excel</button></div>
         <table width="47%" cellpadding="3" cellspacing="3" border="0" style="float:left;">
             <caption>ნაპასუხები ზარები რიგის მიხედვით</caption>
             <thead>
@@ -1667,6 +2417,7 @@
             <br>
             <div id="chart_container7" bgcolor="#fffdf3" style="float:left; width: 50%; height: 300px;"></div>
             <br>
+            <div style="margin-top: 860px; position: absolute; left: 570px;"><button id="excel_disconnection_cause_info">Excel</button></div>
             <table width="47%" cellpadding="3" cellspacing="3" border="0" style="float:left;">
             <caption>კავშირის გაწყვეტის მიზეზეი</caption>
             <thead>
@@ -1702,6 +2453,7 @@
               <div id="chart_container1" style="float:left; width: 50%; height: 300px;"></div>
 		 </div>
 		 <div id="tab-2">
+		 <div style="margin-top: 5px; position: absolute; left: 600px;"><button class="excel_report_info">Excel</button></div>
 		    <table width="99%" cellpadding="3" cellspacing="3" border="0">
 		<thead>
 		<tr>
@@ -1731,7 +2483,7 @@
 
 			</td>
 			<td valign="top" width="50%">
-
+			<div style="margin-top: 5px; position: absolute; right: 40px;"><button id="excel_unanswer_call_info">Excel</button></div>
 				<table width="100%" border="0" cellpadding="0" cellspacing="0">
 				<caption>უპასუხო ზარები</caption>
 				<tbody id="unanswer_call">
@@ -1759,6 +2511,7 @@
 		</thead>
 		</table>
 		<br>
+		<div style="margin-top: 5px; position: absolute; left: 570px;"><button id="excel_disconnection_cause_unanswer_info">Excel</button></div>
 		<table width="47%" cellpadding="3" cellspacing="3" border="0" style="float:left;">
 		<caption>კავშირის გაწყვეტის მიზეზი</caption>
 			<thead>
@@ -1791,6 +2544,7 @@
 			</table>
 			<div id="chart_container5" style="float:left; width: 50%; height: 300px;"></div>
 			<br>
+			<div style="margin-top: 290px; position: absolute; left: 570px;"><button id="excel_unanswer_call_by_queue_info">Excel</button></div>
 			<table width="47%" cellpadding="3" cellspacing="3" border="0" style="float:left;">
 			<caption>უპასუხო ზარები რიგის მიხედვით</caption>
 			<thead>
@@ -1817,6 +2571,7 @@
 			  <div id="chart_container6" style="float:left; width: 50%; height: 300px;"></div>
 		 </div>
 		 <div id="tab-3">
+		 <div style="margin-top: 5px; position: absolute; left: 600px;"><button class="excel_report_info">Excel</button></div>
 		    <table width="99%" cellpadding="3" cellspacing="3" border="0">
 		<thead>
 		<tr>
@@ -1846,7 +2601,7 @@
 
 			</td>
 			<td valign="top" width="50%">
-
+				<div style="margin-top: 5px; position: absolute; right: 40px;"><button id="excel_total_info">Excel</button></div>
 				<table width="100%" border="0" cellpadding="0" cellspacing="0">
 				<caption>სულ</caption>
 				<tbody id="totals">
@@ -1874,6 +2629,7 @@
 		</thead>
 		</table>
 		<br>
+		<div style="margin-top: 5px; position: absolute; right: 40px;"><button id="excel_answer_call_by_day_info">Excel</button></div>
 		<table width="99%" cellpadding="1" cellspacing="1" border="0" class="sortable" id="table1">
 			<caption>ზარის განაწილება დღეების მიხედვით</caption>
 				<thead>
@@ -1907,6 +2663,7 @@
 			<div id="chart_container4" style="float:left; width: 47%; height: 300px; margin-left: 20px;"></div>
 			<div id="chart_container8" style="float:right; width: 47%; height: 300px; margin-left: 20px;"></div>
 			<br>
+			<div style="margin-top: 295px; position: absolute; right: 40px;"><button id="excel_answer_call_by_time_info">Excel</button></div>
 			<table width="99%" cellpadding="1" cellspacing="1" border="0" class="sortable" id="table2">
 			<caption>ზარის განაწილება საათების მიხედვით</caption>
 				<thead>
@@ -1939,8 +2696,9 @@
 			<div id="chart_container2" style="float:left; width: 47%; height: 300px; margin-left: 20px;"></div>
 			  <div id="chart_container9" style="float:right; width: 47%; height: 300px; margin-left: 20px;"></div>
 			<br>
+			<div style="margin-top: 295px; position: absolute; right: 40px;"><button id="excel_answer_call_by_weak_info">Excel</button></div>
 			<table width="99%" cellpadding="1" cellspacing="1" border="0" class="sortable" id="table3">
-			<caption>ზარის განაწილება კვირების მიხედვით</caption>
+			<caption>ზარის განაწილება კვირის დღეების მიხედვით</caption>
 				<thead>
 				<tr>
                     <th><a  class="sortheader" onclick="ts_resortTable(this, 0);return false;">დღე<span class="sortarrow">&nbsp;&nbsp;&nbsp;</span></a></th>
@@ -1976,6 +2734,11 @@
 </div>
 <!-- jQuery Dialog -->
 <div id="add-edit-form" class="form-dialog" title="ნაპასუხები ზარები">
+<div id="test"></div>
+</div>
+
+<!-- jQuery Dialog -->
+<div id="add-edit-form-unanswer" class="form-dialog" title="უპასუხო ზარები">
 <div id="test"></div>
 </div>
 

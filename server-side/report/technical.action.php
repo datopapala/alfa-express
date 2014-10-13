@@ -1,5 +1,5 @@
 <?php
-
+require_once('../../includes/classes/core.php');
 //----------------------------- ცვლადი
 
 $agent	= $_REQUEST['agent'];
@@ -13,12 +13,6 @@ $day_format = ($day / (60*60*24)) + 1;
 // ----------------------------------
 
 if($_REQUEST['act'] =='answear_dialog_table'){
-	mysql_close();
-	$conn = mysql_connect('212.72.155.175', 'root', 'Gl-1114');
-	if (!$conn) {
-		$error = 'dgfhg';
-	}
-	mysql_select_db('asteriskcdrdb');
 	$data		= array('page' => array(
 			'answear_dialog' => ''
 	));
@@ -58,12 +52,6 @@ if($_REQUEST['act'] =='answear_dialog_table'){
 }
 else
 if($_REQUEST['act'] =='unanswear_dialog_table'){
-	mysql_close();
-	$conn = mysql_connect('212.72.155.175', 'root', 'Gl-1114');
-	if (!$conn) {
-		$error = 'dgfhg';
-	}
-	mysql_select_db('asteriskcdrdb');
 	$data		= array('page' => array(
 			'answear_dialog' => ''
 	));
@@ -75,9 +63,9 @@ if($_REQUEST['act'] =='unanswear_dialog_table'){
 									cdr.dst,
 									CONCAT(SUBSTR((cdr.duration / 60), 1, 1), ':', cdr.duration % 60) as `time`
 							FROM	queue_stats
-							JOIN	qname ON	queue_stats.qname = qname.qname_id
-							JOIN	qevent ON	queue_stats.qevent = qevent.event_id
-							JOIN	cdr ON	queue_stats.uniqueid = cdr.uniqueid
+							left JOIN	qname ON	queue_stats.qname = qname.qname_id
+							left JOIN	qevent ON	queue_stats.qevent = qevent.event_id
+							left JOIN	cdr ON	queue_stats.uniqueid = cdr.uniqueid
 							WHERE 	DATE(queue_stats.datetime) >= '$start_time'
 							AND 	DATE(queue_stats.datetime) <= '$end_time' 
 							AND 	qname.queue IN ($queue) 
@@ -155,7 +143,7 @@ if($_REQUEST['act'] =='unanswear_dialog'){
 	$data['page']['answear_dialog'] = '
 								
 							
-												                <table class="display" id="example">
+												                <table class="display" id="example1">
 												                    <thead>
 												                        <tr id="datatable_header">
 												                            <th>ID</th>
@@ -194,15 +182,11 @@ if($_REQUEST['act'] =='unanswear_dialog'){
 else
 {
 	
-require_once('../../includes/classes/core.php');
+
 
 $row_done_blank = mysql_fetch_assoc(mysql_query("	SELECT COUNT(*) AS `count`
-		FROM `incomming_call`
-		WHERE DATE(date) >= '$start_time' AND DATE(date) <= '$end_time' AND phone != '' "));
-
-mysql_close();
-$conn = mysql_connect('212.72.155.175', 'root', 'Gl-1114');
-mysql_select_db('asteriskcdrdb');
+													FROM `incomming_call`
+													WHERE DATE(date) >= '$start_time' AND DATE(date) <= '$end_time' AND phone != '' "));
 
 
 $data		= array('page' => array(
@@ -252,7 +236,7 @@ $data['error'] = $error;
 													AND DATE(qs.datetime) >= '$start_time'
 													AND DATE(qs.datetime) <= '$end_time' 
 													AND q.queue IN ($queue) 
-													AND ac.event IN ('ABANDON', 'EXITWITHTIMEOUT')"));
+													AND ac.event IN ('ABANDON')"));
 	
 	
 	
@@ -273,10 +257,26 @@ $data['error'] = $error;
 
 //------------------------------- ნაპასუხები ზარები რიგის მიხედვით
 
-	$data['page']['answer_call'] = '
-							<tr><td>'.$row_answer[queue].'</td><td>'.$row_answer[count].' ზარი</td><td>'.round(((($row_answer[count]) / ($row_answer[count])) * 100)).' %</td></tr>
+	$g = mysql_query("	SELECT	COUNT(*) AS `count`,
+									q.queue AS `queue`
+									FROM	queue_stats AS qs,
+									qname AS q,
+									qagent AS ag,
+									qevent AS ac
+									WHERE qs.qname = q.qname_id
+									AND qs.qagent = ag.agent_id
+									AND qs.qevent = ac.event_id
+									AND DATE(qs.datetime) >= '$start_time' AND DATE(qs.datetime) <= '$end_time'
+									AND q.queue IN ($queue)
+									AND ag.agent in ($agent)
+									AND ac.event IN ( 'COMPLETECALLER', 'COMPLETEAGENT')
+									GROUP BY q.queue");
+	
+	while ($rr = mysql_fetch_assoc($g)){								
+	$data['page']['answer_call'] .= '
+							<tr><td>'.$rr[queue].'</td><td>'.$rr[count].' ზარი</td><td>'.round(((($rr[count]) / ($row_answer[count])) * 100)).' %</td></tr>
 							';
-
+	}
 //-------------------------------------------------------
 
 //------------------------------- მომსახურების დონე(Service Level)
@@ -668,26 +668,27 @@ $row_COMPLETEAGENT = mysql_fetch_assoc(mysql_query("	SELECT	COUNT(*) AS `count`,
 
 //------------------------------ უპასუხო ზარები რიგის მიხედვით
 
-	$Unanswered_Calls_by_Queue = mysql_fetch_assoc(mysql_query("	SELECT 	COUNT(*) AS `count`,
-			q.queue as `queue`
-			FROM 	queue_stats AS qs,
-			qname AS q,
-			qagent AS ag,
-			qevent AS ac
-			WHERE qs.qname = q.qname_id
-			AND qs.qagent = ag.agent_id
-			AND qs.qevent = ac.event_id
-			AND DATE(qs.datetime) >= '$start_time' AND DATE(qs.datetime) <= '$end_time'
-			AND q.queue IN ($queue)
-			AND ac.event IN ('ABANDON')
-			ORDER BY qs.datetime"));
-	
-	$data['page']['unanswered_calls_by_queue'] = '
+	$r = mysql_query("	SELECT 	COUNT(*) AS `count`,
+										q.queue as `queue`
+										FROM 	queue_stats AS qs,
+										qname AS q,
+										qagent AS ag,
+										qevent AS ac
+										WHERE qs.qname = q.qname_id
+										AND qs.qagent = ag.agent_id
+										AND qs.qevent = ac.event_id
+										AND DATE(qs.datetime) >= '$start_time' AND DATE(qs.datetime) <= '$end_time'
+										AND q.queue IN ($queue)
+										AND ac.event IN ('ABANDON')
+										GROUP BY q.queue");
+	while ($Unanswered_Calls_by_Queue = mysql_fetch_assoc($r)){
+	$data['page']['unanswered_calls_by_queue'] .= '
 
-                   	<tr><td>'.$Unanswered_Calls_by_Queue[queue].'</td><td>'.$Unanswered_Calls_by_Queue[count].' ზარი</td><td>'.round((($Unanswered_Calls_by_Queue[count] / $Unanswered_Calls_by_Queue[count]) * 100),2).' %</td></tr>
+                   	<tr><td>'.$Unanswered_Calls_by_Queue[queue].'</td><td>'.$Unanswered_Calls_by_Queue[count].' ზარი</td><td>'.round((($Unanswered_Calls_by_Queue[count] / $row_abadon[count]) * 100),2).' %</td></tr>
 
 							';
-
+	}
+	
 //---------------------------------------------------
 
 //------------------------------------------- სულ

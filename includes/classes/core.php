@@ -66,7 +66,7 @@ if((time() - $_SESSION['lifetime'] > 360000) && $_SERVER['QUERY_STRING'] && strp
 	unset($_SESSION['lifetime']);
 	header('LOCATION: 404.php');	
 }else{
-	$db = new sql_db ( "192.168.11.99", "root", "Gl-1114", "alfa" );
+	$db = new sql_db ( "212.72.155.175", "root", "Gl-1114", "asteriskcdrdb" );
 }
 
 ?>

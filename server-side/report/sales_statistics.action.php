@@ -16,16 +16,8 @@ $cause1 = array();
 $name = array();
 $agent = array();
 
-$call_count = array();
-$answer_count = array();
 
-$datetime[] = array();
-$answer_count1 = array();
 
-$datetime1[] = array();
-$agent = array();
-
-$name[]     = 'რაოდენობა';
 
 
 //-----------------------კავშირის გაწყვეტის მიზეზი
@@ -193,9 +185,11 @@ $res5 =mysql_query("SELECT 	COUNT(*) AS `answer_count3`,
 								AND qs.qagent = ag.agent_id
 								AND qs.qevent = ac.event_id
 								AND DATE(qs.datetime) >= '$start' AND DATE(qs.datetime) <= '$end'
-								AND q.queue IN ($queuet)
+								AND q.queue IN ($queuet,'NONE')
 								AND ac.event IN ('ABANDON')
-								ORDER BY qs.datetime");
+								GROUP BY q.queue
+								
+");
 
 		while($row6 = mysql_fetch_assoc($res6)){
 		
@@ -215,7 +209,7 @@ $res5 =mysql_query("SELECT 	COUNT(*) AS `answer_count3`,
 							AND DATE(qs.datetime) >= '$start' AND DATE(qs.datetime) <= '$end'
 							AND q.queue IN ($queuet)
 							AND ac.event IN ( 'COMPLETECALLER', 'COMPLETEAGENT')
-							ORDER BY ag.agent");
+							GROUP BY q.queue");
 
 		while($row7 = mysql_fetch_assoc($res7)){
 
@@ -271,7 +265,8 @@ $res4 =mysql_query("SELECT 	DATE(qs.datetime) AS `datetime`,
 		$datetime2[]		= $row4[datetime];
 			}
 //------------------------------ უპასუხო ზარები საათების მიხედვით			
-	$res9 =mysql_query("SELECT  CASE	WHEN HOUR(qs.datetime) >= 0 AND HOUR(qs.datetime) < 1 THEN '00:00'
+	$res9 =mysql_query("SELECT  CASE		
+										WHEN HOUR(qs.datetime) >= 0 AND HOUR(qs.datetime) < 1 THEN '00:00'
 										WHEN HOUR(qs.datetime) >= 1 AND HOUR(qs.datetime) < 2 THEN '01:00'
 										WHEN HOUR(qs.datetime) >= 2 AND HOUR(qs.datetime) < 3 THEN '02:00'
 										WHEN HOUR(qs.datetime) >= 3 AND HOUR(qs.datetime) < 4 THEN '03:00'
@@ -280,22 +275,21 @@ $res4 =mysql_query("SELECT 	DATE(qs.datetime) AS `datetime`,
 										WHEN HOUR(qs.datetime) >= 6 AND HOUR(qs.datetime) < 7 THEN '06:00'
 										WHEN HOUR(qs.datetime) >= 7 AND HOUR(qs.datetime) < 8 THEN '07:00'
 										WHEN HOUR(qs.datetime) >= 8 AND HOUR(qs.datetime) < 9 THEN '08:00'
-										WHEN HOUR(qs.datetime) >= 9 AND HOUR(qs.datetime) < 10 THEN '10:00'
-										WHEN HOUR(qs.datetime) >= 10 AND HOUR(qs.datetime) < 11 THEN '11:00'
-										WHEN HOUR(qs.datetime) >= 11 AND HOUR(qs.datetime) < 12 THEN '12:00'
-										WHEN HOUR(qs.datetime) >= 12 AND HOUR(qs.datetime) < 13 THEN '13:00'
-										WHEN HOUR(qs.datetime) >= 13 AND HOUR(qs.datetime) < 14 THEN '14:00'
-										WHEN HOUR(qs.datetime) >= 14 AND HOUR(qs.datetime) < 15 THEN '15:00'
-										WHEN HOUR(qs.datetime) >= 15 AND HOUR(qs.datetime) < 16 THEN '16:00'
-										WHEN HOUR(qs.datetime) >= 16 AND HOUR(qs.datetime) < 17 THEN '17:00'
-										WHEN HOUR(qs.datetime) >= 17 AND HOUR(qs.datetime) < 18 THEN '18:00'
-										WHEN HOUR(qs.datetime) >= 18 AND HOUR(qs.datetime) < 19 THEN '19:00'
-										WHEN HOUR(qs.datetime) >= 19 AND HOUR(qs.datetime) < 20 THEN '20:00'
-										WHEN HOUR(qs.datetime) >= 20 AND HOUR(qs.datetime) < 21 THEN '21:00'
-										WHEN HOUR(qs.datetime) >= 21 AND HOUR(qs.datetime) < 22 THEN '22:00'
-										WHEN HOUR(qs.datetime) >= 22 AND HOUR(qs.datetime) < 23 THEN '23:00'
-										WHEN HOUR(qs.datetime) >= 23 AND HOUR(qs.datetime) < 24 THEN '24:00'
-
+										WHEN HOUR(qs.datetime) >= 9 AND HOUR(qs.datetime) < 10 THEN '09:00'
+										WHEN HOUR(qs.datetime) >= 10 AND HOUR(qs.datetime) < 11 THEN '10:00'
+										WHEN HOUR(qs.datetime) >= 11 AND HOUR(qs.datetime) < 12 THEN '11:00'
+										WHEN HOUR(qs.datetime) >= 12 AND HOUR(qs.datetime) < 13 THEN '12:00'
+										WHEN HOUR(qs.datetime) >= 13 AND HOUR(qs.datetime) < 14 THEN '13:00'
+										WHEN HOUR(qs.datetime) >= 14 AND HOUR(qs.datetime) < 15 THEN '14:00'
+										WHEN HOUR(qs.datetime) >= 15 AND HOUR(qs.datetime) < 16 THEN '15:00'
+										WHEN HOUR(qs.datetime) >= 16 AND HOUR(qs.datetime) < 17 THEN '16:00'
+										WHEN HOUR(qs.datetime) >= 17 AND HOUR(qs.datetime) < 18 THEN '17:00'
+										WHEN HOUR(qs.datetime) >= 18 AND HOUR(qs.datetime) < 19 THEN '18:00'
+										WHEN HOUR(qs.datetime) >= 19 AND HOUR(qs.datetime) < 20 THEN '19:00'
+										WHEN HOUR(qs.datetime) >= 20 AND HOUR(qs.datetime) < 21 THEN '20:00'
+										WHEN HOUR(qs.datetime) >= 21 AND HOUR(qs.datetime) < 22 THEN '21:00'
+										WHEN HOUR(qs.datetime) >= 22 AND HOUR(qs.datetime) < 23 THEN '22:00'
+										WHEN HOUR(qs.datetime) >= 23 AND HOUR(qs.datetime) < 24 THEN '23:00'
 									END AS `times`,
 									COUNT(*) AS `unanswer_count`
 										
@@ -423,7 +417,15 @@ $res4 =mysql_query("SELECT 	DATE(qs.datetime) AS `datetime`,
 			$w91++;
 			
 			}	
-$mas = array($w15,$w30,$w45,$w60,$w75,$w90,$w91);
+			
+			$d30 = $w30 - $w15;
+			$d45 = $w45 - $w30;
+			$d60 = $w60 - $w45;
+			$d75 = $w75 - $w60;
+			$d90 = $w90 - $w75;
+			$d91 = $w91 - $w90;
+						
+$mas = array($w15,$d30,$d45,$d60,$d75,$d90,$d91);
 $call_second=array('15 წამში','30 წამში','45წამში','60 წამში','75 წამში','90 წამში','90+წამში');			
 							
 $unit[]="ზარი";
