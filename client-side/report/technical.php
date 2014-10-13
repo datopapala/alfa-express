@@ -2279,7 +2279,7 @@
 		</div>
 		 </div>
 		<div id="tab-1">
-		<div style="margin-top: 5px; position: absolute; left: 600px;"><button class="excel_report_info">Excel</button></div>
+		<div style="margin-top: 5px; position: absolute; left: 580px;"><button class="excel_report_info">Excel</button></div>
 		   <table width="99%" cellpadding="3" cellspacing="3" border="0">
         <thead>
         <tr>
@@ -2363,7 +2363,7 @@
         <br>
           <div id="chart_container" style="float:left; width: 90%; height: 300px; margin-left: 20px;"></div>
       <br>
-      <div style="margin-top: 290px; position: absolute; left: 570px;"><button id="excel_answer_service_level_info">Excel</button></div>
+      <div style="margin-top: 290px; position: absolute; left: 550px;"><button id="excel_answer_service_level_info">Excel</button></div>
         <table width="47%" cellpadding="3" cellspacing="3" border="0" style="float:left;">
             <caption>მომსახურების დონე(Service Level)</caption>
             <thead>
@@ -2390,7 +2390,7 @@
             </table>
             <div id="chart_container11" bgcolor="#fffdf3" style="float:left; width: 50%; height: 300px;"></div>
         <br>
-        <div style="margin-top: 580px; position: absolute; left: 570px;"><button id="excel_answer_call_by_queue_info">Excel</button></div>
+        <div style="margin-top: 580px; position: absolute; left: 550px;"><button id="excel_answer_call_by_queue_info">Excel</button></div>
         <table width="47%" cellpadding="3" cellspacing="3" border="0" style="float:left;">
             <caption>ნაპასუხები ზარები რიგის მიხედვით</caption>
             <thead>
@@ -2417,7 +2417,7 @@
             <br>
             <div id="chart_container7" bgcolor="#fffdf3" style="float:left; width: 50%; height: 300px;"></div>
             <br>
-            <div style="margin-top: 860px; position: absolute; left: 570px;"><button id="excel_disconnection_cause_info">Excel</button></div>
+            <div style="margin-top: 855px; position: absolute; left: 550px;"><button id="excel_disconnection_cause_info">Excel</button></div>
             <table width="47%" cellpadding="3" cellspacing="3" border="0" style="float:left;">
             <caption>კავშირის გაწყვეტის მიზეზეი</caption>
             <thead>
@@ -2453,7 +2453,7 @@
               <div id="chart_container1" style="float:left; width: 50%; height: 300px;"></div>
 		 </div>
 		 <div id="tab-2">
-		 <div style="margin-top: 5px; position: absolute; left: 600px;"><button class="excel_report_info">Excel</button></div>
+		 <div style="margin-top: 5px; position: absolute; left: 580px;"><button class="excel_report_info">Excel</button></div>
 		    <table width="99%" cellpadding="3" cellspacing="3" border="0">
 		<thead>
 		<tr>
@@ -2511,7 +2511,7 @@
 		</thead>
 		</table>
 		<br>
-		<div style="margin-top: 5px; position: absolute; left: 570px;"><button id="excel_disconnection_cause_unanswer_info">Excel</button></div>
+		<div style="margin-top: 5px; position: absolute; left: 550px;"><button id="excel_disconnection_cause_unanswer_info">Excel</button></div>
 		<table width="47%" cellpadding="3" cellspacing="3" border="0" style="float:left;">
 		<caption>კავშირის გაწყვეტის მიზეზი</caption>
 			<thead>
@@ -2544,7 +2544,7 @@
 			</table>
 			<div id="chart_container5" style="float:left; width: 50%; height: 300px;"></div>
 			<br>
-			<div style="margin-top: 290px; position: absolute; left: 570px;"><button id="excel_unanswer_call_by_queue_info">Excel</button></div>
+			<div style="margin-top: 290px; position: absolute; left: 550px;"><button id="excel_unanswer_call_by_queue_info">Excel</button></div>
 			<table width="47%" cellpadding="3" cellspacing="3" border="0" style="float:left;">
 			<caption>უპასუხო ზარები რიგის მიხედვით</caption>
 			<thead>
@@ -2571,7 +2571,7 @@
 			  <div id="chart_container6" style="float:left; width: 50%; height: 300px;"></div>
 		 </div>
 		 <div id="tab-3">
-		 <div style="margin-top: 5px; position: absolute; left: 600px;"><button class="excel_report_info">Excel</button></div>
+		 <div style="margin-top: 5px; position: absolute; left: 580px;"><button class="excel_report_info">Excel</button></div>
 		    <table width="99%" cellpadding="3" cellspacing="3" border="0">
 		<thead>
 		<tr>
